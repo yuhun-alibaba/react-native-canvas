@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "KCView.h"
+#import "CanvasExampleView.h"
 
 @interface ViewController ()
 
@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    KCView *view=[[KCView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    CanvasExampleView *view=[[CanvasExampleView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     view.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:view];
     // Do any additional setup after loading the view, typically from a nib.

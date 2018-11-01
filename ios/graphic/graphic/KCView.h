@@ -12,6 +12,4 @@
 
 @property CGContextRef context;
 
--(void)arc:(float)x y:(float)y radius:(float)radius startAangle:(float)startAngle endAngle:(float)endAangle clockwise:(int)clockwise;
-
 @end
