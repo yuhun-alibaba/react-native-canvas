@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign) NSMutableArray *actions;
 
--(void)callAction:(NSMutableArray*)actionAndArgs;
+-(void)callAction:(NSDictionary*)methodAndArguments;
 
 @end
 

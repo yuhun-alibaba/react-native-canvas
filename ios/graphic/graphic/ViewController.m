@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "CanvasExampleView.h"
 
 @interface ViewController ()
 
@@ -17,9 +16,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    CanvasExampleView *view=[[CanvasExampleView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    view.backgroundColor=[UIColor whiteColor];
-    [self.view addSubview:view];
+    
+    CanvasView *canvas=[[CanvasView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    canvas.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:canvas];
+
+    NSDictionary *fillRect = @{@"method":@"fillRect:y:width:height:",@"arguments":@[@50, @50, @100, @100]};
+    [canvas callAction:fillRect];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

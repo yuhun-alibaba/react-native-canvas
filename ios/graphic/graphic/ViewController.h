@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CanvasExampleView.h"
+#import "Canvas/CanvasView.h"
 
 @interface ViewController : UIViewController
 
