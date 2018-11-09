@@ -19,17 +19,18 @@
 
 #pragma 绘制矩形
 -(void)clearRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height{
-    
+    CGRect rect = CGRectMake(x, y, width, height);
+    CGContextClearRect(_context, rect);
 }
 -(void)fillRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height{
     CGRect rect = CGRectMake(x, y, width, height);
     CGContextAddRect(_context, rect);
-    CGContextDrawPath(_context, kCGPathFillStroke);
+    CGContextDrawPath(_context, kCGPathFill);
 }
 -(void)strokeRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height{
     CGRect rect = CGRectMake(x, y, width, height);
     CGContextAddRect(_context, rect);
-    CGContextDrawPath(_context, kCGPathFillStroke);
+    CGContextDrawPath(_context, kCGPathStroke);
 }
 
 #pragma 绘制文本
@@ -112,40 +113,40 @@
 
 #pragma 路径
 -(void)beginPath{
-    
+    CGContextBeginPath(_context);
 }
 -(void)closePath{
-    
+    CGContextClosePath(_context);
 }
 -(void)moveTo:(CGFloat)x y:(CGFloat)y{
-    
+    CGContextMoveToPoint(_context, x, y);
 }
 -(void)lineTo:(CGFloat)x y:(CGFloat)y{
-    
+    CGContextAddLineToPoint(_context, x, y);
 }
 -(void)bezierCurveTo:(CGFloat)cp1x cp1y:(CGFloat)cp1y cp2x:(CGFloat)cp2x cp2y:(CGFloat)cp2y x:(CGFloat)x y:(CGFloat)y{
-    
+    CGContextAddCurveToPoint(_context, cp1x, cp1y, cp2x, cp2y, x, y);
 }
 -(void)quadraticCurveTo:(CGFloat)cpx cpy:(CGFloat)cpy x:(CGFloat)x y:(CGFloat)y{
-    
+    CGContextAddQuadCurveToPoint(_context, cpx, cpy, x, y);
 }
 -(void)arc:(CGFloat)x y:(CGFloat)y radius:(CGFloat)radius startAangle:(CGFloat)startAngle endAngle:(CGFloat)endAangle anticlockwise:(int)anticlockwise{
     CGContextAddArc(_context, x, y, radius, startAngle, endAangle, anticlockwise);
-    CGContextDrawPath(_context, kCGPathFillStroke);
 }
 -(void)arcTo:(CGFloat)x1 y1:(CGFloat)y1 x2:(CGFloat)x2 y2:(CGFloat)y2 radius:(CGFloat)radius{
-    
+    CGContextAddArcToPoint(_context, x1, y1, x2, y2, radius);
 }
 -(void)rect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height{
-    
+    CGRect rect = CGRectMake(x, y, width, height);
+    CGContextAddRect(_context, rect);
 }
 
 #pragma 绘制路径
 -(void)fill{
-    
+    CGContextDrawPath(_context, kCGPathFill);
 }
 -(void)stroke{
-    
+    CGContextDrawPath(_context, kCGPathStroke);
 }
 -(void)drawFocusIfNeeded{
     
@@ -154,7 +155,14 @@
     
 }
 -(void)clip{
-    
+    CGContextClip(_context);
+}
+-(void)clip:(NSString*)fillRule{
+    if ([fillRule isEqualToString:@"nonzero"]) {
+        [self clip];
+    } else if ([fillRule isEqualToString:@"evenodd"]) {
+        CGContextEOClip(_context);
+    }
 }
 -(void)isPointInPath{
     
@@ -165,19 +173,20 @@
 
 #pragma 变换
 -(void)rotate:(CGFloat)angle{
-    
+    CGContextRotateCTM(_context, angle);
 }
 -(void)scale:(CGFloat)x y:(CGFloat)y{
-    
+    CGContextScaleCTM(_context, x, y);
 }
 -(void)translate:(CGFloat)x y:(CGFloat)y{
-    
+    CGContextTranslateCTM(_context, x, y);
 }
 -(void)transform:(CGFloat)a b:(CGFloat)b c:(CGFloat)c d:(CGFloat)d e:(CGFloat)e f:(CGFloat)f{
-    
+    CGContextConcatCTM(_context, CGAffineTransformMake(a, b, c, d, e, f));
 }
 -(void)setTransform:(CGFloat)a b:(CGFloat)b c:(CGFloat)c d:(CGFloat)d e:(CGFloat)e f:(CGFloat)f{
-    
+    [self transform:1 b:0 c:0 d:1 e:0 f:0];
+    [self transform:a b:b c:c d:d e:e f:f];
 }
 
 #pragma 绘制图像
@@ -198,10 +207,10 @@
 
 #pragma canvas 状态
 -(void)save{
-    
+    CGContextSaveGState(_context);
 }
 -(void)restore{
-    
+    CGContextRestoreGState(_context);
 }
 
 

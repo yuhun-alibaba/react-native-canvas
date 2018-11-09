@@ -75,7 +75,9 @@
 
 -(void)runActions{
     for (NSDictionary *action in _actions) {
-        [self callMethodWithArguments:_context method:[action objectForKey:@"method"] arguments:[action objectForKey:@"arguments"]];
+        NSString * method = [action objectForKey:@"method"];
+        NSLog(@"callMethodWithArguments: method %@", method);
+        [self callMethodWithArguments:_context method:method arguments:[action objectForKey:@"arguments"]];
     }
 }
 
