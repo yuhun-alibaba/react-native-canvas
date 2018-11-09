@@ -10,12 +10,12 @@
 
 @implementation CanvasView
 
-
 -(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
-//    if (self) {
-//        _actions = [[NSMutableArray alloc] initWithCapacity:100];
-//    }
+    if (self) {
+        _actions = [[NSMutableArray alloc] initWithCapacity:0];
+    }
+    
     return self;
 }
 
@@ -28,25 +28,46 @@
 /**
  * 未知参数的反射：
  * https://blog.csdn.net/imanapple/article/details/50477148
+ * https://github.com/chukong/quick-cocos2d-x/blob/master/lib/cocos2d-x/scripting/lua/cocos2dx_support/platform/ios/CCLuaObjcBridge.mm (156 line)
  */
--(void)callMethodWithArguments:(NSString *)method arguments:(NSArray *)arguments {
+-(void)callMethodWithArguments:object method:(NSString *)method arguments:(NSArray *)arguments {
     SEL selector = NSSelectorFromString(method);
-    NSMethodSignature *signature = [_context methodSignatureForSelector:selector];
+    NSMethodSignature *signature = [object methodSignatureForSelector:selector];
 
     if (signature.numberOfArguments == 0) {
-        return; //@selector未找到
+        NSLog(@"callMethodWithArguments:%@ no selector", method);
+        return;
     }
     if (signature.numberOfArguments > [arguments count]+2) {
-        return; //传入arguments参数不足。signature至少有两个参数，self和_cmd
+        NSLog(@"callMethodWithArguments:%@ not enough aruments", method);
+        return;
     }
+    
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-    [invocation setTarget:_context];
+    [invocation setTarget:object];
     [invocation setSelector:selector];
 
-    for(int i=0; i<[arguments count]; i++)
-    {
-        id arg = [arguments objectAtIndex:i];
-        [invocation setArgument:&arg atIndex:i+2]; // The first two arguments are the hidden arguments self and _cmd
+    for(int i=0; i<[arguments count]; i++){
+        NSObject *arg = [arguments objectAtIndex:i];
+        // 类型转换
+        if([arg isKindOfClass:[NSNull class]]){
+            arg = nil;
+        } else if([arg isKindOfClass:[NSNumber class]]) {
+            NSNumber *number = (NSNumber *)arg;
+            const char *numberType = [number objCType];
+            if (strcmp(numberType, @encode(BOOL)) == 0) {
+                bool value = [(NSNumber *)arg boolValue];
+                [invocation setArgument:&value atIndex:2+i];
+            } else if (strcmp(numberType, @encode(int)) == 0) {
+                int value = [(NSNumber *)arg intValue];
+                [invocation setArgument:&value atIndex:2+i];
+            } else {
+                CGFloat value = [(NSNumber *)arg floatValue];
+                [invocation setArgument:&value atIndex:2+i];
+            }
+            continue;
+        }
+        [invocation setArgument:&arg atIndex:2+i];
     }
 
     [invocation invoke]; // Invoke the selector
@@ -54,20 +75,24 @@
 
 -(void)runActions{
     for (NSDictionary *action in _actions) {
-        NSString *method = [action objectForKey:@"method"];
-        NSArray *arguments = [action objectForKey:@"arguments"];
-        [self callMethodWithArguments:method arguments:arguments];
+        [self callMethodWithArguments:_context method:[action objectForKey:@"method"] arguments:[action objectForKey:@"arguments"]];
     }
 }
 
 /**
  * @{
- *   @"arguments" : @[],
- *   @"method" : @""
+ *   @"method" : @"",
+ *   @"arguments" : @[]
  * };
  */
--(void)callAction:(NSMutableArray*)methodAndArguments{
+-(void)callAction:(NSDictionary*)methodAndArguments{
     [_actions addObject: methodAndArguments];
+}
+
+-(void)callActions:(NSArray<NSDictionary *>*)actions{
+    for (NSDictionary* methodAndArguments in actions) {
+        [self callAction:methodAndArguments];
+    }
 }
 
 @end

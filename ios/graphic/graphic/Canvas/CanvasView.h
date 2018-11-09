@@ -13,11 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CanvasView : UIView
 
-@property (nonatomic, assign) CanvasRenderingContext2D *context;
+@property (nonatomic, strong) CanvasRenderingContext2D *context;
 
-@property (nonatomic, assign) NSMutableArray *actions;
+@property (nonatomic, strong) NSMutableArray *actions;
 
 -(void)callAction:(NSDictionary*)methodAndArguments;
+
+-(void)callActions:(NSArray<NSDictionary *>*)actions;
 
 @end
 

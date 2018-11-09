@@ -20,16 +20,23 @@
     CanvasView *canvas=[[CanvasView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     canvas.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:canvas];
-
-    NSDictionary *fillRect = @{@"method":@"fillRect:y:width:height:",@"arguments":@[@50, @50, @100, @100]};
-    [canvas callAction:fillRect];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    NSArray *drawActions = @[
+        @{
+          @"method":@"fillRect:y:width:height:",
+          @"arguments":@[@50.0, @50.0, @100.0, @100.0]
+        },
+        @{
+          @"method":@"arc:y:radius:startAangle:endAngle:anticlockwise:",
+          @"arguments":@[@150.0, @150.0, @50.0, @0, @(M_PI * 2), @1]
+        }
+    ];
+    [canvas callActions:drawActions];
 }
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
