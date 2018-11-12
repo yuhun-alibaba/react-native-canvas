@@ -35,11 +35,11 @@
     NSMethodSignature *signature = [object methodSignatureForSelector:selector];
 
     if (signature.numberOfArguments == 0) {
-        NSLog(@"callMethodWithArguments:%@ no selector", method);
+        NSLog(@"callMethodWithArguments: %@ no selector", method);
         return;
     }
     if (signature.numberOfArguments > [arguments count]+2) {
-        NSLog(@"callMethodWithArguments:%@ not enough aruments", method);
+        NSLog(@"callMethodWithArguments: %@ not enough aruments", method);
         return;
     }
     

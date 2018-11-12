@@ -14,6 +14,10 @@
 
 -(id)initWithContext:(CGContextRef)context{
     _context = context;
+    _fillStyle = [UIColor blackColor].CGColor;
+    _strokeStyle = [UIColor blackColor].CGColor;
+    _fontName = @"Helvetica";
+    _fontSize = 12.0;
     return self;
 }
 
@@ -31,17 +35,6 @@
     CGRect rect = CGRectMake(x, y, width, height);
     CGContextAddRect(_context, rect);
     CGContextDrawPath(_context, kCGPathStroke);
-}
-
-#pragma 绘制文本
--(void)fillText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
-    
-}
--(void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
-    
-}
--(void)measureText:(NSString *)text{
-    
 }
 
 #pragma 线型
@@ -80,6 +73,69 @@
     }
     _lineJoin = lineJoin;
     CGContextSetLineJoin(_context, _lineJoin);
+}
+#pragma 文本
+-(void)setFont:(NSString *)font{
+    if (font == _font) {
+        return;
+    }
+    _font = font;
+    NSArray *fonts = [font componentsSeparatedByString:@" "];
+    
+    if (fonts.count <2) {
+        return;
+    }
+    NSString *size = [fonts[0] stringByReplacingOccurrencesOfString:@"px" withString:@""];
+    _fontSize = (CGFloat)[size floatValue];
+    
+    UIFont *f = [UIFont fontWithName:fonts[1] size:_fontSize];
+    _fontName = f.fontName;
+    CGFontRef ff = CGFontCreateWithFontName((__bridge CFStringRef) _fontName);
+    
+    CGContextSetFont(_context, ff);
+    CGContextSetFontSize(_context, _fontSize);
+    
+    CGFontRelease(ff);
+}
+-(void)setTextAlign:(NSString *)textAlign{
+    if (textAlign == _textAlign) {
+        return;
+    }
+    _textAlign = textAlign;
+}
+-(void)setTextBaseline:(NSString *)textBaseline{
+    if (textBaseline == _textBaseline) {
+        return;
+    }
+    _textBaseline = textBaseline;
+}
+
+#pragma 绘制文本
+-(void)drawText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
+    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+    textStyle.alignment = NSTextAlignmentNatural; // @todo 取 _textAlign
+    UIColor *color = [UIColor colorWithCGColor:_fillStyle];
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: _fontName size: _fontSize], NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle};
+    [text drawAtPoint:CGPointMake(x, y) withAttributes:textFontAttributes];
+}
+
+-(void)fillText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
+    CGContextSetTextPosition(_context, x, y);
+    CGContextSetTextDrawingMode(_context, kCGTextFill);
+    
+    [self drawText:text x:x y:y];
+}
+-(void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
+    CGContextSetTextPosition(_context, x, y);
+    CGContextSetTextDrawingMode(_context, kCGTextStroke);
+    
+    [self drawText:text x:x y:y];
+}
+-(CGSize)measureText:(NSString *)text{
+    NSDictionary *userAttributes = @{NSFontAttributeName: [UIFont fontWithName:_fontName size:_fontSize]};
+    CGSize textSize = [text sizeWithAttributes:userAttributes];
+    NSLog(@"text: %@, size: width %f, height %f", text, textSize.width, textSize.height);
+    return textSize;
 }
 
 #pragma 填充与描边
