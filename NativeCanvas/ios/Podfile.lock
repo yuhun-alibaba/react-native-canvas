@@ -1,0 +1,16 @@
+PODS:
+  - graphic (0.0.1)
+
+DEPENDENCIES:
+  - graphic (from `../../ios/graphic`)
+
+EXTERNAL SOURCES:
+  graphic:
+    :path: "../../ios/graphic"
+
+SPEC CHECKSUMS:
+  graphic: 62474d8a0dabecb8780074626c7d7a4bf23b1cad
+
+PODFILE CHECKSUM: c5dda655e44feecaed0aad3134291996c5f5d07b
+
+COCOAPODS: 1.5.3

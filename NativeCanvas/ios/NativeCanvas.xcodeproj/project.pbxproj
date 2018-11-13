@@ -23,6 +23,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		221E3A75219AA6D60088FE23 /* CanvasViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2274D2E6219A58FC00A858E5 /* CanvasViewManager.m */; };
+		22EB12AB219AAC5000B9BD0D /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EB1281219AAC5000B9BD0D /* CanvasView.m */; };
+		22EB12AC219AAC5000B9BD0D /* CanvasRenderingContext2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */; };
+		22EB12B2219AC10D00B9BD0D /* RCTConvert+CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EB12B1219AC10D00B9BD0D /* RCTConvert+CanvasView.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -36,6 +40,7 @@
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* NativeCanvasTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NativeCanvasTests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
+		650057D7FAE0C9E2BCF6F583 /* libPods-NativeCanvas.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D89D6FD2CEB66F4869A8B2 /* libPods-NativeCanvas.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 /* End PBXBuildFile section */
@@ -103,27 +108,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
-		};
-		2233E3432199A39B00B33D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2233E33D2199A39B00B33D1B /* graphic.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 224DD720218A8E180010D787;
-			remoteInfo = graphic;
-		};
-		2233E3452199A39B00B33D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2233E33D2199A39B00B33D1B /* graphic.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 224DD738218A8E1A0010D787;
-			remoteInfo = graphicTests;
-		};
-		2233E3472199A39B00B33D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2233E33D2199A39B00B33D1B /* graphic.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 224DD743218A8E1A0010D787;
-			remoteInfo = graphicUITests;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -357,10 +341,21 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NativeCanvas/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NativeCanvas/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		2233E33D2199A39B00B33D1B /* graphic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = graphic.xcodeproj; path = ../../ios/graphic/graphic.xcodeproj; sourceTree = "<group>"; };
+		2274D2E5219A58FC00A858E5 /* CanvasViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasViewManager.h; sourceTree = "<group>"; };
+		2274D2E6219A58FC00A858E5 /* CanvasViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasViewManager.m; sourceTree = "<group>"; };
+		22EB1281219AAC5000B9BD0D /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
+		22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasRenderingContext2D.m; sourceTree = "<group>"; };
+		22EB1283219AAC5000B9BD0D /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
+		22EB1284219AAC5000B9BD0D /* CanvasCGFloatArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasCGFloatArray.h; sourceTree = "<group>"; };
+		22EB1285219AAC5000B9BD0D /* CanvasRenderingContext2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasRenderingContext2D.h; sourceTree = "<group>"; };
+		22EB12B0219AC10D00B9BD0D /* RCTConvert+CanvasView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+CanvasView.h"; sourceTree = "<group>"; };
+		22EB12B1219AC10D00B9BD0D /* RCTConvert+CanvasView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+CanvasView.m"; sourceTree = "<group>"; };
+		23D89D6FD2CEB66F4869A8B2 /* libPods-NativeCanvas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NativeCanvas.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* NativeCanvas-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NativeCanvas-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* NativeCanvas-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "NativeCanvas-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EA201C3A87A1170F307398C /* Pods-NativeCanvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeCanvas.release.xcconfig"; path = "Pods/Target Support Files/Pods-NativeCanvas/Pods-NativeCanvas.release.xcconfig"; sourceTree = "<group>"; };
+		55E39D2B6BC98F6550910BEE /* Pods-NativeCanvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NativeCanvas.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NativeCanvas/Pods-NativeCanvas.debug.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -380,6 +375,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				650057D7FAE0C9E2BCF6F583 /* libPods-NativeCanvas.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -503,6 +499,7 @@
 		13B07FAE1A68108700A75B9A /* NativeCanvas */ = {
 			isa = PBXGroup;
 			children = (
+				22EB1280219AAC5000B9BD0D /* Canvas */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -537,20 +534,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2233E33E2199A39B00B33D1B /* Products */ = {
+		22EB1280219AAC5000B9BD0D /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
-				2233E3442199A39B00B33D1B /* graphic.app */,
-				2233E3462199A39B00B33D1B /* graphicTests.xctest */,
-				2233E3482199A39B00B33D1B /* graphicUITests.xctest */,
+				22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */,
+				22EB1283219AAC5000B9BD0D /* CanvasView.h */,
+				22EB1281219AAC5000B9BD0D /* CanvasView.m */,
+				2274D2E5219A58FC00A858E5 /* CanvasViewManager.h */,
+				2274D2E6219A58FC00A858E5 /* CanvasViewManager.m */,
+				22EB1284219AAC5000B9BD0D /* CanvasCGFloatArray.h */,
+				22EB1285219AAC5000B9BD0D /* CanvasRenderingContext2D.h */,
+				22EB12B0219AC10D00B9BD0D /* RCTConvert+CanvasView.h */,
+				22EB12B1219AC10D00B9BD0D /* RCTConvert+CanvasView.m */,
 			);
-			name = Products;
+			path = Canvas;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
+				23D89D6FD2CEB66F4869A8B2 /* libPods-NativeCanvas.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -604,12 +608,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				2233E33D2199A39B00B33D1B /* graphic.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* NativeCanvas */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* NativeCanvasTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				E00DB3D297E62C6EE43DDCF1 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -634,6 +638,15 @@
 				2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E00DB3D297E62C6EE43DDCF1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				55E39D2B6BC98F6550910BEE /* Pods-NativeCanvas.debug.xcconfig */,
+				2EA201C3A87A1170F307398C /* Pods-NativeCanvas.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -661,6 +674,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "NativeCanvas" */;
 			buildPhases = (
+				420ABA5F50477719C4AC5CB7 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
@@ -747,10 +761,6 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 2233E33E2199A39B00B33D1B /* Products */;
-					ProjectRef = 2233E33D2199A39B00B33D1B /* graphic.xcodeproj */;
-				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
@@ -865,27 +875,6 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2233E3442199A39B00B33D1B /* graphic.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = graphic.app;
-			remoteRef = 2233E3432199A39B00B33D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2233E3462199A39B00B33D1B /* graphicTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = graphicTests.xctest;
-			remoteRef = 2233E3452199A39B00B33D1B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2233E3482199A39B00B33D1B /* graphicUITests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = graphicUITests.xctest;
-			remoteRef = 2233E3472199A39B00B33D1B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */ = {
@@ -1156,6 +1145,28 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		420ABA5F50477719C4AC5CB7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NativeCanvas-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1173,6 +1184,10 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				22EB12B2219AC10D00B9BD0D /* RCTConvert+CanvasView.m in Sources */,
+				22EB12AB219AAC5000B9BD0D /* CanvasView.m in Sources */,
+				221E3A75219AA6D60088FE23 /* CanvasViewManager.m in Sources */,
+				22EB12AC219AAC5000B9BD0D /* CanvasRenderingContext2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1262,7 +1277,9 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55E39D2B6BC98F6550910BEE /* Pods-NativeCanvas.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1275,13 +1292,16 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = NativeCanvas;
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** ${PODS_ROOT}/**";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2EA201C3A87A1170F307398C /* Pods-NativeCanvas.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = NativeCanvas/Info.plist;
@@ -1293,6 +1313,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = NativeCanvas;
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/** ${PODS_ROOT}/**";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1445,7 +1466,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1491,7 +1512,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
