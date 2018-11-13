@@ -11,16 +11,16 @@ import createAction from "./createAction";
 export default class CanvasRenderingAction {
   _actions = [];
 
-  get actions(){
+  get actions() {
     return this._actions;
   }
 
-  clear() {
+  resetActions() {
     this._actions = [];
   }
 
   enqueue(action: Action) {
-    this._actions.push(action)
+    this._actions.push(action);
   }
 
   createAction(method: ActionMethod, args: ActionArguments) {

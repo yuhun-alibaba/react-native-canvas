@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGLineJoin miterLimit;
 
 #pragma 文本
+@property (nonatomic, assign) NSString *font;
+@property (nonatomic, assign) NSString *fontName;
+@property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, assign) NSString *textAlign;
 @property (nonatomic, assign) NSString *textBaseline;
 @property (nonatomic, assign) NSString *direction;
@@ -52,9 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)strokeRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height;
 
 #pragma 绘制文本
+-(void)setFont:(NSString *)font;
+-(void)setTextAlign:(NSString *)textAlign;
+-(void)setTextBaseline:(NSString *)textBaseline;
+
+#pragma 绘制文本
 -(void)fillText:(NSString *)text x:(CGFloat)x y:(CGFloat)y;
 -(void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y;
--(void)measureText:(NSString *)text;
+-(CGSize)measureText:(NSString *)text;
 
 #pragma 线型
 -(CanvasCGFloatArray)getLineDash;
