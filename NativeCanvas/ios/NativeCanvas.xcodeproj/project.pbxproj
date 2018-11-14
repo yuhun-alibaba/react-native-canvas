@@ -544,8 +544,8 @@
 				2274D2E5219A58FC00A858E5 /* CanvasViewManager.h */,
 				2274D2E6219A58FC00A858E5 /* CanvasViewManager.m */,
 				22EB1284219AAC5000B9BD0D /* CanvasCGFloatArray.h */,
-				22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */,
 				22EB1285219AAC5000B9BD0D /* CanvasRenderingContext2D.h */,
+				22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -1150,15 +1150,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-NativeCanvas-checkManifestLockResult.txt",
 			);

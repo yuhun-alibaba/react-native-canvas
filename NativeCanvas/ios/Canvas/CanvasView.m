@@ -19,12 +19,10 @@
 }
 
 -(void)initWithContext:(CGContextRef)context{
-  _context = [[CanvasRenderingContext2D alloc] initWithContext:context];
-//  if (!_context) {
-//      _context = [[CanvasRenderingContext2D alloc] initWithContext:context];
-//  } else {
-//      [_context clearRect:0 y:0 width:375 height:300];
-//  }
+  if (!_context) {
+      _context = [[CanvasRenderingContext2D alloc] init];
+  }
+  _context.context = context;
 }
 
 -(void)invalidate{

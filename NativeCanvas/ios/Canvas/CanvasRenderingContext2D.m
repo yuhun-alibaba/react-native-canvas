@@ -12,14 +12,9 @@
 
 @implementation CanvasRenderingContext2D
 
--(id)initWithContext:(CGContextRef)context{
-    _context = context;
+-(CanvasRenderingContext2D *)init{
     [self initOrResetProperty];
     return self;
-}
-
--(void)dealloc{
-//  CGContextRelease(_context);
 }
 
 #pragma 初始化属性
@@ -283,6 +278,5 @@
 -(void)restore{
     CGContextRestoreGState(_context);
 }
-
 
 @end

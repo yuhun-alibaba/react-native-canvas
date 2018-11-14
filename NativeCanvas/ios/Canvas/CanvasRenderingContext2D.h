@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSString *globalCompositeOperation;
 
 #pragma 初始化
--(id)initWithContext:(CGContextRef)context;
+-(CanvasRenderingContext2D *)init;
 -(void)initOrResetProperty;
 
 #pragma 绘制矩形
