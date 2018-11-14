@@ -8,13 +8,10 @@ const windowWidth = Dimensions.get("window").width;
 
 type Props = {};
 
-type State = {
-  actions: Array<Object>
-};
+type State = {};
 
 export default class Animate extends Component<Props, State> {
   state = {
-    actions: [],
     running: false
   };
 
@@ -66,13 +63,15 @@ export default class Animate extends Component<Props, State> {
 
   drawContext(x = 0, y = 0) {
     if (!this.renderingContext) return;
+    const ctx = this.renderingContext;
 
-    this.renderingContext.font = "16px sans-serif";
-    this.renderingContext.fillText("hello world", 150, 200);
-    this.renderingContext.fillRect(x, y, 50.0, 50.0);
-    this.renderingContext.arc(x + 100, y + 100, 50.0, 0, Math.PI * 2, 1);
-    this.renderingContext.fill();
-    this.renderingContext.draw();
+    ctx.font = "16px Helvetica";
+    ctx.fillText("hello world", x, y + 150);
+    ctx.fillStyle = "red";
+    ctx.fillRect(x, y, 50.0, 50.0);
+    ctx.arc(x + 100, y + 100, 50.0, 0, Math.PI * 2, 1);
+    ctx.stroke();
+    ctx.draw();
   }
 
   componentDidMount() {
@@ -85,11 +84,16 @@ export default class Animate extends Component<Props, State> {
     const { running } = this.state;
 
     return (
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         <Canvas
           style={{
             width: windowWidth,
-            height: 500,
+            height: 300,
             backgroundColor: "#dddddd"
           }}
           ref={this.setCanvas}
@@ -107,7 +111,13 @@ export default class Animate extends Component<Props, State> {
               borderRadius: 4
             }}
           >
-            <Text style={{ fontSize: 16 }}>{running ? "stop" : "start"}</Text>
+            <Text
+              style={{
+                fontSize: 16
+              }}
+            >
+              {running ? "stop" : "start"}
+            </Text>
           </View>
         </TouchableWithoutFeedback>
       </View>

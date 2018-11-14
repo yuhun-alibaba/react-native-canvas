@@ -1,3 +1,5 @@
-import Animate from "./examples/animate";
+// import App from "./examples/animate";
+// import App from "./examples/simple";
+import App from "./examples/f2";
 
-export default Animate;
+export default App;
