@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "CanvasCGFloatArray.h"
+#import "CanvasConvert.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,11 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGLineCap lineCap;
 @property (nonatomic, assign) CGLineJoin lineJoin;
 @property (nonatomic, assign) CanvasCGFloatArray lineDash;
-@property (nonatomic, assign) CGFloat lineDashOffset;
 @property (nonatomic, assign) CGLineJoin miterLimit;
 
 #pragma 文本
-@property (nonatomic, assign) NSString *font;
+@property (nonatomic, assign) NSDictionary *font;
 @property (nonatomic, assign) NSString *fontName;
 @property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, assign) NSString *textAlign;
@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma 初始化
 -(id)initWithContext:(CGContextRef)context;
+-(void)initOrResetProperty;
 
 #pragma 绘制矩形
 -(void)clearRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height;
@@ -55,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)strokeRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height;
 
 #pragma 绘制文本
--(void)setFont:(NSString *)font;
+-(void)setFont:(NSDictionary *)font;
 -(void)setTextAlign:(NSString *)textAlign;
 -(void)setTextBaseline:(NSString *)textBaseline;
 
@@ -64,9 +65,15 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y;
 -(CGSize)measureText:(NSString *)text;
 
+#pragma 填充与描边
+-(void)setFillStyle:(NSArray *)fillStyle;
+-(void)setStrokeStyle:(NSArray *)strokeStyle;
+
 #pragma 线型
 -(CanvasCGFloatArray)getLineDash;
--(void)setLineDash:(CanvasCGFloatArray) lineDash;
+-(void)setLineDash:(NSArray *)lineDash;
+-(void)setLineCap:(NSString *)lineCap;
+-(void)setLineJoin:(NSString *)lineJoin;
 
 #pragma 渐变和图案
 -(void)createLinearGradient:(CGFloat)x0 y0:(CGFloat)y0 x1:(CGFloat)x1 y1:(CGFloat)y1;

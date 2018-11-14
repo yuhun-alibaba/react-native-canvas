@@ -21,16 +21,21 @@ class Canvas extends PureComponent<Props, State> {
     ...View.propTypes
   };
 
+  style = {}; // mock
+
+  renderingContext = new CanvasRenderingContext2D(this);
+
   state = {
     actions: this.props.actions || []
   };
 
   update(actions: Actions) {
+    console.log("draw ~~~~~~~~~~~~");
     this.setState({ actions });
   }
 
   getContext() {
-    return new CanvasRenderingContext2D(this);
+    return this.renderingContext;
   }
 
   componentWillReceiveProps(nextProps: Props) {

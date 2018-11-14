@@ -15,6 +15,10 @@ export default class CanvasRenderingAction {
     return this._actions;
   }
 
+  logAction(method, args) {
+    // console.log("method", method, "arguments", args);
+  }
+
   resetActions() {
     this._actions = [];
   }
@@ -24,6 +28,7 @@ export default class CanvasRenderingAction {
   }
 
   createAction(method: ActionMethod, args: ActionArguments) {
+    this.logAction(method, args);
     return createAction(method, args);
   }
 }

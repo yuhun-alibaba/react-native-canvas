@@ -20,6 +20,9 @@ RCT_EXPORT_MODULE()
 
 RCT_CUSTOM_VIEW_PROPERTY(actions, NSMutableArray*, CanvasView){
   NSMutableArray *actions = (NSMutableArray *)[RCTConvert NSArray:json] ?: defaultView.actions;
+  if (actions.count == 0) {
+    return;
+  }
   [self.canvas invalidate];
   [self.canvas setActions:actions];
 }

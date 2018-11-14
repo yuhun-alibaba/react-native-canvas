@@ -3,17 +3,21 @@
 import type { ActionMethod, ActionArguments } from "./flowTypes";
 
 const methodMap = {
-  fillStyle: "fillStyle:",
-  strokeStyle: "strokeStyle:",
-  lineWidth: "lineWidth:",
-  lineCap: "lineCap:",
-  lineJoin: "lineJoin:",
-  font: "font:",
-  textAlgin: "textAlgin:",
-  textBaseline: "textBaseline:",
-  direction: "direction:",
-  shadowColor: "shadowColor:",
-  shadowBlur: "shadowBlur:",
+  // styles
+  fillStyle: "setFillStyle:",
+  strokeStyle: "setStrokeStyle:",
+  lineWidth: "setLineWidth:",
+  lineCap: "setLineCap:",
+  lineJoin: "setLineJoin:",
+  lineDashOffset: "setLineDashOffset:",
+  font: "setFont:",
+  textAlgin: "setTextAlgin:",
+  textBaseline: "setTextBaseline:",
+  direction: "setDirection:",
+  shadowColor: "setShadowColor:",
+  shadowBlur: "setShadowBlur:",
+  // methods
+  setLineDash: "setLineDash:",
   clearRect: "clearRect:y:width:height:",
   fillRect: "fillRect:y:width:height:",
   strokeRect: "strokeRect:y:width:height:",
@@ -29,10 +33,10 @@ const methodMap = {
   arc: "arc:y:radius:startAangle:endAngle:anticlockwise:",
   arcTo: "arcTo:y1:x2:y2:radius:",
   rect: "rect:y:width:height:",
+  clip: "clip",
   fill: "fill",
   stroke: "stroke",
   rotate: "rotate:",
-  clip: "clip",
   scale: "scale:y:",
   translate: "translate:y:",
   transform: "transform:b:c:d:e:f:",
@@ -49,8 +53,6 @@ export default function createAction(
   method: ActionMethod,
   args: ActionArguments = []
 ) {
-  console.log("method", method, "arguments", args);
-
   const convertedMethod = methodMap[method];
 
   if (method === "clip" && args.length) {

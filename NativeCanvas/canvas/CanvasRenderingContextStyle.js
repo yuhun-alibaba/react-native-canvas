@@ -1,6 +1,11 @@
 // @flow
 
 import CanvasRenderingAction from "./CanvasRenderingAction";
+import {
+  extractColor,
+  extractFont,
+  extractAlignment
+} from "./extractStyleValue";
 
 export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
   // fill stroke style
@@ -10,6 +15,7 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
   _lineWidth;
   _lineCap;
   _lineJoin;
+  _lineDashOffset;
   // text style
   _font;
   _textAlign;
@@ -19,18 +25,33 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
   _shadowColor;
   _shadowBlur;
 
+  resetProperties() {
+    this._fillStyle = null;
+    this._strokeStyle = null;
+    this._lineWidth = null;
+    this._lineCap = null;
+    this._lineJoin = null;
+    this._lineDashOffset = null;
+    this._font = null;
+    this._textAlgin = null;
+    this._textBaseline = null;
+    this._direction = null;
+    this._shadowColor = null;
+    this._shadowBlur = null;
+  }
+
   set fillStyle(fillStyle) {
     if (this._fillStyle === fillStyle) return;
     this._fillStyle = fillStyle;
 
-    this.enqueue(this.createAction("fillStyle", [fillStyle]));
+    this.enqueue(this.createAction("fillStyle", [extractColor(fillStyle)]));
   }
 
   set strokeStyle(strokeStyle) {
     if (this._strokeStyle === strokeStyle) return;
     this._strokeStyle = strokeStyle;
 
-    this.enqueue(this.createAction("strokeStyle", [fillStyle]));
+    this.enqueue(this.createAction("strokeStyle", [extractColor(strokeStyle)]));
   }
 
   set lineWidth(lineWidth) {
@@ -41,7 +62,7 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
   }
 
   set lineCap(lineCap) {
-    if (this._lineJoin === lineJoin) return;
+    if (this._lineCap === lineCap) return;
     this._lineCap = lineCap;
 
     this.enqueue(this.createAction("lineCap", [lineCap]));
@@ -54,18 +75,25 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
     this.enqueue(this.createAction("lineJoin", [lineJoin]));
   }
 
+  set lineDashOffset(lineDashOffset) {
+    if (this._lineDashOffset === lineDashOffset) return;
+    this._lineDashOffset = lineDashOffset;
+
+    this.enqueue(this.createAction("lineDashOffset", [lineDashOffset]));
+  }
+
   set font(font) {
     if (this._font === font) return;
     this._font = font;
 
-    this.enqueue(this.createAction("font", [font]));
+    this.enqueue(this.createAction("font", [extractFont(font)]));
   }
 
-  set textAlign(textAlign) {
-    if (this._textAlign === textAlign) return;
-    this._textAlign = textAlign;
+  set textAlgin(textAlgin) {
+    if (this._textAlgin === textAlgin) return;
+    this._textAlgin = textAlgin;
 
-    this.enqueue(this.createAction("textAlign", [textAlign]));
+    this.enqueue(this.createAction("textAlgin", [extractAlignment(textAlgin)]));
   }
 
   set textBaseline(textBaseline) {
@@ -89,7 +117,7 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
     this.enqueue(this.createAction("shadowColor", [shadowColor]));
   }
 
-  set shadowBlur(direction) {
+  set shadowBlur(shadowBlur) {
     if (this._shadowBlur === shadowBlur) return;
     this._shadowBlur = shadowBlur;
 

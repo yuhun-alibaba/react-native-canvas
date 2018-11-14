@@ -15,18 +15,30 @@
     if (self) {
         _actions = [[NSMutableArray alloc] initWithCapacity:0];
     }
-    
     return self;
 }
 
+-(void)initWithContext:(CGContextRef)context{
+  _context = [[CanvasRenderingContext2D alloc] initWithContext:context];
+//  if (!_context) {
+//      _context = [[CanvasRenderingContext2D alloc] initWithContext:context];
+//  } else {
+//      [_context clearRect:0 y:0 width:375 height:300];
+//  }
+}
+
 -(void)invalidate{
-  [self setNeedsDisplay];
+    [self setNeedsDisplay];
+}
+
+-(void)clear{
+    [self.context initOrResetProperty];
 }
 
 -(void)drawRect:(CGRect)rect {
-    CanvasRenderingContext2D *context = [[CanvasRenderingContext2D alloc] initWithContext:UIGraphicsGetCurrentContext()];
-    _context = context;
+    [self initWithContext:UIGraphicsGetCurrentContext()];
     [self runActions];
+    [self clear];
 }
 
 /**

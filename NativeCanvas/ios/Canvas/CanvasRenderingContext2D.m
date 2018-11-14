@@ -14,11 +14,24 @@
 
 -(id)initWithContext:(CGContextRef)context{
     _context = context;
-    _fillStyle = [UIColor blackColor].CGColor;
-    _strokeStyle = [UIColor blackColor].CGColor;
-    _fontName = @"Helvetica";
-    _fontSize = 12.0;
+    [self initOrResetProperty];
     return self;
+}
+
+-(void)dealloc{
+//  CGContextRelease(_context);
+}
+
+#pragma 初始化属性
+-(void)initOrResetProperty{
+  _fillStyle = [UIColor blackColor].CGColor;
+  _strokeStyle = [UIColor blackColor].CGColor;
+  _font = @{};
+  _fontName = @"Helvetica";
+  _fontSize = 10.0;
+  _lineWidth = 0.0;
+  _lineCap = kCGLineCapButt;
+  _lineJoin = kCGLineJoinMiter;
 }
 
 #pragma 绘制矩形
@@ -45,56 +58,52 @@
     _lineWidth = lineWidth;
     CGContextSetLineWidth(_context, _lineWidth);
 }
--(void)setLineCap:(CGLineCap)lineCap{
-    if (lineCap == _lineCap) {
+-(void)setLineCap:(NSString *)lineCap{
+    CGLineCap cap = [CanvasConvert CGLineCap:lineCap];
+    if (cap == _lineCap) {
         return;
     }
-    _lineCap = lineCap;
+    _lineCap = cap;
     CGContextSetLineCap(_context, _lineCap);
 }
 -(CanvasCGFloatArray)getLineDash{
     return _lineDash;
 }
--(void)setLineDash:(CanvasCGFloatArray)lineDash{
-    if (lineDash.array == _lineDash.array) {
+-(void)setLineDash:(NSArray *)lineDash{
+  CanvasCGFloatArray dash = [CanvasConvert CanvasCGFloatArray:lineDash];
+    if (dash.array == _lineDash.array) {
         return;
     }
     if (_lineDash.array) {
         free(_lineDash.array);
     }
-    _lineDash = lineDash;
-    if (lineDash.count) {
-        CGContextSetLineDash(_context, 0, lineDash.array, lineDash.count);
+    _lineDash = dash;
+    if (dash.count) {
+        CGContextSetLineDash(_context, 0, dash.array, dash.count);
     }
 }
--(void)setLineJoin:(CGLineJoin)lineJoin{
-    if (lineJoin == _lineJoin) {
+-(void)setLineJoin:(NSString *)lineJoin{
+    CGLineJoin join = [CanvasConvert CGLineJoin:lineJoin];
+    if (join == _lineJoin) {
         return;
     }
-    _lineJoin = lineJoin;
+    _lineJoin = join;
     CGContextSetLineJoin(_context, _lineJoin);
 }
 #pragma 文本
--(void)setFont:(NSString *)font{
+-(void)setFont:(NSDictionary *)font{
     if (font == _font) {
         return;
     }
+    UIFont *f = [CanvasConvert UIFont:font];
+  
     _font = font;
-    NSArray *fonts = [font componentsSeparatedByString:@" "];
-    
-    if (fonts.count <2) {
-        return;
-    }
-    NSString *size = [fonts[0] stringByReplacingOccurrencesOfString:@"px" withString:@""];
-    _fontSize = (CGFloat)[size floatValue];
-    
-    UIFont *f = [UIFont fontWithName:fonts[1] size:_fontSize];
     _fontName = f.fontName;
+    _fontSize = f.pointSize;
+
     CGFontRef ff = CGFontCreateWithFontName((__bridge CFStringRef) _fontName);
-    
     CGContextSetFont(_context, ff);
     CGContextSetFontSize(_context, _fontSize);
-    
     CGFontRelease(ff);
 }
 -(void)setTextAlign:(NSString *)textAlign{
@@ -115,7 +124,11 @@
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = NSTextAlignmentNatural; // @todo 取 _textAlign
     UIColor *color = [UIColor colorWithCGColor:_fillStyle];
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: _fontName size: _fontSize], NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle};
+    UIFont *font = [UIFont fontWithName:_fontName size: _fontSize];
+    if (!font) {
+      font = [UIFont systemFontOfSize:_fontSize];
+    }
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle};
     [text drawAtPoint:CGPointMake(x, y) withAttributes:textFontAttributes];
 }
 
@@ -139,20 +152,22 @@
 }
 
 #pragma 填充与描边
--(void)setFillStyle:(CGColorRef)fillStyle{
-    if (fillStyle == _fillStyle) {
+-(void)setFillStyle:(NSArray *)fillStyle{
+    CGColorRef style = [CanvasConvert CGColorConvert:fillStyle];
+    if (style == _fillStyle) {
         return;
     }
-    CGColorRelease(_fillStyle);
-    _fillStyle = CGColorRetain(fillStyle);
+    _fillStyle = CGColorRetain(style);
+    CGColorRelease(style);
     CGContextSetFillColorWithColor(_context, _fillStyle);
 }
--(void)setStrokeStyle:(CGColorRef)strokeStyle{
-    if (strokeStyle == _strokeStyle) {
+-(void)setStrokeStyle:(NSArray *)strokeStyle{
+    CGColorRef style = [CanvasConvert CGColorConvert:strokeStyle];
+    if (style == _strokeStyle) {
         return;
     }
-    CGColorRelease(_strokeStyle);
-    _strokeStyle = CGColorRetain(strokeStyle);
+    _strokeStyle = CGColorRetain(style);
+    CGColorRelease(style);
     CGContextSetStrokeColorWithColor(_context, _strokeStyle);
 }
 
