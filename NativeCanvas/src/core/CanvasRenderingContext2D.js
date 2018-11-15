@@ -1,10 +1,12 @@
 // @flow
+// CanvasRenderingContext2D
+// API ref: https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D
 
 import CanvasRenderingContextStyle from "./CanvasRenderingContextStyle";
+import { measureText } from "./utils";
 
 export default class CanvasRenderingContext2D extends CanvasRenderingContextStyle {
-  // canvas component instance
-  _canvas;
+  _canvas; // canvas component instance
   _lineDash;
 
   get canvas() {
@@ -36,10 +38,7 @@ export default class CanvasRenderingContext2D extends CanvasRenderingContextStyl
   measureText(text) {
     this.logAction("measureText", [text]);
 
-    return {
-      width: text.length * 2,
-      height: 5
-    };
+    return measureText(text, this._fontSize);
   }
 
   getLineDash() {

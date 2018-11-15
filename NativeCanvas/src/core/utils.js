@@ -1,20 +1,22 @@
 // @flow
+
+// extract style values
 // copy from "art": react-native/Libraries/ART/ReactNativeART.js
 
-var Color = require("art/core/color");
+import Color from "art/core/color";
 
 export function extractColor(color) {
   if (color == null) {
     return null;
   }
-  var c = new Color(color);
+  const c = new Color(color);
   return [c.red / 255, c.green / 255, c.blue / 255, c.alpha];
 }
 
-var cachedFontObjectsFromString = {};
+const cachedFontObjectsFromString = {};
 
-var fontFamilyPrefix = /^[\s"']*/;
-var fontFamilySuffix = /[\s"']*$/;
+const fontFamilyPrefix = /^[\s"']*/;
+const fontFamilySuffix = /[\s"']*$/;
 
 function extractSingleFontFamily(fontFamilyString) {
   // ART on the web allows for multiple font-families to be specified.
@@ -30,15 +32,15 @@ function parseFontString(font) {
   if (cachedFontObjectsFromString.hasOwnProperty(font)) {
     return cachedFontObjectsFromString[font];
   }
-  var regexp = /^\s*((?:(?:normal|bold|italic)\s+)*)(?:(\d+(?:\.\d+)?)[ptexm\%]*(?:\s*\/.*?)?\s+)?\s*\"?([^\"]*)/i;
-  var match = regexp.exec(font);
+  const regexp = /^\s*((?:(?:normal|bold|italic)\s+)*)(?:(\d+(?:\.\d+)?)[ptexm\%]*(?:\s*\/.*?)?\s+)?\s*\"?([^\"]*)/i;
+  const match = regexp.exec(font);
   if (!match) {
     return null;
   }
-  var fontFamily = extractSingleFontFamily(match[3]);
-  var fontSize = +match[2] || 12;
-  var isBold = /bold/.exec(match[1]);
-  var isItalic = /italic/.exec(match[1]);
+  const fontFamily = extractSingleFontFamily(match[3]);
+  const fontSize = +match[2] || 12;
+  const isBold = /bold/.exec(match[1]);
+  const isItalic = /italic/.exec(match[1]);
   cachedFontObjectsFromString[font] = {
     fontFamily: fontFamily,
     fontSize: fontSize,
@@ -55,9 +57,10 @@ export function extractFont(font) {
   if (typeof font === "string") {
     return parseFontString(font);
   }
-  var fontFamily = extractSingleFontFamily(font.fontFamily);
-  var fontSize = +font.fontSize || 12;
-  var fontWeight = font.fontWeight != null ? font.fontWeight.toString() : "400";
+  const fontFamily = extractSingleFontFamily(font.fontFamily);
+  const fontSize = +font.fontSize || 12;
+  const fontWeight =
+    font.fontWeight != null ? font.fontWeight.toString() : "400";
   return {
     // Normalize
     fontFamily: fontFamily,
@@ -76,4 +79,26 @@ export function extractAlignment(alignment) {
     default:
       return 0;
   }
+}
+
+// measureText sync api
+// mock!!
+
+function strLen(str) {
+  let len = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (str.charCodeAt(i) > 0 && str.charCodeAt(i) < 128) {
+      len++;
+    } else {
+      len += 2;
+    }
+  }
+  return len;
+}
+
+export function measureText(text, fontSize = 10) {
+  return {
+    width: strLen(text) * fontSize / 2,
+    height: fontSize
+  };
 }

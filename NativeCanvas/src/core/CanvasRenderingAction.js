@@ -1,11 +1,6 @@
 // @flow
 
-import type {
-  ActionMethod,
-  ActionArguments,
-  Action,
-  Actions
-} from "./flowTypes";
+import type { ActionMethod, ActionArguments, Action, Actions } from "./types";
 import createAction from "./createAction";
 
 export default class CanvasRenderingAction {
@@ -16,7 +11,7 @@ export default class CanvasRenderingAction {
   }
 
   logAction(method, args) {
-    // console.log("method", method, "arguments", args);
+    console.log("method", method, "arguments", args);
   }
 
   resetActions() {

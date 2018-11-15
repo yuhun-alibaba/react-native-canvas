@@ -1,6 +1,6 @@
 // @flow
 
-import type { ActionMethod, ActionArguments } from "./flowTypes";
+import type { ActionMethod, ActionArguments } from "./types";
 
 const methodMap = {
   // styles

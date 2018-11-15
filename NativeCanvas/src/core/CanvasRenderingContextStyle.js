@@ -1,11 +1,7 @@
 // @flow
 
 import CanvasRenderingAction from "./CanvasRenderingAction";
-import {
-  extractColor,
-  extractFont,
-  extractAlignment
-} from "./extractStyleValue";
+import { extractColor, extractFont, extractAlignment } from "./utils";
 
 export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
   // fill stroke style
@@ -18,6 +14,7 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
   _lineDashOffset;
   // text style
   _font;
+  _fontSize = 10;
   _textAlign;
   _textBaseline;
   _direction;
@@ -33,6 +30,7 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
     this._lineJoin = null;
     this._lineDashOffset = null;
     this._font = null;
+    this._fontSize = 10;
     this._textAlgin = null;
     this._textBaseline = null;
     this._direction = null;
@@ -84,6 +82,8 @@ export default class CanvasRenderingContextStyle extends CanvasRenderingAction {
 
   set font(font) {
     if (this._font === font) return;
+
+    this._fontSize = font["fontSize"] || this._fontSize;
     this._font = font;
 
     this.enqueue(this.createAction("font", [extractFont(font)]));
