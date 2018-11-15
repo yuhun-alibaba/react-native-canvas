@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import { TouchableWithoutFeedback, View, Text, Dimensions } from "react-native";
-import Canvas from "../canvas";
+import { CanvasAutoDrawing } from "../src/core";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -15,13 +15,7 @@ export default class Animate extends Component<Props, State> {
     running: false
   };
 
-  canvas;
-
   timeIndex = 0;
-
-  setCanvas = ref => {
-    this.canvas = ref;
-  };
 
   toggleRunning = () => {
     this.setState(
@@ -40,7 +34,7 @@ export default class Animate extends Component<Props, State> {
 
   gameLoopStart() {
     this.timer = setInterval(() => {
-      window.requestAnimationFrame(() => this.draw());
+      window.requestAnimationFrame(() => this.paint());
       this.timeIndex++;
     }, 20);
   }
@@ -49,7 +43,11 @@ export default class Animate extends Component<Props, State> {
     clearInterval(this.timer);
   };
 
-  draw() {
+  draw = canvas => {
+    this.renderingContext = canvas.getContext();
+  };
+
+  paint() {
     const x = 0 + this.timeIndex;
     const y = 0 + this.timeIndex / 3;
 
@@ -62,22 +60,13 @@ export default class Animate extends Component<Props, State> {
   }
 
   drawContext(x = 0, y = 0) {
-    if (!this.renderingContext) return;
     const ctx = this.renderingContext;
 
-    ctx.font = "16px Helvetica";
-    ctx.fillText("hello world", x, y + 150);
     ctx.fillStyle = "red";
     ctx.fillRect(x, y, 50.0, 50.0);
     ctx.arc(x + 100, y + 100, 50.0, 0, Math.PI * 2, 1);
     ctx.stroke();
     ctx.draw();
-  }
-
-  componentDidMount() {
-    if (this.canvas) {
-      this.renderingContext = this.canvas.getContext();
-    }
   }
 
   render() {
@@ -90,13 +79,13 @@ export default class Animate extends Component<Props, State> {
           alignItems: "center"
         }}
       >
-        <Canvas
+        <CanvasAutoDrawing
           style={{
             width: windowWidth,
             height: 300,
             backgroundColor: "#dddddd"
           }}
-          ref={this.setCanvas}
+          draw={this.draw}
         />
         <TouchableWithoutFeedback onPress={this.toggleRunning}>
           <View
