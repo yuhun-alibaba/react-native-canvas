@@ -81,6 +81,17 @@ export function extractAlignment(alignment) {
   }
 }
 
+export function extractTextBaseline(textBaseline) {
+  switch (textBaseline) {
+    case "bottom":
+      return 1;
+    case "middle":
+      return 2;
+    default:
+      return 0;
+  }
+}
+
 // measureText sync api
 // mock!!
 
@@ -98,7 +109,7 @@ function strLen(str) {
 
 export function measureText(text, fontSize = 10) {
   return {
-    width: strLen(text) * fontSize / 2,
+    width: (strLen(text) * fontSize) / 2,
     height: fontSize
   };
 }

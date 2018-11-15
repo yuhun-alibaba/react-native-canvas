@@ -81,22 +81,39 @@
     CGFontRelease(ff);
 }
 -(void)setTextAlign:(NSString *)textAlign{
-    _textAlign = textAlign;
+    NSTextAlignment align = [CanvasConvert NSTextAlignment:textAlign];
+    _textAlign = align;
 }
--(void)setTextBaseline:(NSString *)textBaseline{
+
+-(NSNumber *)NSBaselineOffset{
+  UIFont *font = [UIFont systemFontOfSize:_fontSize];
+  CGFloat lineHeight = font.lineHeight;
+  
+  if (_textBaseline == 1) { // bottom
+    return @(- lineHeight);
+  } else if (_textBaseline == 2) { // middle
+    return @(- lineHeight / 2);
+  } else {
+    return @0; // top
+  }
+}
+
+-(void)setTextBaseline:(int)textBaseline{
     _textBaseline = textBaseline;
 }
 
 #pragma 绘制文本
 -(void)drawText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-    textStyle.alignment = NSTextAlignmentLeft; // @todo 取 _textAlign
+    textStyle.alignment = _textAlign;
     UIColor *color = [UIColor colorWithCGColor:_fillStyle];
     UIFont *font = [UIFont fontWithName:_fontName size: _fontSize];
     if (!font) {
       font = [UIFont systemFontOfSize:_fontSize];
     }
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle};
+  NSNumber *baselineOffset = [self NSBaselineOffset];
+  
+  NSDictionary* textFontAttributes = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle, NSBaselineOffsetAttributeName: baselineOffset};
     [text drawAtPoint:CGPointMake(x, y) withAttributes:textFontAttributes];
 }
 
