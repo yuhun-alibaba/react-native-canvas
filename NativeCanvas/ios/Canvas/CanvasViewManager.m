@@ -14,8 +14,7 @@ RCT_EXPORT_MODULE()
 
 -(UIView *)view
 {
-  _canvas = [CanvasView new];
-  return _canvas;
+  return [CanvasView new];
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(actions, NSMutableArray*, CanvasView){
@@ -23,8 +22,8 @@ RCT_CUSTOM_VIEW_PROPERTY(actions, NSMutableArray*, CanvasView){
   if (actions.count == 0) {
     return;
   }
-  [self.canvas invalidate];
-  [self.canvas setActions:actions];
+  [view invalidate];
+  [view setActions:actions];
 }
 
 @end
