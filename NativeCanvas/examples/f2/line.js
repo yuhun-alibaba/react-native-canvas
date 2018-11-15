@@ -2,35 +2,16 @@
 
 import React, { Component } from "react";
 import { View, Dimensions } from "react-native";
-import F2 from "@antv/f2/lib/index";
 const Tooltip = require("@antv/f2/lib/plugin/tooltip");
 
-import Canvas from "../../canvas";
-
-F2.Util.isWx = true;
+import { F2Canvas } from "../../src/adaption";
 
 const windowWidth = Dimensions.get("window").width;
 const canvasWidth = windowWidth;
 const canvasHeight = 300;
 
-type Props = {};
-
-type State = {};
-
-export default class Line extends Component<Props, State> {
-  canvas;
-
-  setCanvas = ref => {
-    this.canvas = ref;
-  };
-
-  componentDidMount() {
-    if (this.canvas) {
-      this.draw();
-    }
-  }
-
-  draw() {
+export default class Line extends Component<any> {
+  draw = (canvas, F2) => {
     const data = [
       { date: "2017-06-05", value: 116 },
       { date: "2017-06-06", value: 129 },
@@ -84,7 +65,7 @@ export default class Line extends Component<Props, State> {
       { date: "2017-07-24", value: 60 }
     ];
     chart = new F2.Chart({
-      el: this.canvas,
+      el: canvas,
       width: canvasWidth,
       height: canvasHeight,
       plugins: Tooltip
@@ -122,17 +103,17 @@ export default class Line extends Component<Props, State> {
     });
     chart.line().position("date*value");
     chart.render();
-  }
+  };
 
   render() {
     return (
-      <Canvas
+      <F2Canvas
         style={{
           width: canvasWidth,
           height: canvasHeight,
           backgroundColor: "#ffffff"
         }}
-        ref={this.setCanvas}
+        draw={this.draw}
       />
     );
   }

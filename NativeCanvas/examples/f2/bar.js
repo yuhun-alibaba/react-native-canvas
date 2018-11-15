@@ -2,36 +2,16 @@
 
 import React, { Component } from "react";
 import { View, Dimensions } from "react-native";
-import F2 from "@antv/f2/lib/index";
 
-import Canvas from "../../canvas";
-
-F2.Util.isWx = true;
+import { CanvasAutoDrawing } from "../../src/core";
+import { F2Canvas } from "../../src/adaption";
 
 const windowWidth = Dimensions.get("window").width;
 const canvasWidth = windowWidth;
 const canvasHeight = 300;
 
-type Props = {};
-
-type State = {};
-
-export default class Bar extends Component<Props, State> {
-  canvas;
-
-  setCanvas = ref => {
-    this.canvas = ref;
-  };
-
-  componentDidMount() {
-    if (this.canvas) {
-      setTimeout(() => {
-        this.draw();
-      }, 2000);
-    }
-  }
-
-  draw() {
+export default class Bar extends Component<any> {
+  draw = (canvas: any, F2) => {
     var Global = F2.Global;
     var data = [
       { country: "巴西", population: 18203 },
@@ -41,7 +21,7 @@ export default class Bar extends Component<Props, State> {
       { country: "中国", population: 131744 }
     ];
     var chart = new F2.Chart({
-      el: this.canvas,
+      el: canvas,
       width: canvasWidth,
       height: canvasHeight
     });
@@ -73,17 +53,17 @@ export default class Bar extends Component<Props, State> {
     });
     chart.interval().position("country*population");
     chart.render();
-  }
+  };
 
   render() {
     return (
-      <Canvas
+      <F2Canvas
         style={{
           width: canvasWidth,
           height: canvasHeight,
           backgroundColor: "#ffffff"
         }}
-        ref={this.setCanvas}
+        draw={this.draw}
       />
     );
   }
