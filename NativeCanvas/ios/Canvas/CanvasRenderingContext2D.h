@@ -18,14 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGContextRef context;
 
 #pragma 线型
-@property (nonatomic, assign) CGFloat lineWidth;
-@property (nonatomic, assign) CGLineCap lineCap;
-@property (nonatomic, assign) CGLineJoin lineJoin;
 @property (nonatomic, assign) CanvasCGFloatArray lineDash;
-@property (nonatomic, assign) CGLineJoin miterLimit;
 
 #pragma 文本
-@property (nonatomic, assign) NSDictionary *font;
 @property (nonatomic, assign) NSString *fontName;
 @property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, assign) NSString *textAlign;

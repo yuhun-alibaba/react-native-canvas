@@ -57,7 +57,7 @@ const styles = [].concat(
 function logStyle() {
   styles.forEach(style => {
     console.log(
-      `set ${style}(${style}) {if (this._${style} === ${style}) return;\n this._${style} = ${style}; \n\nthis.enqueue(\n\tthis.createAction("${style}", [${style}])\n\t)}\n`
+      `set ${style}(${style}) {this.enqueue(\n\tthis.createAction("${style}", [${style}])\n\t)}\n`
     );
   });
 }

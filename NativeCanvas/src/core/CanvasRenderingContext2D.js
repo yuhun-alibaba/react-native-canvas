@@ -2,12 +2,18 @@
 // CanvasRenderingContext2D
 // API ref: https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D
 
-import CanvasRenderingContextStyle from "./CanvasRenderingContextStyle";
-import { measureText } from "./utils";
+import CanvasRenderingAction from "./CanvasRenderingAction";
+import {
+  extractColor,
+  extractFont,
+  extractAlignment,
+  measureText
+} from "./utils";
 
-export default class CanvasRenderingContext2D extends CanvasRenderingContextStyle {
+export default class CanvasRenderingContext2D extends CanvasRenderingAction {
   _canvas; // canvas component instance
   _lineDash;
+  _fontSize = 10;
 
   get canvas() {
     return _canvas;
@@ -27,8 +33,8 @@ export default class CanvasRenderingContext2D extends CanvasRenderingContextStyl
   }
 
   resetProperties() {
-    super.resetProperties();
     this._lineDash = null;
+    this._fontSize = 10;
   }
 
   /**
@@ -43,6 +49,59 @@ export default class CanvasRenderingContext2D extends CanvasRenderingContextStyl
 
   getLineDash() {
     return this._lineDash;
+  }
+
+  /**
+   * set styles
+   */
+
+  set fillStyle(fillStyle) {
+    this.enqueue(this.createAction("fillStyle", [extractColor(fillStyle)]));
+  }
+
+  set strokeStyle(strokeStyle) {
+    this.enqueue(this.createAction("strokeStyle", [extractColor(strokeStyle)]));
+  }
+
+  set lineWidth(lineWidth) {
+    this.enqueue(this.createAction("lineWidth", [lineWidth]));
+  }
+
+  set lineCap(lineCap) {
+    this.enqueue(this.createAction("lineCap", [lineCap]));
+  }
+
+  set lineJoin(lineJoin) {
+    this.enqueue(this.createAction("lineJoin", [lineJoin]));
+  }
+
+  set lineDashOffset(lineDashOffset) {
+    this.enqueue(this.createAction("lineDashOffset", [lineDashOffset]));
+  }
+
+  set font(font) {
+    this._fontSize = font["fontSize"] || this._fontSize;
+    this.enqueue(this.createAction("font", [extractFont(font)]));
+  }
+
+  set textAlgin(textAlgin) {
+    this.enqueue(this.createAction("textAlgin", [extractAlignment(textAlgin)]));
+  }
+
+  set textBaseline(textBaseline) {
+    this.enqueue(this.createAction("textBaseline", [textBaseline]));
+  }
+
+  set direction(direction) {
+    this.enqueue(this.createAction("direction", [direction]));
+  }
+
+  set shadowColor(shadowColor) {
+    this.enqueue(this.createAction("shadowColor", [shadowColor]));
+  }
+
+  set shadowBlur(shadowBlur) {
+    this.enqueue(this.createAction("shadowBlur", [shadowBlur]));
   }
 
   /**

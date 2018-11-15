@@ -21,12 +21,8 @@
 -(void)initOrResetProperty{
   _fillStyle = [UIColor blackColor].CGColor;
   _strokeStyle = [UIColor blackColor].CGColor;
-  _font = @{};
   _fontName = @"Helvetica";
   _fontSize = 10.0;
-  _lineWidth = 0.0;
-  _lineCap = kCGLineCapButt;
-  _lineJoin = kCGLineJoinMiter;
 }
 
 #pragma 绘制矩形
@@ -47,19 +43,11 @@
 
 #pragma 线型
 -(void)setLineWidth:(CGFloat)lineWidth{
-    if (lineWidth == _lineWidth) {
-        return;
-    }
-    _lineWidth = lineWidth;
-    CGContextSetLineWidth(_context, _lineWidth);
+    CGContextSetLineWidth(_context, lineWidth);
 }
 -(void)setLineCap:(NSString *)lineCap{
     CGLineCap cap = [CanvasConvert CGLineCap:lineCap];
-    if (cap == _lineCap) {
-        return;
-    }
-    _lineCap = cap;
-    CGContextSetLineCap(_context, _lineCap);
+    CGContextSetLineCap(_context, cap);
 }
 -(CanvasCGFloatArray)getLineDash{
     return _lineDash;
@@ -79,20 +67,11 @@
 }
 -(void)setLineJoin:(NSString *)lineJoin{
     CGLineJoin join = [CanvasConvert CGLineJoin:lineJoin];
-    if (join == _lineJoin) {
-        return;
-    }
-    _lineJoin = join;
-    CGContextSetLineJoin(_context, _lineJoin);
+    CGContextSetLineJoin(_context, join);
 }
 #pragma 文本
 -(void)setFont:(NSDictionary *)font{
-    if (font == _font) {
-        return;
-    }
     UIFont *f = [CanvasConvert UIFont:font];
-  
-    _font = font;
     _fontName = f.fontName;
     _fontSize = f.pointSize;
 
@@ -102,22 +81,16 @@
     CGFontRelease(ff);
 }
 -(void)setTextAlign:(NSString *)textAlign{
-    if (textAlign == _textAlign) {
-        return;
-    }
     _textAlign = textAlign;
 }
 -(void)setTextBaseline:(NSString *)textBaseline{
-    if (textBaseline == _textBaseline) {
-        return;
-    }
     _textBaseline = textBaseline;
 }
 
 #pragma 绘制文本
 -(void)drawText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-    textStyle.alignment = NSTextAlignmentNatural; // @todo 取 _textAlign
+    textStyle.alignment = NSTextAlignmentLeft; // @todo 取 _textAlign
     UIColor *color = [UIColor colorWithCGColor:_fillStyle];
     UIFont *font = [UIFont fontWithName:_fontName size: _fontSize];
     if (!font) {
@@ -149,18 +122,12 @@
 #pragma 填充与描边
 -(void)setFillStyle:(NSArray *)fillStyle{
     CGColorRef style = [CanvasConvert CGColorConvert:fillStyle];
-    if (style == _fillStyle) {
-        return;
-    }
     _fillStyle = CGColorRetain(style);
     CGColorRelease(style);
     CGContextSetFillColorWithColor(_context, _fillStyle);
 }
 -(void)setStrokeStyle:(NSArray *)strokeStyle{
     CGColorRef style = [CanvasConvert CGColorConvert:strokeStyle];
-    if (style == _strokeStyle) {
-        return;
-    }
     _strokeStyle = CGColorRetain(style);
     CGColorRelease(style);
     CGContextSetStrokeColorWithColor(_context, _strokeStyle);
@@ -168,10 +135,8 @@
 
 #pragma 渐变和图案
 -(void)createLinearGradient:(CGFloat)x0 y0:(CGFloat)y0 x1:(CGFloat)x1 y1:(CGFloat)y1{
-    
 }
 -(void)createRadialGradient:(CGFloat)x0 y0:(CGFloat)y0 r0:(CGFloat)r0 x1:(CGFloat)x1 y1:(CGFloat)y1 r1:(CGFloat)r1{
-    
 }
 -(void)createPattern{
     

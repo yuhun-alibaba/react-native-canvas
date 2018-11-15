@@ -3,7 +3,7 @@
 
 import React, { PureComponent } from "react";
 
-import createPanResponder from "../../utils/createPanResponder";
+import createPanResponder from "../createPanResponder";
 import createCanvas from "../../core/createCanvas";
 import F2 from "./adaption";
 import Renderer from "./renderer";
