@@ -22,33 +22,26 @@ export default class F2Canvas extends PureComponent<Props> {
     this.canvas = ref.canvas;
   };
 
-  onTouchStart = ({ nativeEvent }) => {
-    const event = { ...nativeEvent, type: "touchstart" };
-    if (this.canvas) {
-      this.canvas.emit("touchstart", event);
-    }
-  };
+  isInResponse = false;
 
-  onTouchMove = ({ nativeEvent }) => {
-    const event = { ...nativeEvent, type: "touchmove" };
-    if (this.canvas) {
-      this.canvas.emit("touchmove", event);
-    }
-  };
+  createTouchEvent(name: string) {
+    return ({ nativeEvent }) => {
+      if (this.isInResponse) return;
+      this.isInResponse = true;
 
-  onTouchEnd = ({ nativeEvent }) => {
-    const event = { ...nativeEvent, type: "touchend" };
-    if (this.canvas) {
-      this.canvas.emit("touchend", event);
-    }
-  };
+      requestAnimationFrame(() => {
+        if (this.canvas) {
+          this.canvas.emit(name, { ...nativeEvent, type: name });
+          this.isInResponse = false;
+        }
+      });
+    };
+  }
 
-  onTouchCancel = ({ nativeEvent }) => {
-    const event = { ...nativeEvent, type: "touchcacel" };
-    if (this.canvas) {
-      this.canvas.emit("touchcacel", event);
-    }
-  };
+  onTouchStart = this.createTouchEvent("touchstart");
+  onTouchMove = this.createTouchEvent("touchmove");
+  onTouchEnd = this.createTouchEvent("touchend");
+  onTouchCancel = this.createTouchEvent("touchcacel");
 
   panHandlers = createPanResponder({
     start: this.onTouchStart,

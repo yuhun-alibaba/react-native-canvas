@@ -19,16 +19,16 @@ type State = {
 export default function createCanvas(Renderer: RendererType) {
   return class Canvas extends PureComponent<Props, State> {
     static propTypes = CanvasPropTypes;
-
     canvas = new Renderer(new CanvasRenderingContext2D(this));
 
-    state = {
-      actions: this.props.actions || []
+    ref;
+
+    setRef = ref => {
+      this.ref = ref;
     };
 
     update(actions: Actions) {
-      console.log("draw ~~~~~~~~~~~~");
-      this.setState({ actions });
+      this.ref.setNativeProps({ actions });
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -38,7 +38,7 @@ export default function createCanvas(Renderer: RendererType) {
     }
 
     render() {
-      return <CanvasNative {...this.props} actions={this.state.actions} />;
+      return <CanvasNative {...this.props} ref={this.setRef} />;
     }
   };
 }
