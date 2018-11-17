@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+<canvas height="500" width="400" id="canvas"></canvas>
+</body>
+<script type="text/javascript">
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+
+  ctx.font = "24px serif";
+
+  var textMetrix = ctx.measureText("Hello world");
+  console.log("textMetrix", textMetrix);
+  console.log("textMetrix mock", measureText("Hello world", 24));
+
+  ctx.textAlign = "left";
+  ctx.strokeText("Hello world", 0, 100);
+  ctx.textAlign = "right";
+  ctx.strokeText("Hello world", textMetrix.width, 200);
+  ctx.textAlign = "center";
+  ctx.strokeText("Hello world", textMetrix.width / 2, 300);
+
+  function strLen(str) {
+    let len = 0;
+    for (let i = 0; i < str.length; i++) {
+      if (str.charCodeAt(i) > 0 && str.charCodeAt(i) < 128) {
+        len++;
+      } else {
+        len += 2;
+      }
+    }
+    return len;
+  }
+
+  function measureText(text, fontSize = 10) {
+    return {
+      width: (strLen(text) * fontSize) / 2
+    };
+  }
+</script>
+</html>
