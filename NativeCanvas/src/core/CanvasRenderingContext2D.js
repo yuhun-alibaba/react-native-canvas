@@ -7,7 +7,6 @@ import {
   extractColor,
   extractFont,
   extractAlignment,
-  extractTextBaseline,
   measureText
 } from "./utils";
 
@@ -85,14 +84,12 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
     this.enqueue(this.createAction("font", [extractFont(font)]));
   }
 
-  set textAlgin(textAlgin) {
-    this.enqueue(this.createAction("textAlgin", [extractAlignment(textAlgin)]));
+  set textAlign(textAlign) {
+    this.enqueue(this.createAction("textAlign", [extractAlignment(textAlign)]));
   }
 
   set textBaseline(textBaseline) {
-    this.enqueue(
-      this.createAction("textBaseline", [extractTextBaseline(textBaseline)])
-    );
+    this.enqueue(this.createAction("textBaseline", [textBaseline]));
   }
 
   set direction(direction) {

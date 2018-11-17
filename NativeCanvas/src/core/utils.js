@@ -71,24 +71,12 @@ export function extractFont(font) {
 }
 
 export function extractAlignment(alignment) {
-  switch (alignment) {
-    case "right":
-      return 1;
-    case "center":
-      return 2;
-    default:
-      return 0;
-  }
-}
-
-export function extractTextBaseline(textBaseline) {
-  switch (textBaseline) {
-    case "bottom":
-      return 1;
-    case "middle":
-      return 2;
-    default:
-      return 0;
+  if (alignment === "start") {
+    return "left";
+  } else if (alignment === "end") {
+    return "right";
+  } else {
+    return alignment;
   }
 }
 
@@ -109,7 +97,6 @@ function strLen(str) {
 
 export function measureText(text, fontSize = 10) {
   return {
-    width: (strLen(text) * fontSize) / 2,
-    height: fontSize
+    width: (strLen(text) * fontSize) / 2
   };
 }

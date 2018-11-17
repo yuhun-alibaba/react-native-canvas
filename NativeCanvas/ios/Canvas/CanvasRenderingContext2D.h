@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSString *fontName;
 @property (nonatomic, assign) CGFloat fontSize;
 @property (nonatomic, assign) NSTextAlignment textAlign;
-@property (nonatomic, assign) int textBaseline;
+@property (nonatomic, assign) NSNumber *textBaseline;
 @property (nonatomic, assign) NSString *direction;
 
 #pragma 填充与描边
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma 绘制文本
 -(void)setFont:(NSDictionary *)font;
 -(void)setTextAlign:(NSString *)textAlign;
--(void)setTextBaseline:(int)textBaseline;
+-(void)setTextBaseline:(NSString *)textBaseline;
 
 #pragma 绘制文本
 -(void)fillText:(NSString *)text x:(CGFloat)x y:(CGFloat)y;

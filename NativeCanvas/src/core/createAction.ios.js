@@ -11,7 +11,7 @@ const methodMap = {
   lineJoin: "setLineJoin:",
   lineDashOffset: "setLineDashOffset:",
   font: "setFont:",
-  textAlgin: "setTextAlgin:",
+  textAlign: "setTextAlign:",
   textBaseline: "setTextBaseline:",
   direction: "setDirection:",
   shadowColor: "setShadowColor:",

@@ -23,6 +23,7 @@
   _strokeStyle = [UIColor blackColor].CGColor;
   _fontName = @"Helvetica";
   _fontSize = 10.0;
+  _textBaseline = @0;
 }
 
 #pragma 绘制矩形
@@ -85,21 +86,39 @@
     _textAlign = align;
 }
 
--(NSNumber *)NSBaselineOffset{
-  UIFont *font = [UIFont systemFontOfSize:_fontSize];
-  CGFloat lineHeight = font.lineHeight;
+-(CGFloat)textHorizontalOffset:(NSString*)text :(NSTextAlignment)textAlign{
+  if (textAlign == NSTextAlignmentLeft || textAlign == NSTextAlignmentNatural) {
+    return 0;
+  }
+  CGSize textSize = [self measureText:text];
   
-  if (_textBaseline == 1) { // bottom
-    return @(- lineHeight);
-  } else if (_textBaseline == 2) { // middle
-    return @(- lineHeight / 2);
+  if (textAlign == NSTextAlignmentRight) {
+    return - textSize.width;
+  } else if (textAlign == NSTextAlignmentCenter) {
+    return - (textSize.width / 2);
   } else {
-    return @0; // top
+    return 0;
   }
 }
 
--(void)setTextBaseline:(int)textBaseline{
-    _textBaseline = textBaseline;
+-(CGFloat)textVerticalOffset:(UIFont *)font :(NSNumber *)textBaseLine{
+  if ([textBaseLine isEqualToNumber:@0]) { // top
+    return 0;
+  }
+
+  CGFloat lineHeight = font.lineHeight;
+
+  if ([textBaseLine isEqualToNumber:@1]) { // bottom
+    return - lineHeight;
+  } else if ([textBaseLine isEqualToNumber:@2]) { // middle
+    return - (lineHeight / 2);
+  } else {
+    return 0;
+  }
+}
+
+-(void)setTextBaseline:(NSString *)textBaseline{
+  _textBaseline = [CanvasConvert TextBaselineConvert:textBaseline];
 }
 
 #pragma 绘制文本
@@ -111,22 +130,24 @@
     if (!font) {
       font = [UIFont systemFontOfSize:_fontSize];
     }
-  NSNumber *baselineOffset = [self NSBaselineOffset];
   
-  NSDictionary* textFontAttributes = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle, NSBaselineOffsetAttributeName: baselineOffset};
-    [text drawAtPoint:CGPointMake(x, y) withAttributes:textFontAttributes];
+    CGFloat horizontalOffset = [self textHorizontalOffset:text :_textAlign];
+    CGFloat verticalOffset = [self textVerticalOffset:font :_textBaseline];
+
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: textStyle};
+    [text drawAtPoint:CGPointMake(x + horizontalOffset, y + verticalOffset) withAttributes:textFontAttributes];
 }
 
 -(void)fillText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
     CGContextSetTextPosition(_context, x, y);
     CGContextSetTextDrawingMode(_context, kCGTextFill);
-    
+
     [self drawText:text x:x y:y];
 }
 -(void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y{
     CGContextSetTextPosition(_context, x, y);
     CGContextSetTextDrawingMode(_context, kCGTextStroke);
-    
+
     [self drawText:text x:x y:y];
 }
 -(CGSize)measureText:(NSString *)text{
@@ -156,7 +177,7 @@
 -(void)createRadialGradient:(CGFloat)x0 y0:(CGFloat)y0 r0:(CGFloat)r0 x1:(CGFloat)x1 y1:(CGFloat)y1 r1:(CGFloat)r1{
 }
 -(void)createPattern{
-    
+
 }
 
 #pragma 路径
@@ -197,10 +218,10 @@
     CGContextDrawPath(_context, kCGPathStroke);
 }
 -(void)drawFocusIfNeeded{
-    
+
 }
 -(void)scrollPathIntoView{
-    
+
 }
 -(void)clip{
     CGContextClip(_context);
@@ -213,10 +234,10 @@
     }
 }
 -(void)isPointInPath{
-    
+
 }
 -(void)isPointInStroke{
-    
+
 }
 
 #pragma 变换
@@ -239,18 +260,18 @@
 
 #pragma 绘制图像
 -(void)drawImage{
-    
+
 }
 
 #pragma 像素控制
 -(void)createImageData{
-    
+
 }
 -(void)getImageData{
-    
+
 }
 -(void)putImageData{
-    
+
 }
 
 #pragma canvas 状态

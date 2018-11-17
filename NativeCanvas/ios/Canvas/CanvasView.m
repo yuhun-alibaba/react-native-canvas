@@ -56,7 +56,7 @@
         NSLog(@"callMethodWithArguments:%@ not enough aruments", method);
         return;
     }
-    
+
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setTarget:object];
     [invocation setSelector:selector];

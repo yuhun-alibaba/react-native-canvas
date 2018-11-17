@@ -3,7 +3,7 @@
 
 const fillStrokeStyles = ["fillStyle", "strokeStyle"];
 const lineStyles = ["lineWidth", "lineCap", "lineJoin", "lineDashOffset"];
-const textStyles = ["font", "textAlgin", "textBaseline", "direction"];
+const textStyles = ["font", "textAlign", "textBaseline", "direction"];
 const shadowStyles = ["shadowColor", "shadowBlur"];
 
 const text = ["fillText", "strokeText"];

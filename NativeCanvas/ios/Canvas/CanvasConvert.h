@@ -14,5 +14,6 @@
 
 + (CanvasCGFloatArray)CanvasCGFloatArray:(NSArray *)arr;
 + (CGColorRef)CGColorConvert:(NSArray *)arr;
++ (NSNumber *)TextBaselineConvert:(NSString *)textBaseline;
 
 @end

@@ -38,4 +38,19 @@
   return [self CGColor:[arr subarrayWithRange:(NSRange){0, 4}]];
 }
 
++ (NSNumber *)TextBaselineConvert:(NSString *)textBaseline
+{
+  static NSDictionary *mapping;
+  static dispatch_once_t onceToken;
+  
+  dispatch_once(&onceToken, ^{
+    mapping = @{
+      @"bottom": @1,
+      @"middle": @2,
+      @"top": @0
+    };
+  });
+  return mapping[textBaseline] ?: @0;
+}
+
 @end
