@@ -9,6 +9,8 @@
 #import <React/RCTConvert.h>
 #import <React/RCTFont.h>
 #import "CanvasCGFloatArray.h"
+#import "CanvasTextBaseline.h"
+
 
 @interface CanvasConvert : RCTConvert
 

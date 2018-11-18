@@ -341,6 +341,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NativeCanvas/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NativeCanvas/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		2201240421A0FD7D003D28D8 /* CanvasTextBaseline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasTextBaseline.h; sourceTree = "<group>"; };
 		2266A25D219BC2FF00CCBA1C /* CanvasConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasConvert.m; sourceTree = "<group>"; };
 		2266A25E219BC2FF00CCBA1C /* CanvasConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasConvert.h; sourceTree = "<group>"; };
 		2274D2E5219A58FC00A858E5 /* CanvasViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasViewManager.h; sourceTree = "<group>"; };
@@ -546,6 +547,7 @@
 				22EB1284219AAC5000B9BD0D /* CanvasCGFloatArray.h */,
 				22EB1285219AAC5000B9BD0D /* CanvasRenderingContext2D.h */,
 				22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */,
+				2201240421A0FD7D003D28D8 /* CanvasTextBaseline.h */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";

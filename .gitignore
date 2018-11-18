@@ -2,4 +2,4 @@
 
 project.xcworkspace
 xcuserdata
-DerivedData
+DerivedData.clang-format
