@@ -3,8 +3,12 @@
 import React, { Component } from "react";
 import { View, ScrollView, Dimensions } from "react-native";
 
-import Line from "./line";
+import Area from "./area";
 import Bar from "./bar";
+import Column from "./column";
+import K from "./k";
+import Line from "./line";
+import Pie from "./pie";
 
 const windowWidth = Dimensions.get("window").width;
 const canvasWidth = windowWidth;
@@ -22,8 +26,12 @@ export default class F2Example extends Component<Props, State> {
           flex: 1
         }}
       >
-        <Line />
+        <Area />
         <Bar />
+        <Column />
+        <K />
+        <Line />
+        <Pie />
       </ScrollView>
     );
   }

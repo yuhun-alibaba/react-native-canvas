@@ -10,18 +10,40 @@
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 
-  ctx.font = "24px serif";
+  var fontSize = 25
+  ctx.font = `${fontSize}px serif`;
 
   var textMetrix = ctx.measureText("Hello world");
-  console.log("textMetrix", textMetrix);
-  console.log("textMetrix mock", measureText("Hello world", 24));
+  var textMockMetrix = measureText("Hello world", fontSize);
 
-  ctx.textAlign = "left";
-  ctx.strokeText("Hello world", 0, 100);
-  ctx.textAlign = "right";
-  ctx.strokeText("Hello world", textMetrix.width, 200);
-  ctx.textAlign = "center";
-  ctx.strokeText("Hello world", textMetrix.width / 2, 300);
+  console.log("textMetrix", textMetrix);
+  console.log("textMetrix mock", textMockMetrix);
+  console.log("right pecentangle", textMetrix.width / textMockMetrix.width);
+
+  // ctx.textAlign = "left";
+  // ctx.strokeText("Hello world", 0, 100);
+  // ctx.textAlign = "right";
+  // ctx.strokeText("Hello world", textMetrix.width, 200);
+  // ctx.textAlign = "center";
+  // ctx.strokeText("Hello world", textMetrix.width / 2, 300);
+
+  // ctx.save();
+  // ctx.translate(0, 400);
+  // ctx.beginPath();
+  // ctx.moveTo(0,0);
+  // ctx.lineWidth = 2;
+  // ctx.lineTo(100, 100);
+  // ctx.closePath();
+  // ctx.fill();
+  // ctx.stroke();
+  // ctx.restore();
+
+
+  ctx.fillStyle = "red";
+  ctx.strokeStyle = "black";
+  ctx.arc(100, 100, 50.0, 0, Math.PI * 2, 1);
+  ctx.stroke();
+  ctx.fill();
 
   function strLen(str) {
     let len = 0;
@@ -40,5 +62,6 @@
       width: (strLen(text) * fontSize) / 2
     };
   }
+
 </script>
 </html>

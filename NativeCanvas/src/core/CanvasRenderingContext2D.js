@@ -26,10 +26,19 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
 
   draw() {
     if (this._canvas.update) {
+      this.beforeDrawing();
       this._canvas.update(this.actions);
-      this.resetActions();
-      this.resetProperties();
+      this.afterDrawing();
     }
+  }
+
+  beforeDrawing() {
+    super.beforeDrawing();
+  }
+
+  afterDrawing() {
+    super.afterDrawing();
+    this.resetProperties();
   }
 
   resetProperties() {
@@ -42,12 +51,12 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
    */
 
   measureText(text) {
-    this.logAction("measureText", [text]);
-
+    this.enqueueJSAction("measureText", [text]);
     return measureText(text, this._fontSize);
   }
 
   getLineDash() {
+    this.enqueueJSAction("getLineDash", []);
     return this._lineDash;
   }
 

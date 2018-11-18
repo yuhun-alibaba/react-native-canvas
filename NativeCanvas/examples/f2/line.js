@@ -1,120 +1,126 @@
 // @flow
 
-import React, { Component } from "react";
-import { View, Dimensions } from "react-native";
-const Tooltip = require("@antv/f2/lib/plugin/tooltip");
+import createF2Chart from "./createF2Chart";
 
-import { F2Canvas } from "../../src/adaption";
+export default createF2Chart(function initChart(
+  canvas: any,
+  width,
+  height,
+  F2
+) {
+  const data = [
+    { year: 1997, type: "United States", value: 4.9 },
+    { year: 1997, type: "Florida", value: 4.8 },
+    { year: 1998, type: "United States", value: 4.5 },
+    { year: 1998, type: "Florida", value: 4.3 },
+    { year: 1999, type: "United States", value: 4.2 },
+    { year: 1999, type: "Florida", value: 3.9 },
+    { year: 2000, type: "United States", value: 4 },
+    { year: 2000, type: "Florida", value: 3.7 },
+    { year: 2001, type: "United States", value: 4.7 },
+    { year: 2001, type: "Florida", value: 4.7 },
+    { year: 2002, type: "United States", value: 5.8 },
+    { year: 2002, type: "Florida", value: 5.6 },
+    { year: 2003, type: "United States", value: 6 },
+    { year: 2003, type: "Florida", value: 5.2 },
+    { year: 2004, type: "United States", value: 5.5 },
+    { year: 2004, type: "Florida", value: 4.6 },
+    { year: 2005, type: "United States", value: 5.1 },
+    { year: 2005, type: "Florida", value: 3.7 },
+    { year: 2006, type: "United States", value: 4.6 },
+    { year: 2006, type: "Florida", value: 3.2 },
+    { year: 2007, type: "United States", value: 4.6 },
+    { year: 2007, type: "Florida", value: 4 },
+    { year: 2008, type: "United States", value: 5.8 },
+    { year: 2008, type: "Florida", value: 6.3 },
+    { year: 2009, type: "United States", value: 9.3 },
+    { year: 2009, type: "Florida", value: 10.4 },
+    { year: 2010, type: "United States", value: 9.6 },
+    { year: 2010, type: "Florida", value: 11.1 },
+    { year: 2011, type: "United States", value: 8.9 },
+    { year: 2011, type: "Florida", value: 10 },
+    { year: 2012, type: "United States", value: 8.1 },
+    { year: 2012, type: "Florida", value: 8.5 },
+    { year: 2013, type: "United States", value: 7.4 },
+    { year: 2013, type: "Florida", value: 7.2 },
+    { year: 2014, type: "United States", value: 6.2 },
+    { year: 2014, type: "Florida", value: 6.3 },
+    { year: 2015, type: "United States", value: 5.3 },
+    { year: 2015, type: "Florida", value: 5.4 },
+    { year: 2016, type: "United States", value: 4.9 },
+    { year: 2016, type: "Florida", value: 4.9 },
+    { year: 2017, type: "United States", value: 4.4 },
+    { year: 2017, type: "Florida", value: 4.3 }
+  ];
 
-const windowWidth = Dimensions.get("window").width;
-const canvasWidth = windowWidth;
-const canvasHeight = 300;
+  chart = new F2.Chart({
+    el: canvas,
+    width,
+    height
+  });
 
-export default class Line extends Component<any> {
-  draw = (canvas, F2) => {
-    const data = [
-      { date: "2017-06-05", value: 116 },
-      { date: "2017-06-06", value: 129 },
-      { date: "2017-06-07", value: 135 },
-      { date: "2017-06-08", value: 86 },
-      { date: "2017-06-09", value: 73 },
-      { date: "2017-06-10", value: 85 },
-      { date: "2017-06-11", value: 73 },
-      { date: "2017-06-12", value: 68 },
-      { date: "2017-06-13", value: 92 },
-      { date: "2017-06-14", value: 130 },
-      { date: "2017-06-15", value: 245 },
-      { date: "2017-06-16", value: 139 },
-      { date: "2017-06-17", value: 115 },
-      { date: "2017-06-18", value: 111 },
-      { date: "2017-06-19", value: 309 },
-      { date: "2017-06-20", value: 206 },
-      { date: "2017-06-21", value: 137 },
-      { date: "2017-06-22", value: 128 },
-      { date: "2017-06-23", value: 85 },
-      { date: "2017-06-24", value: 94 },
-      { date: "2017-06-25", value: 71 },
-      { date: "2017-06-26", value: 106 },
-      { date: "2017-06-27", value: 84 },
-      { date: "2017-06-28", value: 93 },
-      { date: "2017-06-29", value: 85 },
-      { date: "2017-06-30", value: 73 },
-      { date: "2017-07-01", value: 83 },
-      { date: "2017-07-02", value: 125 },
-      { date: "2017-07-03", value: 107 },
-      { date: "2017-07-04", value: 82 },
-      { date: "2017-07-05", value: 44 },
-      { date: "2017-07-06", value: 72 },
-      { date: "2017-07-07", value: 106 },
-      { date: "2017-07-08", value: 107 },
-      { date: "2017-07-09", value: 66 },
-      { date: "2017-07-10", value: 91 },
-      { date: "2017-07-11", value: 92 },
-      { date: "2017-07-12", value: 113 },
-      { date: "2017-07-13", value: 107 },
-      { date: "2017-07-14", value: 131 },
-      { date: "2017-07-15", value: 111 },
-      { date: "2017-07-16", value: 64 },
-      { date: "2017-07-17", value: 69 },
-      { date: "2017-07-18", value: 88 },
-      { date: "2017-07-19", value: 77 },
-      { date: "2017-07-20", value: 83 },
-      { date: "2017-07-21", value: 111 },
-      { date: "2017-07-22", value: 57 },
-      { date: "2017-07-23", value: 55 },
-      { date: "2017-07-24", value: 60 }
-    ];
-    chart = new F2.Chart({
-      el: canvas,
-      width: canvasWidth,
-      height: canvasHeight,
-      plugins: Tooltip
-    });
-
-    chart.source(data, {
-      value: {
-        tickCount: 5,
-        min: 0
-      },
-      date: {
-        type: "timeCat",
-        range: [0, 1],
-        tickCount: 3
+  chart.source(data, {
+    year: {
+      range: [0, 1],
+      ticks: [1997, 1999, 2001, 2003, 2005, 2007, 2009, 2011, 2013, 2015, 2017]
+    },
+    value: {
+      tickCount: 10,
+      formatter(val) {
+        return val.toFixed(1) + "%";
       }
-    });
-    chart.tooltip({
-      showItemMarker: false,
-      onShow(ev) {
-        const { items } = ev;
-        items[0].name = items[0].title;
-      }
-    });
-    chart.axis("date", {
-      label(text, index, total) {
-        const textCfg = {};
-        if (index === 0) {
-          textCfg.textAlign = "left";
+    }
+  });
+
+  chart.tooltip({
+    custom: true, // 自定义 tooltip 内容框
+    onChange(obj) {
+      const legend = chart.get("legendController").legends.top[0];
+      const tooltipItems = obj.items;
+      const legendItems = legend.items;
+      const map = {};
+      legendItems.map(item => {
+        map[item.name] = Object.assign({}, item);
+      });
+      tooltipItems.map(item => {
+        const { name, value } = item;
+        if (map[name]) {
+          map[name].value = value;
         }
-        if (index === total - 1) {
-          textCfg.textAlign = "right";
-        }
-        return textCfg;
+      });
+      legend.setItems(Object.values(map));
+    },
+    onHide() {
+      const legend = chart.get("legendController").legends.top[0];
+      legend.setItems(chart.getLegendItems().country);
+    }
+  });
+
+  chart.guide().rect({
+    start: [2011, "max"],
+    end: ["max", "min"],
+    style: {
+      fill: "#CCD6EC",
+      opacity: 0.3
+    }
+  });
+  chart.guide().text({
+    position: [2014, "max"],
+    content: "Scott administratio\n(2011 to present)",
+    style: {
+      fontSize: 10,
+      textBaseline: "top"
+    }
+  });
+
+  chart
+    .line()
+    .position("year*value")
+    .color("type", val => {
+      if (val === "United States") {
+        return "#ccc";
       }
     });
-    chart.line().position("date*value");
-    chart.render();
-  };
-
-  render() {
-    return (
-      <F2Canvas
-        style={{
-          width: canvasWidth,
-          height: canvasHeight,
-          backgroundColor: "#ffffff"
-        }}
-        draw={this.draw}
-      />
-    );
-  }
-}
+  chart.render();
+  return chart;
+});

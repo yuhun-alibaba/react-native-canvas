@@ -10,7 +10,7 @@ type Props = {};
 
 type State = {};
 
-export default class Animate extends Component<Props, State> {
+export default class Animation extends Component<Props, State> {
   state = {
     running: false
   };
@@ -34,9 +34,9 @@ export default class Animate extends Component<Props, State> {
 
   gameLoopStart() {
     this.timer = setInterval(() => {
-      window.requestAnimationFrame(() => this.paint());
+      this.paint();
       this.timeIndex++;
-    }, 20);
+    }, 10);
   }
 
   gameLoopEnd = () => {
@@ -62,8 +62,7 @@ export default class Animate extends Component<Props, State> {
   drawContext(x = 0, y = 0) {
     const ctx = this.renderingContext;
 
-    ctx.fillStyle = "red";
-    ctx.fillRect(x, y, 50.0, 50.0);
+    ctx.strokeStyle = "red";
     ctx.arc(x + 100, y + 100, 50.0, 0, Math.PI * 2, 1);
     ctx.stroke();
     ctx.draw();
@@ -75,6 +74,7 @@ export default class Animate extends Component<Props, State> {
     return (
       <View
         style={{
+          marginTop: 20,
           justifyContent: "center",
           alignItems: "center"
         }}

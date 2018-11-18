@@ -26,15 +26,9 @@ export default class F2Canvas extends PureComponent<Props> {
 
   createTouchEvent(name: string) {
     return ({ nativeEvent }) => {
-      if (this.isInResponse) return;
-      this.isInResponse = true;
-
-      requestAnimationFrame(() => {
-        if (this.canvas) {
-          this.canvas.emit(name, { ...nativeEvent, type: name });
-          this.isInResponse = false;
-        }
-      });
+      if (this.canvas) {
+        this.canvas.emit(name, { ...nativeEvent, type: name });
+      }
     };
   }
 

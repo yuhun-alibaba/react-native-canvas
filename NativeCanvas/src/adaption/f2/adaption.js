@@ -1,7 +1,7 @@
 // @flow
 // f2 canvas
 
-import F2 from "@antv/f2/lib/index";
+import F2 from "@antv/f2";
 
 F2.Util.isWx = true;
 

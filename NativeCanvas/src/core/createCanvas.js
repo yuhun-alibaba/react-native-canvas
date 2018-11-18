@@ -19,6 +19,7 @@ type State = {
 export default function createCanvas(Renderer: RendererType) {
   return class Canvas extends PureComponent<Props, State> {
     static propTypes = CanvasPropTypes;
+
     canvas = new Renderer(new CanvasRenderingContext2D(this));
 
     ref;
@@ -27,8 +28,16 @@ export default function createCanvas(Renderer: RendererType) {
       this.ref = ref;
     };
 
+    updateing = false;
+
     update(actions: Actions) {
-      this.ref.setNativeProps({ actions });
+      if (this.updateing) return;
+
+      this.updateing = true;
+      requestAnimationFrame(() => {
+        this.ref.setNativeProps({ actions });
+        this.updateing = false;
+      });
     }
 
     componentWillReceiveProps(nextProps: Props) {
