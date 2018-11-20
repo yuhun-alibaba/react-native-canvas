@@ -23,7 +23,7 @@
 - (void)initWithContext:(CGContextRef)context
 {
     if (!_context) {
-        _context = [[CanvasRenderingContext2D alloc] init];
+        _context = [CanvasRenderingContext2D new];
     }
     _context.context = context;
 }
@@ -56,11 +56,11 @@
     NSMethodSignature *signature = [object methodSignatureForSelector:selector];
 
     if (signature.numberOfArguments == 0) {
-        NSLog(@"callMethodWithArguments:%@ no selector", method);
+        RCTLogInfo(@"callMethodWithArguments:%@ no selector", method);
         return;
     }
     if (signature.numberOfArguments > [arguments count] + 2) {
-        NSLog(@"callMethodWithArguments:%@ not enough aruments", method);
+        RCTLogInfo(@"callMethodWithArguments:%@ not enough aruments", method);
         return;
     }
 
@@ -98,7 +98,7 @@
 {
     for (NSDictionary *action in _actions) {
         NSString *method = [action objectForKey:@"method"];
-        NSLog(@"callMethodWithArguments: method %@", method);
+        RCTLogInfo(@"callMethodWithArguments: method %@", method);
         [self callMethodWithArguments:_context method:method arguments:[action objectForKey:@"arguments"]];
     }
 }

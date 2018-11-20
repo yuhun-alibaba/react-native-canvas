@@ -198,8 +198,6 @@
     NSDictionary *userAttributes =
         @{NSFontAttributeName : [UIFont fontWithName:_fontName size:_fontSize]};
     CGSize textSize = [text sizeWithAttributes:userAttributes];
-    NSLog(@"text: %@, size: width %f, height %f", text, textSize.width,
-          textSize.height);
     return textSize;
 }
 

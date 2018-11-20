@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <React/RCTLog.h>
 #import "CanvasRenderingContext2D.h"
-
-NS_ASSUME_NONNULL_BEGIN
 
 
 @interface CanvasView : UIView
@@ -22,6 +21,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)invalidate;
 
 @end
-
-
-NS_ASSUME_NONNULL_END
