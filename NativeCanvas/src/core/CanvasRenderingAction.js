@@ -33,7 +33,7 @@ export default class CanvasRenderingAction {
   }
 
   logAction([method, ...args]) {
-    console.log(`${method}(${args})`);
+    // console.log(`${method}(${args})`);
   }
 
   enqueueJSAction(method, args) {

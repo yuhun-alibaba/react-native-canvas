@@ -2,6 +2,7 @@
 // CanvasRenderingContext2D
 // API ref: https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D
 
+import CanvasNativeAPI from "./CanvasNativeAPI";
 import CanvasRenderingAction from "./CanvasRenderingAction";
 import {
   extractColor,
@@ -11,13 +12,9 @@ import {
 } from "./utils";
 
 export default class CanvasRenderingContext2D extends CanvasRenderingAction {
-  _canvas; // canvas component instance
+  _canvas; // canvas view component instance
   _lineDash;
   _fontSize = 10;
-
-  get canvas() {
-    return _canvas;
-  }
 
   constructor(canvas) {
     super();
@@ -25,11 +22,21 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
   }
 
   draw() {
-    if (this._canvas.update) {
-      this.beforeDrawing();
-      this._canvas.update(this.actions);
-      this.afterDrawing();
+    this.beforeDrawing();
+    this.drawing();
+    this.afterDrawing();
+  }
+
+  drawing() {
+    if (__DEV__) {
+      this._canvas.asyncUpdate(this.actions);
+    } else {
+      CanvasNativeAPI.drawSync(this._canvas.nativeID, this.actions);
     }
+  }
+
+  release() {
+    CanvasNativeAPI.release(this._canvas.nativeID);
   }
 
   beforeDrawing() {
@@ -52,7 +59,11 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
 
   measureText(text) {
     this.enqueueJSAction("measureText", [text]);
-    return measureText(text, this._fontSize);
+    if (__DEV__) {
+      return measureText(text, this._fontSize);
+    } else {
+      return CanvasNativeAPI.measureText(text, this._fontSize);
+    }
   }
 
   getLineDash() {

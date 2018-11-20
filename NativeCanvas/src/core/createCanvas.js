@@ -6,48 +6,51 @@ import React, { PureComponent } from "react";
 import CanvasRenderingContext2D from "./CanvasRenderingContext2D";
 import type { Actions, RendererType } from "./types";
 import { CanvasPropTypes } from "./types";
-import CanvasNative from "./CanvasNative";
+import CanvasNativeView from "./CanvasNativeView";
 
 type Props = {
-  actions: Actions
+  nativeID?: string
 };
 
-type State = {
-  actions: Actions
-};
+let canvasIndex = 0;
+function getNativeID() {
+  return `canvas:${canvasIndex++}`;
+}
 
 export default function createCanvas(Renderer: RendererType) {
-  return class Canvas extends PureComponent<Props, State> {
+  return class Canvas extends PureComponent<Props> {
     static propTypes = CanvasPropTypes;
 
+    nativeID = this.props.nativeID || getNativeID();
     canvas = new Renderer(new CanvasRenderingContext2D(this));
-
     ref;
 
     setRef = ref => {
       this.ref = ref;
     };
 
-    updateing = false;
-
-    update(actions: Actions) {
-      if (this.updateing) return;
-
-      this.updateing = true;
-      requestAnimationFrame(() => {
-        this.ref.setNativeProps({ actions });
-        this.updateing = false;
-      });
+    asyncUpdate(actions: Actions) {
+      this.ref.setNativeProps({ actions });
     }
 
     componentWillReceiveProps(nextProps: Props) {
       if (this.props.actions !== nextProps.actions) {
-        this.update(nextProps.actions);
+        this.asyncUpdate(nextProps.actions);
       }
     }
 
+    componentWillUnmount() {
+      this.context.release();
+    }
+
     render() {
-      return <CanvasNative {...this.props} ref={this.setRef} />;
+      return (
+        <CanvasNativeView
+          {...this.props}
+          nativeID={this.nativeID}
+          ref={this.setRef}
+        />
+      );
     }
   };
 }

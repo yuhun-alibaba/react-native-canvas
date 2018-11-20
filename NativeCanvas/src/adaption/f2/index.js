@@ -51,6 +51,8 @@ export default class F2Canvas extends PureComponent<Props> {
   }
 
   render() {
-    return <Canvas {...this.props} {...this.panHandlers} ref={this.setRef} />;
+    return (
+      <Canvas {...this.props} {...this.panHandlers} ref={this.setRef} />
+    );
   }
 }
