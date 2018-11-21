@@ -6,6 +6,7 @@
 //  Copyright © 2018 sam. All rights reserved.
 //
 
+
 typedef struct {
     size_t count;
     CGFloat *array;

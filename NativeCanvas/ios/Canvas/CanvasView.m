@@ -56,11 +56,11 @@
     NSMethodSignature *signature = [object methodSignatureForSelector:selector];
 
     if (signature.numberOfArguments == 0) {
-        RCTLogInfo(@"callMethodWithArguments:%@ no selector", method);
+        RCTLogWarn(@"callMethodWithArguments:%@ no selector", method);
         return;
     }
     if (signature.numberOfArguments > [arguments count] + 2) {
-        RCTLogInfo(@"callMethodWithArguments:%@ not enough aruments", method);
+        RCTLogWarn(@"callMethodWithArguments:%@ not enough aruments", method);
         return;
     }
 
@@ -94,30 +94,17 @@
     [invocation invoke]; // Invoke the selector
 }
 
-- (void)runActions
-{
-    for (NSDictionary *action in _actions) {
-        NSString *method = [action objectForKey:@"method"];
-        RCTLogInfo(@"callMethodWithArguments: method %@", method);
-        [self callMethodWithArguments:_context method:method arguments:[action objectForKey:@"arguments"]];
-    }
-}
-
 /**
  * @{
  *   @"method" : @"",
  *   @"arguments" : @[]
  * };
  */
-- (void)callAction:(NSDictionary *)methodAndArguments
+- (void)runActions
 {
-    [_actions addObject:methodAndArguments];
-}
-
-- (void)callActions:(NSArray<NSDictionary *> *)actions
-{
-    for (NSDictionary *methodAndArguments in actions) {
-        [self callAction:methodAndArguments];
+    for (NSDictionary *action in _actions) {
+        NSString *method = [action objectForKey:@"method"];
+        [self callMethodWithArguments:_context method:method arguments:[action objectForKey:@"arguments"]];
     }
 }
 
