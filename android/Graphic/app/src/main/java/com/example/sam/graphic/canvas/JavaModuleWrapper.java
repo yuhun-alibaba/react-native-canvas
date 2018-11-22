@@ -1,22 +1,23 @@
 package com.example.sam.graphic.canvas;
 
-
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 /**
  * Created by sam on 2018/11/21.
+ *
+ * 生成模块方法配置，参考自 react-native
+ *
  */
 
 public class JavaModuleWrapper {
 
   private final Class mModuleClass;
-  private final Object mModuleClassInstance;
   private final HashMap<String, JavaMethodWrapper> mMethods;
 
-  public JavaModuleWrapper(Object moduleClassInstance) {
-    mModuleClass = moduleClassInstance.getClass();
-    mModuleClassInstance = moduleClassInstance;
+  public JavaModuleWrapper(Class moduleClass) {
+    mModuleClass = moduleClass;
     mMethods = new HashMap();
     findMethods();
   }
@@ -26,20 +27,12 @@ public class JavaModuleWrapper {
     Method[] targetMethods = classForMethods.getDeclaredMethods();
 
     for (Method targetMethod : targetMethods) {
-        JavaMethodWrapper method = new JavaMethodWrapper(this, targetMethod);
-        mMethods.put(method.getName(), method);
+      JavaMethodWrapper method = new JavaMethodWrapper(targetMethod);
+      mMethods.put(method.getName(), method);
     }
   }
 
-  public String getName() {
-      return mModuleClass.getName();
-  }
-
-  public void invoke(String method, Object[] arguments) {
-    if (mMethods == null) {
-      return;
-    }
-
+  public void invoke(Object mModuleClassInstance, String method, Object[] arguments) {
     mMethods.get(method).invoke(mModuleClassInstance, arguments);
   }
 }

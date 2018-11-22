@@ -3,14 +3,10 @@ package com.example.sam.graphic.canvas;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.lang.Object;
-import java.lang.reflect.Method;
-import java.lang.NoSuchMethodException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 /**
@@ -18,51 +14,41 @@ import java.util.HashMap;
  */
 
 public class CanvasView extends View {
-    private final String TAG = "CanvasView";
-    private ArrayList<HashMap> actions = new ArrayList<>();
-    private JavaModuleWrapper module = new JavaModuleWrapper(this);
-    Canvas canvas;
-//    private CanvasRenderingContext2D context = new CanvasRenderingContext2D();
+  private static final JavaModuleWrapper module = new JavaModuleWrapper(CanvasRenderingContext2D.class);
 
-    public CanvasView(Context context) {
-        super(context);
+  private final String TAG = "CanvasView";
+  ArrayList<HashMap> actions = new ArrayList<>();
+  private final CanvasRenderingContext2D context = new CanvasRenderingContext2D();
 
-        canvas = null;
-        HashMap d = new HashMap();
-        d.put("method", new String("drawColor"));
-        int color = Color.BLUE;
-        d.put("arguments", new Object[]{ color });
-        // d.put("arguments", new Object[]{});
-        actions.add(d);
+  public CanvasView(Context context) {
+    super(context);
+  }
+
+  /**
+   * { "method": "", "arguments": [] };
+   */
+  private void runAction(String method, Object[] arguments) {
+    module.invoke(context, method, arguments);
+  }
+
+  private void runActions() {
+    for (HashMap action : actions) {
+      runAction((String) action.get("method"), (Object[]) action.get("arguments"));
+    }
+  }
+
+  public void setActions(ArrayList<HashMap> drawActions){
+    actions = new ArrayList<HashMap>(drawActions);
+  }
+
+  @Override
+  protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+
+    if (context.getCanvas() == null) {
+      context.setCanvas(canvas);
     }
 
-    public void drawColor(){
-        drawColor(Color.BLUE);
-    }
-
-    public void drawColor(int color){
-        canvas.drawColor(color);
-    }
-
-    /**
-     * { "method": "", "arguments": [] };
-     */
-    private void runAction(String method, Object[] arguments) {
-        module.invoke(method, arguments);
-    }
-
-    private void runActions() {
-        for (HashMap action : actions) {
-            runAction((String) action.get("method"), (Object[]) action.get("arguments"));
-        }
-    }
-
-    @Override
-    protected void onDraw(Canvas c) {
-        super.onDraw(c);
-        if (canvas == null) {
-            canvas = c;
-        }
-        runActions();
-    }
+    runActions();
+  }
 }
