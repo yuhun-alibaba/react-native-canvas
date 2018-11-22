@@ -14,13 +14,13 @@
 
 @implementation CanvasRenderingContext2D
 
+#pragma 初始化
 - (CanvasRenderingContext2D *)init
 {
     [self initOrResetProperty];
     return self;
 }
 
-#pragma 初始化属性
 - (void)initOrResetProperty
 {
     _fillStyle = [UIColor blackColor].CGColor;
@@ -59,45 +59,7 @@
     CGContextDrawPath(_context, kCGPathStroke);
 }
 
-#pragma 线型
-- (void)setLineWidth:(CGFloat)lineWidth
-{
-    CGContextSetLineWidth(_context, lineWidth);
-}
-
-- (void)setLineCap:(NSString *)lineCap
-{
-    CGLineCap cap = [CanvasConvert CGLineCap:lineCap];
-    CGContextSetLineCap(_context, cap);
-}
-
-- (CanvasCGFloatArray)getLineDash
-{
-    return _lineDash;
-}
-
-- (void)setLineDash:(NSArray *)lineDash
-{
-    CanvasCGFloatArray dash = [CanvasConvert CanvasCGFloatArray:lineDash];
-    if (dash.array == _lineDash.array) {
-        return;
-    }
-    if (_lineDash.array) {
-        free(_lineDash.array);
-    }
-    _lineDash = dash;
-    if (dash.count) {
-        CGContextSetLineDash(_context, 0, dash.array, dash.count);
-    }
-}
-
-- (void)setLineJoin:(NSString *)lineJoin
-{
-    CGLineJoin join = [CanvasConvert CGLineJoin:lineJoin];
-    CGContextSetLineJoin(_context, join);
-}
-
-#pragma 文本
+#pragma 设置文本样式
 - (void)setFont:(NSDictionary *)font
 {
     UIFont *f = [CanvasConvert UIFont:font];
@@ -214,7 +176,45 @@
     CGContextSetStrokeColorWithColor(_context, style);
 }
 
-#pragma 渐变和图案
+#pragma 线型样式
+- (void)setLineWidth:(CGFloat)lineWidth
+{
+    CGContextSetLineWidth(_context, lineWidth);
+}
+
+- (void)setLineCap:(NSString *)lineCap
+{
+    CGLineCap cap = [CanvasConvert CGLineCap:lineCap];
+    CGContextSetLineCap(_context, cap);
+}
+
+- (CanvasCGFloatArray)getLineDash
+{
+    return _lineDash;
+}
+
+- (void)setLineDash:(NSArray *)lineDash
+{
+    CanvasCGFloatArray dash = [CanvasConvert CanvasCGFloatArray:lineDash];
+    if (dash.array == _lineDash.array) {
+        return;
+    }
+    if (_lineDash.array) {
+        free(_lineDash.array);
+    }
+    _lineDash = dash;
+    if (dash.count) {
+        CGContextSetLineDash(_context, 0, dash.array, dash.count);
+    }
+}
+
+- (void)setLineJoin:(NSString *)lineJoin
+{
+    CGLineJoin join = [CanvasConvert CGLineJoin:lineJoin];
+    CGContextSetLineJoin(_context, join);
+}
+
+#pragma 创建渐变和图案
 - (void)createLinearGradient:(CGFloat)x0
                           y0:(CGFloat)y0
                           x1:(CGFloat)x1
@@ -234,7 +234,7 @@
 {
 }
 
-#pragma 路径
+#pragma 生成路径
 - (void)beginPath
 {
     CGContextBeginPath(_context);
@@ -342,7 +342,7 @@
 {
 }
 
-#pragma 变换
+#pragma 坐标变换
 - (void)rotate:(CGFloat)angle
 {
     CGContextRotateCTM(_context, angle);
@@ -397,7 +397,7 @@
 {
 }
 
-#pragma canvas 状态
+#pragma 状态处理
 - (void)save
 {
     CGContextSaveGState(_context);

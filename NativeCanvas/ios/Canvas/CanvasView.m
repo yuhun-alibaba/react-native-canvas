@@ -52,6 +52,7 @@
  */
 - (void)callMethodWithArguments:object method:(NSString *)method arguments:(NSArray *)arguments
 {
+    // @TODO 将 invocation 存起来
     SEL selector = NSSelectorFromString(method);
     NSMethodSignature *signature = [object methodSignatureForSelector:selector];
 
