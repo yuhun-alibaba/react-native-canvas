@@ -23,13 +23,15 @@ RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(NSDictionary *, measureText
     return textMetric;
 }
 
-// 同步
+// 同步绘制
 RCT_EXPORT_SYNCHRONOUS_TYPED_METHOD(id, drawSync
                                     : (NSString *)tag actions
                                     : (id)actions)
 {
     NSMutableArray *convertedActions = (NSMutableArray *)[RCTConvert NSArray:actions];
-    [CanvasAPI draw:tag actions:convertedActions];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [CanvasAPI draw:tag actions:convertedActions];
+    });
     return @1;
 }
 
