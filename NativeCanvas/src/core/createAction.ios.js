@@ -9,13 +9,13 @@ const methodMap = {
   lineWidth: "setLineWidth:",
   lineCap: "setLineCap:",
   lineJoin: "setLineJoin:",
-  lineDashOffset: "setLineDashOffset:",
+  lineDashOffset: "setLineDashOffset:", // not implement
   font: "setFont:",
   textAlign: "setTextAlign:",
   textBaseline: "setTextBaseline:",
-  direction: "setDirection:",
-  shadowColor: "setShadowColor:",
-  shadowBlur: "setShadowBlur:",
+  direction: "setDirection:", // not implement
+  shadowColor: "setShadowColor:", // not implement
+  shadowBlur: "setShadowBlur:", // not implement
   // methods
   setLineDash: "setLineDash:",
   clearRect: "clearRect:y:width:height:",
@@ -41,10 +41,10 @@ const methodMap = {
   translate: "translate:y:",
   transform: "transform:b:c:d:e:f:",
   setTransform: "setTransform:b:c:d:e:f:",
-  drawImage: "drawImage:",
-  createImageData: "createImageData:",
-  getImageData: "getImageData:",
-  putImageData: "putImageData:",
+  drawImage: "drawImage:", // not implement
+  createImageData: "createImageData:", // not implement
+  getImageData: "getImageData:", // not implement
+  putImageData: "putImageData:", // not implement
   save: "save",
   restore: "restore"
 };
