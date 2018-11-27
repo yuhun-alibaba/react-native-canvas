@@ -49,7 +49,7 @@ public class CanvasRenderingContext2D {
   }
 
   private void setFillAndStrokeBeforeDrawing() {
-    paint.setStyle(Paint.Style.FILL_AND_STROKE);
+    setPaintStyle(Paint.Style.FILL_AND_STROKE, fillStyle);
   }
 
   private void setStrokePaintBeforeDrawing() {
@@ -241,16 +241,20 @@ public class CanvasRenderingContext2D {
   }
 
 
-  public void arc(float x, float y, float radius, float startAngle, float endAangle) {
-    arc(x, y, radius, startAngle, endAangle, 1);
+  public void arc(float x, float y, float radius, float startAngle, float endAngle) {
+    arc(x, y, radius, startAngle, endAngle, 1);
   }
 
-  public void arc(float x, float y, float radius, float startAngle, float endAangle, int anticlockwise) {
+  public void arc(float x, float y, float radius, float startAngle, float endAngle, int anticlockwise) {
+    if ((endAngle - startAngle) == 360) {
+      path.addCircle(x, y, radius, anticlockwise == 1 ? Path.Direction.CW : Path.Direction.CCW);
+      return;
+    }
     if (anticlockwise == 0) { // 逆时针
-      endAangle = - endAangle;
+      endAngle = 360 - endAngle;
     }
     RectF rectF = new RectF(x - radius, y - radius, x + radius, y + radius);
-    path.arcTo(rectF, startAngle, endAangle, true);
+    path.arcTo(rectF, startAngle, endAngle - startAngle);
   }
 
 
@@ -320,10 +324,10 @@ public class CanvasRenderingContext2D {
     if (orthP1p2[1] < 0) {
       ea = 360 - ea;
     }
-    if ((sa > ea) && ((sa - ea) < 360)) {
+    if ((sa > ea) && ((sa - ea) < 180)) {
       anticlockwise = true;
     }
-    if ((sa < ea) && ((ea - sa)) > 360) {
+    if ((sa < ea) && ((ea - sa) > 180)) {
       anticlockwise = true;
     }
 
