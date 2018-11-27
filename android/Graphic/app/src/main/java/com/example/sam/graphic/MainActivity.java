@@ -28,21 +28,23 @@ public class MainActivity extends AppCompatActivity {
     this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     CanvasView canvas = new CanvasView(this);
-
     ArrayList actions = new ArrayList<HashMap>();
 
     actions.add(createAction((String)"beginPath", new Object[]{}));
-    actions.add(createAction((String)"moveTo:float:float", new Object[]{20,20}));
-    actions.add(createAction((String)"lineTo:float:float", new Object[]{100, 20}));
-    actions.add(createAction((String)"arcTo:float:float:float:float:float", new Object[]{150,20,150,70,50}));
-    actions.add(createAction((String)"lineTo:float:float", new Object[]{150, 120}));
+    actions.add(createAction((String)"moveTo:float:float", new Object[]{150,20}));
+    actions.add(createAction((String)"arcTo:float:float:float:float:float", new Object[]{150,100,50,20,30}));
+    actions.add(createAction((String)"lineTo:float:float", new Object[]{50, 20}));
     actions.add(createAction((String)"stroke", new Object[]{}));
-
 
     actions.add(createAction((String)"beginPath", new Object[]{}));
     actions.add(createAction((String)"setFillStyle:other", new Object[]{new int[]{255,255,255,0}}));
-    actions.add(createAction((String)"arc:float:float:float:float:float", new Object[]{100, 20, 5, 0, 360}));
-    actions.add(createAction((String)"arc:float:float:float:float:float", new Object[]{150, 120, 5, 0, 360}));
+    actions.add(createAction((String)"arc:float:float:float:float:float", new Object[]{150, 20, 5, 0, 360}));
+    actions.add(createAction((String)"fill", new Object[]{}));
+
+    actions.add(createAction((String)"beginPath", new Object[]{}));
+    actions.add(createAction((String)"setFillStyle:other", new Object[]{new int[]{255,255,0,0}}));
+    actions.add(createAction((String)"arc:float:float:float:float:float", new Object[]{150, 100, 5, 0, 360}));
+    actions.add(createAction((String)"arc:float:float:float:float:float", new Object[]{50, 20, 5, 0, 360}));
     actions.add(createAction((String)"fill", new Object[]{}));
 
     canvas.setActions(actions);

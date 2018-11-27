@@ -2,7 +2,6 @@ package com.example.sam.graphic.canvas;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.view.View;
 
 import java.util.ArrayList;

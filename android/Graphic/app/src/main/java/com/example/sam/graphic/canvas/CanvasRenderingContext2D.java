@@ -21,15 +21,15 @@ import java.util.HashMap;
 public class CanvasRenderingContext2D {
   private final Paint paint = new Paint();
   private final Path path = new Path();
-  private final Float[] lastPoint = new Float[]{(float)0,(float)0}; // tracking point
+  private final Float[] lastPoint = new Float[]{(float) 0, (float) 0}; // tracking point
 
   private Canvas canvas;
-  private int[] fillStyle = new int[]{255,0,0,0};
-  private int[] strokeStyle = new int[]{255,0,0,0};
+  private int[] fillStyle = new int[]{255, 0, 0, 0};
+  private int[] strokeStyle = new int[]{255, 0, 0, 0};
   private int textBaseline;
 
-  public CanvasRenderingContext2D(){
-    setLineWidth((float)1);
+  public CanvasRenderingContext2D() {
+    setLineWidth((float) 1);
   }
 
   public Canvas getCanvas() {
@@ -67,9 +67,9 @@ public class CanvasRenderingContext2D {
     float lineHeight = fm.bottom - fm.top + fm.leading;
 
     if (textBaseline == 1) { // bottom
-      return - lineHeight;
+      return -lineHeight;
     } else if (textBaseline == 2) { // middle
-      return - (lineHeight / 2);
+      return -(lineHeight / 2);
     } else {
       return (float) 0;
     }
@@ -242,7 +242,7 @@ public class CanvasRenderingContext2D {
 
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle) {
-    arc(x, y, radius, startAngle, endAngle, 1);
+    arc(x, y, radius, startAngle, endAngle, 0);
   }
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle, int anticlockwise) {
@@ -250,11 +250,15 @@ public class CanvasRenderingContext2D {
       path.addCircle(x, y, radius, anticlockwise == 1 ? Path.Direction.CW : Path.Direction.CCW);
       return;
     }
-    if (anticlockwise == 0) { // 逆时针
-      endAngle = 360 - endAngle;
+    if (endAngle < startAngle) {
+      endAngle = 360 + endAngle;
+    }
+    float sweepAngle = endAngle - startAngle;
+    if (anticlockwise == 1) { //  逆时针
+      sweepAngle = -sweepAngle;
     }
     RectF rectF = new RectF(x - radius, y - radius, x + radius, y + radius);
-    path.arcTo(rectF, startAngle, endAngle - startAngle);
+    path.arcTo(rectF, startAngle, sweepAngle);
   }
 
 
@@ -272,8 +276,8 @@ public class CanvasRenderingContext2D {
     float[] p1p0 = new float[]{x0 - x1, y0 - y1};
     float[] p1p2 = new float[]{x2 - x1, y2 - y1};
 
-    float p1p0Length = (float)Math.sqrt((double)p1p0[0] * p1p0[0] + p1p0[1] * p1p0[1]);
-    float p1p2Length = (float)Math.sqrt((double)p1p2[0] * p1p2[0] + p1p2[1] * p1p2[1]);
+    float p1p0Length = (float) Math.sqrt((double) p1p0[0] * p1p0[0] + p1p0[1] * p1p0[1]);
+    float p1p2Length = (float) Math.sqrt((double) p1p2[0] * p1p2[0] + p1p2[1] * p1p2[1]);
 
     double cosPhi = (p1p0[0] * p1p2[0] + p1p0[1] * p1p2[1]) / (p1p0Length * p1p2Length);
     // all points on a line logic
@@ -289,28 +293,28 @@ public class CanvasRenderingContext2D {
       return;
     }
 
-    float tangent = radius / (float)Math.tan(Math.acos(cosPhi) / 2);
+    float tangent = radius / (float) Math.tan(Math.acos(cosPhi) / 2);
     float factorP1p0 = tangent / p1p0Length;
     float[] tP1p0 = new float[]{x1 + factorP1p0 * p1p0[0], y1 + factorP1p0 * p1p0[1]};
 
     float[] orthP1p0 = new float[]{p1p0[1], -p1p0[0]};
-    float orthP1p0Length = (float)Math.sqrt((double)orthP1p0[0] * orthP1p0[0] + orthP1p0[1] * orthP1p0[1]);
+    float orthP1p0Length = (float) Math.sqrt((double) orthP1p0[0] * orthP1p0[0] + orthP1p0[1] * orthP1p0[1]);
     float factorRa = radius / orthP1p0Length;
     // angle between orthP1p0 and p1p2 to get the right vector orthographic to p1p0
     double cosAlpha = (orthP1p0[0] * p1p2[0] + orthP1p0[1] * p1p2[1]) / (orthP1p0Length * p1p2Length);
-    if (cosAlpha < 0.f) {
-      orthP1p0[0] = - orthP1p0[0];
-      orthP1p0[1] = - orthP1p0[1];
+    if (cosAlpha < 0) {
+      orthP1p0[0] = -orthP1p0[0];
+      orthP1p0[1] = -orthP1p0[1];
     }
 
     float[] p = new float[]{tP1p0[0] + factorRa * orthP1p0[0], tP1p0[1] + factorRa * orthP1p0[1]};
 
-    orthP1p0[0] = - orthP1p0[0];
-    orthP1p0[1] = - orthP1p0[1];
+    orthP1p0[0] = -orthP1p0[0];
+    orthP1p0[1] = -orthP1p0[1];
 
     // calculate angles for arc
-    float sa = (float)(Math.acos(orthP1p0[0] / orthP1p0Length) * 180 / Math.PI);
-    if (orthP1p0[1] < 0.f) {
+    float sa = (float) (Math.acos(orthP1p0[0] / orthP1p0Length) * 180 / Math.PI);
+    if (orthP1p0[1] < 0) {
       sa = 360 - sa;
     }
     // anticlockwise logic
@@ -319,8 +323,8 @@ public class CanvasRenderingContext2D {
     float factorP1p2 = tangent / p1p2Length;
     float[] tP1p2 = new float[]{x1 + factorP1p2 * p1p2[0], y1 + factorP1p2 * p1p2[1]};
     float[] orthP1p2 = new float[]{tP1p2[0] - p[0], tP1p2[1] - p[1]};
-    float orthP1p2Length = (float)Math.sqrt((double)orthP1p2[0] * orthP1p2[0] + orthP1p2[1] * orthP1p2[1]);
-    float ea = (float)(Math.acos(orthP1p2[0] / orthP1p2Length) * 180 / Math.PI);
+    float orthP1p2Length = (float) Math.sqrt((double) orthP1p2[0] * orthP1p2[0] + orthP1p2[1] * orthP1p2[1]);
+    float ea = (float) (Math.acos(orthP1p2[0] / orthP1p2Length) * 180 / Math.PI);
     if (orthP1p2[1] < 0) {
       ea = 360 - ea;
     }
