@@ -1,7 +1,8 @@
 package com.example.sam.graphic.canvas;
 
+import android.util.Log;
+
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 
 /**
@@ -15,6 +16,7 @@ public class JavaModuleWrapper {
 
   private final Class mModuleClass;
   private final HashMap<String, JavaMethodWrapper> mMethods;
+  private final String TAG = "JavaModuleWrapper";
 
   public JavaModuleWrapper(Class moduleClass) {
     mModuleClass = moduleClass;
@@ -33,6 +35,11 @@ public class JavaModuleWrapper {
   }
 
   public void invoke(Object mModuleClassInstance, String method, Object[] arguments) {
-    mMethods.get(method).invoke(mModuleClassInstance, arguments);
+    JavaMethodWrapper drawMethod = mMethods.get(method);
+    if (drawMethod != null) {
+      drawMethod.invoke(mModuleClassInstance, arguments);
+    } else {
+      Log.w(TAG, "Could not find method " + method);
+    }
   }
 }

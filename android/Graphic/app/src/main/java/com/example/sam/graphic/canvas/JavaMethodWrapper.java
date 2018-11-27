@@ -72,11 +72,11 @@ public class JavaMethodWrapper {
       mMethod.invoke(moduleClassInstance, parameters);
       Log.i(TAG, "invoke " + mMethodName);
     } catch (IllegalArgumentException ie) {
-      Log.w(TAG, "Could not invoke " + mMethodName);
+      Log.w(TAG, "IllegalArgumentException: Could not invoke " + mMethodName);
     } catch (IllegalAccessException iae) {
-      Log.w(TAG, "Could not invoke " + mMethodName);
+      Log.w(TAG, "IllegalAccessException: Could not invoke " + mMethodName);
     } catch (InvocationTargetException ite) {
-      Log.w(TAG, "Could not invoke " + mMethodName);
+      Log.w(TAG, "InvocationTargetException: Could not invoke " + mMethodName);
     }
 
   }

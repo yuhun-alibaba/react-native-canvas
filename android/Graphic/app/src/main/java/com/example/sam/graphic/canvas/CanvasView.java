@@ -16,7 +16,6 @@ import java.util.HashMap;
 public class CanvasView extends View {
   private static final JavaModuleWrapper module = new JavaModuleWrapper(CanvasRenderingContext2D.class);
 
-  private final String TAG = "CanvasView";
   ArrayList<HashMap> actions = new ArrayList<>();
   private final CanvasRenderingContext2D context = new CanvasRenderingContext2D();
 
