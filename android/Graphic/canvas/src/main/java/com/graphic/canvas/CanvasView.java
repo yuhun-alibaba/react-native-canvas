@@ -1,4 +1,4 @@
-package com.example.sam.graphic.canvas;
+package com.graphic.canvas;
 
 import android.content.Context;
 import android.graphics.Canvas;

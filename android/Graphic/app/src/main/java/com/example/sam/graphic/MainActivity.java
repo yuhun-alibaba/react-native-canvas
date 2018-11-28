@@ -1,13 +1,11 @@
 package com.example.sam.graphic;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.sam.graphic.canvas.CanvasView;
+import com.graphic.canvas.CanvasView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,5 +1,4 @@
-package com.example.sam.graphic.canvas;
-
+package com.graphic.canvas;
 
 import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
