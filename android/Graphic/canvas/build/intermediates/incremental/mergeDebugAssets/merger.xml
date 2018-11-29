@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/sam/Workstation/github/react-native-canvas/android/Graphic/canvas/src/main/assets"/><source path="/Users/sam/Workstation/github/react-native-canvas/android/Graphic/canvas/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/sam/Workstation/github/react-native-canvas/android/Graphic/canvas/src/debug/assets"/></dataSet></merger>

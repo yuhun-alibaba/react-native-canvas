@@ -6,3 +6,4 @@ DerivedData.clang-format
 
 .idea
 */.idea/*
+*/build/
