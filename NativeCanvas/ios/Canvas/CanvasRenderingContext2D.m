@@ -278,9 +278,9 @@
            radius:(CGFloat)radius
       startAangle:(CGFloat)startAngle
          endAngle:(CGFloat)endAangle
-    anticlockwise:(int)anticlockwise
+    anticlockwise:(bool)anticlockwise
 {
-    CGContextAddArc(_context, x, y, radius, startAngle, endAangle, anticlockwise);
+    CGContextAddArc(_context, x, y, radius, startAngle, endAangle, !anticlockwise);
 }
 
 - (void)arcTo:(CGFloat)x1
