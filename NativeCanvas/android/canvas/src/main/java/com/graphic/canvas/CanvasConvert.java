@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class CanvasConvert {
 
-  public static  HashMap createAction(String method, Object[] arguments) {
+  public static HashMap createAction(String method, Object[] arguments) {
     HashMap action = new HashMap();
     action.put("method", method);
     action.put("arguments", arguments);
@@ -24,7 +24,7 @@ public class CanvasConvert {
 
     ArrayList<HashMap> drawingActions = new ArrayList<HashMap>();
 
-    for(int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
       ReadableMap command = actions.getMap(i);
       String method = command.getString("method");
       ArrayList arguments = command.getArray("arguments").toArrayList();
@@ -44,6 +44,6 @@ public class CanvasConvert {
   }
 
   public static float convertDegree(float degree) {
-    return (float)(degree * 180 / Math.PI);
+    return (float) (degree * 180 / Math.PI);
   }
 }

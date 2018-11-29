@@ -17,7 +17,7 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
 
   private static final String NAME = "CanvasAPI";
 
-  public CanvasAPI(ReactApplicationContext reactContext){
+  public CanvasAPI(ReactApplicationContext reactContext) {
     super(reactContext);
   }
 
@@ -27,7 +27,7 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public HashMap measureText(String text, double fontSize){
+  public HashMap measureText(String text, double fontSize) {
     // @todo measureText
     HashMap d = new HashMap();
     d.put("width", 10);
@@ -51,7 +51,7 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void release(String tag){
+  public void release(String tag) {
     CanvasViewManager.removeCanvasView(tag);
   }
 

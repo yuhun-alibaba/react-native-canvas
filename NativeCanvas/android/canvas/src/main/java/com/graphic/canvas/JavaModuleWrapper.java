@@ -7,9 +7,8 @@ import java.util.HashMap;
 
 /**
  * Created by sam on 2018/11/21.
- *
+ * <p>
  * 生成模块方法配置，参考自 react-native
- *
  */
 
 public class JavaModuleWrapper {

@@ -15,7 +15,7 @@ public class JavaMethodWrapper {
 
   private static class ArgumentExtractor<T> {
     public T extractArgument(
-      Object[] arguments, int atIndex){
+      Object[] arguments, int atIndex) {
       return (T) arguments[atIndex];
     }
   }
@@ -25,7 +25,7 @@ public class JavaMethodWrapper {
       @Override
       public Float extractArgument(
         Object[] arguments, int atIndex) {
-        Double value = (Double)arguments[atIndex];
+        Double value = (Double) arguments[atIndex];
         return new Float(value);
       }
     };
@@ -39,7 +39,7 @@ public class JavaMethodWrapper {
         float[] list = new float[argument.size()];
 
         for (int i = 0; i < list.length; i++) {
-          Double value = (Double)argument.get(i);
+          Double value = (Double) argument.get(i);
           list[i] = value.floatValue();
         }
         return list;
@@ -51,7 +51,7 @@ public class JavaMethodWrapper {
       @Override
       public Integer extractArgument(
         Object[] arguments, int atIndex) {
-        Double value = (Double)arguments[atIndex];
+        Double value = (Double) arguments[atIndex];
         return new Integer(value.intValue());
       }
     };
@@ -65,7 +65,7 @@ public class JavaMethodWrapper {
         int[] list = new int[argument.size()];
 
         for (int i = 0; i < list.length; i++) {
-          Double value = (Double)argument.get(i);
+          Double value = (Double) argument.get(i);
           list[i] = value.intValue();
         }
         return list;
@@ -83,7 +83,7 @@ public class JavaMethodWrapper {
 
   private ArgumentExtractor[] buildArgumentExtractors(Class[] paramTypes) {
     ArgumentExtractor[] argumentExtractors = new ArgumentExtractor[paramTypes.length];
-    for (int i = 0; i < paramTypes.length; i ++) {
+    for (int i = 0; i < paramTypes.length; i++) {
       Class argumentClass = paramTypes[i];
       if (argumentClass == Float.class || argumentClass == float.class) {
         argumentExtractors[i] = ARGUMENT_EXTRACTOR_FLOAT;
@@ -145,7 +145,7 @@ public class JavaMethodWrapper {
     processArguments();
   }
 
-  private void processArguments(){
+  private void processArguments() {
     mMethodName = buildName(mParameterTypes);
     mArgumentExtractors = buildArgumentExtractors(mParameterTypes);
   }

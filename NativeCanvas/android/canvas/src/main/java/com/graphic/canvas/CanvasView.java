@@ -35,7 +35,7 @@ public class CanvasView extends View {
     }
   }
 
-  public void setActions(ArrayList<HashMap> drawActions){
+  public void setActions(ArrayList<HashMap> drawActions) {
     actions = new ArrayList<HashMap>(drawActions);
   }
 
