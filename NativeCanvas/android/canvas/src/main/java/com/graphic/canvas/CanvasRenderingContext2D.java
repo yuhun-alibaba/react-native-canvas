@@ -18,30 +18,46 @@ import java.util.HashMap;
  */
 
 public class CanvasRenderingContext2D {
-  private final Paint paint = new Paint();
-  private final Path path = new Path();
-  private final Float[] lastPoint = new Float[]{(float) 0, (float) 0}; // tracking point
-
   private Canvas canvas;
-  private int[] fillStyle = new int[]{255, 0, 0, 0};
-  private int[] strokeStyle = new int[]{255, 0, 0, 0};
+  private Float[] lastPoint; // tracking point
+  private Path path;
+  private Paint paint;
+  private int[] fillStyle;
+  private int[] strokeStyle;
   private int textBaseline;
 
   public CanvasRenderingContext2D() {
-    setLineWidth((float) 1);
+    initOrResetProperty();
   }
 
   public void setCanvas(Canvas canvasInstance) {
     canvas = canvasInstance;
+    initOrResetProperty();
   }
 
   /**
    * 私用方法
    */
+  private void initOrResetProperty() {
+    flushPath();
+    flushPaint();
+    lastPoint = new Float[]{(float) 0, (float) 0};
+    fillStyle = new int[]{255, 0, 0, 0};
+    strokeStyle = new int[]{255, 0, 0, 0};
+    textBaseline = 0;
+  }
+
+  private void flushPath() {
+    path = new Path();
+  }
+
+  private void flushPaint() {
+    paint = new Paint();
+  }
+
   private void setPaintStyle(Paint.Style style, int[] color) {
     paint.setStyle(style);
-    // alpha 在最前
-    paint.setARGB(color[3], color[0], color[1], color[2]);
+    paint.setARGB(color[0], color[1], color[2], color[3]);
   }
 
   private void setFillAndStrokeBeforeDrawing() {
@@ -120,9 +136,9 @@ public class CanvasRenderingContext2D {
 
   public void setTextBaseline(String baseline) {
     int baselineType = 0;
-    if (baseline.equals((String)"bottom")) {
+    if (baseline.equals((String) "bottom")) {
       baselineType = 1;
-    } else if(baseline.equals((String)"middle")) {
+    } else if (baseline.equals((String) "middle")) {
       baselineType = 2;
     }
     textBaseline = baselineType;
@@ -181,7 +197,7 @@ public class CanvasRenderingContext2D {
       // 奇数变偶数
       float[] dashEffect = new float[lineDash.length * 2];
       for (int i = 0; i < dashEffect.length; i++) {
-        int atIndex = (int)(i % size);
+        int atIndex = (int) (i % size);
         dashEffect[i] = lineDash[atIndex];
       }
       paint.setPathEffect(new DashPathEffect(dashEffect, 0));
@@ -369,14 +385,14 @@ public class CanvasRenderingContext2D {
    */
   public void fill() {
     setFillAndStrokeBeforeDrawing();
-    closePath();
     canvas.drawPath(path, paint);
+    flushPath();
   }
 
   public void stroke() {
     setStrokePaintBeforeDrawing();
-    closePath();
     canvas.drawPath(path, paint);
+    flushPath();
   }
 
   public void drawFocusIfNeeded() {
