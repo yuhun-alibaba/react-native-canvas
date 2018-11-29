@@ -1,3 +1,5 @@
 rootProject.name = 'NativeCanvas'
 
 include ':app', ':canvas'
+
+project(':canvas').projectDir = new File(rootProject.projectDir, './canvas')

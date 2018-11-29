@@ -34,4 +34,16 @@ public class CanvasConvert {
 
     return drawingActions;
   }
+
+  public static int[] convertColor(int[] style) {
+    if (style.length != 4) {
+      return new int[]{255, 0, 0, 0};
+    }
+    // alpha
+    return new int[]{style[3] * 255, style[0] * 255, style[1] * 255, style[2] * 255};
+  }
+
+  public static float convertDegree(float degree) {
+    return (float)(degree * 180 / Math.PI);
+  }
 }

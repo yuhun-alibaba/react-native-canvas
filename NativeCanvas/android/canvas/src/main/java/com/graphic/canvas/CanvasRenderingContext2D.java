@@ -31,10 +31,6 @@ public class CanvasRenderingContext2D {
     setLineWidth((float) 1);
   }
 
-  public Canvas getCanvas() {
-    return canvas;
-  }
-
   public void setCanvas(Canvas canvasInstance) {
     canvas = canvasInstance;
   }
@@ -44,7 +40,8 @@ public class CanvasRenderingContext2D {
    */
   private void setPaintStyle(Paint.Style style, int[] color) {
     paint.setStyle(style);
-    paint.setARGB(color[0], color[1], color[2], color[3]);
+    // alpha 在最前
+    paint.setARGB(color[3], color[0], color[1], color[2]);
   }
 
   private void setFillAndStrokeBeforeDrawing() {
@@ -160,11 +157,11 @@ public class CanvasRenderingContext2D {
    * 设置填充与描边
    */
   public void setFillStyle(int[] style) {
-    fillStyle = style;
+    fillStyle = CanvasConvert.convertColor(style);
   }
 
   public void setStrokeStyle(int[] style) {
-    strokeStyle = style;
+    strokeStyle = CanvasConvert.convertColor(style);
   }
 
   /**
@@ -262,10 +259,13 @@ public class CanvasRenderingContext2D {
 
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle) {
-    arc(x, y, radius, startAngle, endAngle, true);
+    arc(x, y, radius, startAngle, endAngle, false);
   }
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle, boolean anticlockwise) {
+    startAngle = CanvasConvert.convertDegree(startAngle);
+    endAngle = CanvasConvert.convertDegree(endAngle);
+
     if ((endAngle - startAngle) == 360) {
       path.addCircle(x, y, radius, anticlockwise ? Path.Direction.CW : Path.Direction.CCW);
       return;
@@ -369,11 +369,13 @@ public class CanvasRenderingContext2D {
    */
   public void fill() {
     setFillAndStrokeBeforeDrawing();
+    closePath();
     canvas.drawPath(path, paint);
   }
 
   public void stroke() {
     setStrokePaintBeforeDrawing();
+    closePath();
     canvas.drawPath(path, paint);
   }
 

@@ -42,11 +42,7 @@ public class CanvasView extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
-
-    if (context.getCanvas() == null) {
-      context.setCanvas(canvas);
-    }
-
+    context.setCanvas(canvas);
     runActions();
   }
 }
