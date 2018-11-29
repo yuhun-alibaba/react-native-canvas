@@ -4,20 +4,20 @@ import type { ActionMethod, ActionArguments } from "./types";
 
 const methodMap = {
   // styles
-  fillStyle: "setFillStyle:other",
-  strokeStyle: "setStrokeStyle:other",
+  fillStyle: "setFillStyle:int[]",
+  strokeStyle: "setStrokeStyle:int[]",
   lineWidth: "setLineWidth:float",
   lineCap: "setLineCap:String",
   lineJoin: "setLineJoin:String",
   lineDashOffset: "setLineDashOffset", // not implement
-  font: "setFont:other",
+  font: "setFont:HashMap",
   textAlign: "setTextAlign:String",
-  textBaseline: "setTextBaseline:int",
+  textBaseline: "setTextBaseline:String",
   direction: "setDirection", // not implement
   shadowColor: "setShadowColor", // not implement
   shadowBlur: "setShadowBlur", // not implement
   // methods
-  setLineDash: "setLineDash:other",
+  setLineDash: "setLineDash:float[]",
   clearRect: "clearRect:float:float:float:float",
   fillRect: "fillRect:float:float:float:float",
   strokeRect: "strokeRect:float:float:float:float",
@@ -64,7 +64,7 @@ export default function createAction(
 
   if (method === "arc" && args.length === 6) {
     return {
-      method: `${convertedMethod}:int`,
+      method: `${convertedMethod}:boolean`,
       arguments: args
     };
   }

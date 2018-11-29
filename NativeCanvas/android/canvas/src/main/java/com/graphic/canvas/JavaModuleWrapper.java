@@ -30,6 +30,7 @@ public class JavaModuleWrapper {
 
     for (Method targetMethod : targetMethods) {
       JavaMethodWrapper method = new JavaMethodWrapper(targetMethod);
+//      Log.i(TAG, method.getName());
       mMethods.put(method.getName(), method);
     }
   }

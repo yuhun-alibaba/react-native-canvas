@@ -104,10 +104,10 @@ public class CanvasRenderingContext2D {
    * 设置文本样式
    */
   public void setFont(HashMap font) {
-    float fontSize = (float) font.get("fontSize");
+    Double fontSize = (Double) font.get("fontSize");
     Typeface fontFace = Typeface.SANS_SERIF;
     // @todo convert font family ...
-    paint.setTextSize(fontSize);
+    paint.setTextSize(fontSize.floatValue());
     paint.setTypeface(fontFace);
   }
 
@@ -121,8 +121,14 @@ public class CanvasRenderingContext2D {
     paint.setTextAlign(align);
   }
 
-  public void setTextBaseline(int baseline) {
-    textBaseline = baseline;
+  public void setTextBaseline(String baseline) {
+    int baselineType = 0;
+    if (baseline.equals((String)"bottom")) {
+      baselineType = 1;
+    } else if(baseline.equals((String)"middle")) {
+      baselineType = 2;
+    }
+    textBaseline = baselineType;
   }
 
   /**
@@ -169,7 +175,22 @@ public class CanvasRenderingContext2D {
   }
 
   public void setLineDash(float[] lineDash) {
-    paint.setPathEffect(new DashPathEffect(lineDash, 0));
+    float size = lineDash.length;
+    if (size == 0) return;
+
+    boolean isOdd = size % 2 != 0;
+
+    if (isOdd) {
+      // 奇数变偶数
+      float[] dashEffect = new float[lineDash.length * 2];
+      for (int i = 0; i < dashEffect.length; i++) {
+        int atIndex = (int)(i % size);
+        dashEffect[i] = lineDash[atIndex];
+      }
+      paint.setPathEffect(new DashPathEffect(dashEffect, 0));
+    } else {
+      paint.setPathEffect(new DashPathEffect(lineDash, 0));
+    }
   }
 
   public PathEffect getLineDash() {
@@ -241,19 +262,19 @@ public class CanvasRenderingContext2D {
 
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle) {
-    arc(x, y, radius, startAngle, endAngle, 0);
+    arc(x, y, radius, startAngle, endAngle, true);
   }
 
-  public void arc(float x, float y, float radius, float startAngle, float endAngle, int anticlockwise) {
+  public void arc(float x, float y, float radius, float startAngle, float endAngle, boolean anticlockwise) {
     if ((endAngle - startAngle) == 360) {
-      path.addCircle(x, y, radius, anticlockwise == 1 ? Path.Direction.CW : Path.Direction.CCW);
+      path.addCircle(x, y, radius, anticlockwise ? Path.Direction.CW : Path.Direction.CCW);
       return;
     }
     if (endAngle < startAngle) {
       endAngle = 360 + endAngle;
     }
     float sweepAngle = endAngle - startAngle;
-    if (anticlockwise == 1) { //  逆时针
+    if (anticlockwise) { //  逆时针
       sweepAngle = -sweepAngle;
     }
     RectF rectF = new RectF(x - radius, y - radius, x + radius, y + radius);
@@ -335,7 +356,7 @@ public class CanvasRenderingContext2D {
     }
 
     lineTo(tP1p0[0], tP1p0[1]);
-    arc(p[0], p[1], radius, sa, ea, anticlockwise ? 1 : 0);
+    arc(p[0], p[1], radius, sa, ea, anticlockwise);
   }
 
   public void rect(float x, float y, float width, float height) {

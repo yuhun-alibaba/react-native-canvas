@@ -1,12 +1,10 @@
 package com.graphic.canvas;
 
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,23 +39,9 @@ public class CanvasViewManager extends SimpleViewManager {
   @ReactProp(name = "actions")
   public void setActions(CanvasView canvas, @Nullable ReadableArray actions) {
     int size = actions.size();
-    if (size == 0) {
-      return;
-    }
-    ArrayList<HashMap> drawingActions = new ArrayList<HashMap>();
+    if (size == 0) return;
 
-    for(int i = 0; i < size; i++) {
-      ReadableMap command = actions.getMap(i);
-      String method = command.getString("method");
-      ArrayList arguments = command.getArray("arguments").toArrayList();
-      HashMap action = new HashMap();
-
-      action.put("method", method);
-      action.put("arguments", (Object []) arguments.toArray());
-
-      drawingActions.add(action);
-    }
-
+    ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
     canvas.setActions(drawingActions);
     canvas.invalidate();
   }
@@ -66,11 +50,11 @@ public class CanvasViewManager extends SimpleViewManager {
     canvasViews.put(tag, canvas);
   }
 
-  private static CanvasView getCanvasView(String tag) {
+  public static CanvasView getCanvasView(String tag) {
     return canvasViews.get(tag);
   }
 
-  private static void removeCanvasView(String tag) {
+  public static void removeCanvasView(String tag) {
     canvasViews.remove(tag);
   }
 
