@@ -49,7 +49,7 @@ export default class PanAnimation extends Component<any> {
 
     ctx.fillStyle = "red";
     ctx.strokeStyle = "red";
-    ctx.arc(this.x, this.y, 50.0, 0, Math.PI * 2, 1);
+    ctx.arc(this.x, this.y, 50.0, 0, Math.PI * 2);
     ctx.fill();
     ctx.stroke();
     ctx.draw();
