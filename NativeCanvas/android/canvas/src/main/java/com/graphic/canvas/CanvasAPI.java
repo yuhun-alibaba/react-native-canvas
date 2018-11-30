@@ -1,10 +1,11 @@
 package com.graphic.canvas;
 
+import android.graphics.Paint;
+
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 public class CanvasAPI extends ReactContextBaseJavaModule {
 
   private static final String NAME = "CanvasAPI";
+  private static final Paint paint = new Paint();
 
   public CanvasAPI(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -28,10 +30,11 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public HashMap measureText(String text, double fontSize) {
-    // @todo measureText
-    HashMap d = new HashMap();
-    d.put("width", 10);
-    return d;
+    HashMap textMetric = new HashMap();
+    paint.setTextSize((float) fontSize);
+    float width = paint.measureText(text);
+    textMetric.put("width", width);
+    return textMetric;
   }
 
   @ReactMethod(isBlockingSynchronousMethod = true)
