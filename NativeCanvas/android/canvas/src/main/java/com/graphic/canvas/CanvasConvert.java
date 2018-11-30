@@ -46,10 +46,6 @@ public class CanvasConvert {
     return new int[]{(int) (style[3] * 255), (int) (style[0] * 255), (int) (style[1] * 255), (int) (style[2] * 255)};
   }
 
-  public static float convertDegree(float degree) {
-    return (float) (degree * 180 / Math.PI);
-  }
-
   public static Paint.Cap convertLineCap(String lineCap) {
     Paint.Cap cap = Paint.Cap.BUTT;
     if (lineCap.equals((String) "round")) {

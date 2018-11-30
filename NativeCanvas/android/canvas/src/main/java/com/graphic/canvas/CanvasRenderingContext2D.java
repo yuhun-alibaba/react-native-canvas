@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
-import android.graphics.PathEffect;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
@@ -18,44 +18,66 @@ import java.util.HashMap;
  */
 
 public class CanvasRenderingContext2D {
+  private final Paint paint = new Paint();
+  private final Path path = new Path();
+
   private Canvas canvas;
   private Float[] lastPoint; // tracking point
-  private Path path;
-  private Paint paint;
-  private float dpr;
+  private float scale;
+
   private int[] fillStyle;
   private int[] strokeStyle;
+  private float strokeLineWidth;
+  private DashPathEffect strokeLineDash;
+  private Paint.Cap strokeLineCap;
+  private Paint.Join strokeLineJoin;
+
+  private float textSize;
   private int textBaseline;
+  private Paint.Align textAlign;
 
   public CanvasRenderingContext2D() {
-    initOrResetProperty();
   }
 
   public void setCanvas(Canvas canvasInstance) {
     canvas = canvasInstance;
-    initOrResetProperty();
-    scale(dpr, dpr); // 先 scale, 不能用物理像素来画
+    setUp();
   }
 
   public void setDevicePixelRatio(float devicePixelRatio) {
-    dpr = devicePixelRatio;
+    // 由设备像素比决定缩放比，使不模糊
+    scale = devicePixelRatio;
   }
 
   /**
    * 私用方法
    */
-  private void initOrResetProperty() {
-    flushPath();
-    paint = new Paint();
+
+  private void setUp() {
     lastPoint = new Float[]{0.f, 0.f};
     fillStyle = new int[]{255, 0, 0, 0};
     strokeStyle = new int[]{255, 0, 0, 0};
+    strokeLineCap = Paint.Cap.BUTT;
+    strokeLineWidth = 1.f;
+    strokeLineJoin = Paint.Join.MITER;
+    strokeLineDash = new DashPathEffect(new float[]{0.f, 0.f}, 0);
+    textSize = 10.f;
     textBaseline = 0;
-    setLineWidth(1.f);
+    textAlign = Paint.Align.LEFT;
+
+    setUpPathAndPaint();
   }
 
-  private void flushPath() {
-    path = new Path();
+  private void setUpPathAndPaint() {
+    path.reset();
+    resetPaint();
+  }
+
+  private void resetPaint() {
+    paint.reset();
+    paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+    paint.setTextSize(textSize);
+    paint.setTextAlign(textAlign);
   }
 
   private void setPaintStyle(Paint.Style style, int[] color) {
@@ -63,15 +85,17 @@ public class CanvasRenderingContext2D {
     paint.setARGB(color[0], color[1], color[2], color[3]);
   }
 
-  private void setFillAndStrokeBeforeDrawing() {
-    setPaintStyle(Paint.Style.FILL_AND_STROKE, fillStyle);
-  }
-
-  private void setStrokePaintBeforeDrawing() {
+  private void setUpStrokePaint() {
+    resetPaint();
     setPaintStyle(Paint.Style.STROKE, strokeStyle);
+    paint.setStrokeCap(strokeLineCap);
+    paint.setStrokeWidth(strokeLineWidth);
+    paint.setStrokeJoin(strokeLineJoin);
+    paint.setPathEffect(strokeLineDash);
   }
 
-  private void setFillPaintBeforeDrawing() {
+  private void setUpFillPaint() {
+    resetPaint();
     setPaintStyle(Paint.Style.FILL, fillStyle);
   }
 
@@ -99,20 +123,32 @@ public class CanvasRenderingContext2D {
    * 绘制矩形
    */
   public void clearRect(float x, float y, float width, float height) {
+    x *= scale;
+    y *= scale;
+    width *= scale;
+    height *= scale;
     Paint clearPaint = new Paint();
     clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
     canvas.drawRect(x, y, x + width, y + height, clearPaint);
   }
 
   public void fillRect(float x, float y, float width, float height) {
+    x *= scale;
+    y *= scale;
+    width *= scale;
+    height *= scale;
     RectF rectF = new RectF(x, y, x + width, y + height);
-    setFillPaintBeforeDrawing();
+    setUpFillPaint();
     canvas.drawRect(rectF, paint);
   }
 
   public void strokeRect(float x, float y, float width, float height) {
+    x *= scale;
+    y *= scale;
+    width *= scale;
+    height *= scale;
     RectF rectF = new RectF(x, y, x + width, y + height);
-    setStrokePaintBeforeDrawing();
+    setUpStrokePaint();
     canvas.drawRect(rectF, paint);
   }
 
@@ -120,15 +156,15 @@ public class CanvasRenderingContext2D {
    * 设置文本样式
    */
   public void setFont(HashMap font) {
-    Double fontSize = (Double) font.get("fontSize");
+    Double fontSize = (Double) font.get("fontSize") * scale;
     Typeface fontFace = Typeface.SANS_SERIF;
     // @todo convert font family ...
-    paint.setTextSize(fontSize.floatValue());
     paint.setTypeface(fontFace);
+    textSize = fontSize.floatValue();
   }
 
-  public void setTextAlign(String textAlign) {
-    paint.setTextAlign(CanvasConvert.convertTextAlign(textAlign));
+  public void setTextAlign(String align) {
+    textAlign = CanvasConvert.convertTextAlign(align);
   }
 
   public void setTextBaseline(String baseline) {
@@ -139,17 +175,19 @@ public class CanvasRenderingContext2D {
    * 绘制文本
    */
   private void drawText(String text, float x, float y) {
+    x *= scale;
+    y *= scale;
     float textVerticalOffset = getTextVerticalOffset();
     canvas.drawText(text, x, y + textVerticalOffset, paint);
   }
 
   public void fillText(String text, float x, float y) {
-    setFillPaintBeforeDrawing();
+    setUpFillPaint();
     drawText(text, x, y);
   }
 
   public void strokeText(String text, float x, float y) {
-    setStrokePaintBeforeDrawing();
+    setUpStrokePaint();
     drawText(text, x, y);
   }
 
@@ -174,25 +212,29 @@ public class CanvasRenderingContext2D {
   /**
    * 线型样式
    */
+  private void setTextSize(float fontSize) {
+    textSize = fontSize;
+  }
+
   public void setLineWidth(float lineWidth) {
-    paint.setStrokeWidth(lineWidth);
+    strokeLineWidth = lineWidth;
   }
 
   public void setLineDash(float[] lineDash) {
     if (lineDash.length == 0) return;
-    paint.setPathEffect(CanvasConvert.convertLineDash(lineDash));
+    strokeLineDash = CanvasConvert.convertLineDash(lineDash);
   }
 
-  public PathEffect getLineDash() {
-    return paint.getPathEffect();
+  public DashPathEffect getLineDash() {
+    return strokeLineDash;
   }
 
   public void setLineJoin(String lineJoin) {
-    paint.setStrokeJoin(CanvasConvert.convertLineJoin(lineJoin));
+    strokeLineJoin = CanvasConvert.convertLineJoin(lineJoin);
   }
 
   public void setLineCap(String lineCap) {
-    paint.setStrokeCap(CanvasConvert.convertLineCap(lineCap));
+    strokeLineCap = CanvasConvert.convertLineCap(lineCap);
   }
 
   /**
@@ -219,21 +261,35 @@ public class CanvasRenderingContext2D {
   }
 
   public void moveTo(float x, float y) {
+    x *= scale;
+    y *= scale;
     trackPoint(x, y);
     path.moveTo(x, y);
   }
 
   public void lineTo(float x, float y) {
+    x *= scale;
+    y *= scale;
     trackPoint(x, y);
     path.lineTo(x, y);
   }
 
   public void bezierCurveTo(float cp1x, float cp1y, float cp2x, float cp2y, float x, float y) {
+    cp1x *= scale;
+    cp1y *= scale;
+    cp2x *= scale;
+    cp2y *= scale;
+    x *= scale;
+    y *= scale;
     trackPoint(x, y);
     path.cubicTo(cp1x, cp1y, cp2x, cp2y, x, y);
   }
 
   public void quadraticCurveTo(float cpx, float cpy, float x, float y) {
+    cpx *= scale;
+    cpy *= scale;
+    x *= scale;
+    y *= scale;
     trackPoint(x, y);
     path.quadTo(cpx, cpy, x, y);
   }
@@ -244,8 +300,11 @@ public class CanvasRenderingContext2D {
   }
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle, boolean anticlockwise) {
-    startAngle = CanvasConvert.convertDegree(startAngle);
-    endAngle = CanvasConvert.convertDegree(endAngle);
+    x *= scale;
+    y *= scale;
+    radius *= scale;
+    startAngle = (float) Math.toDegrees((double) startAngle);
+    endAngle = (float) Math.toDegrees((double) endAngle);
 
     if ((endAngle - startAngle) == 360) {
       path.addCircle(x, y, radius, anticlockwise ? Path.Direction.CW : Path.Direction.CCW);
@@ -262,12 +321,16 @@ public class CanvasRenderingContext2D {
     path.arcTo(rectF, startAngle, sweepAngle);
   }
 
-
   public void arcTo(float x1, float y1, float x2, float y2, float radius) {
     // 几何问题：已知两直线与圆弧半径，求圆弧的圆心坐标
     // https://sourcegraph.com/github.com/WebKit/webkit/-/blob/Source/WebCore/platform/graphics/cairo/PathCairo.cpp#L223:12
-    float x0 = lastPoint[0];
-    float y0 = lastPoint[1];
+    float x0 = lastPoint[0] * scale;
+    float y0 = lastPoint[1] * scale;
+    x1 *= scale;
+    y1 *= scale;
+    x2 *= scale;
+    y2 *= scale;
+    radius *= scale;
 
     if ((x1 == x0 && y1 == y0) || (x1 == x2 && y1 == y2) || radius == 0) {
       lineTo(x1, y1);
@@ -341,6 +404,10 @@ public class CanvasRenderingContext2D {
   }
 
   public void rect(float x, float y, float width, float height) {
+    x *= scale;
+    y *= scale;
+    width *= scale;
+    height *= scale;
     RectF rectF = new RectF(x, y, x + width, y + height);
     path.addRect(rectF, Path.Direction.CW);
   }
@@ -349,15 +416,13 @@ public class CanvasRenderingContext2D {
    * 绘制路径
    */
   public void fill() {
-    setFillAndStrokeBeforeDrawing();
+    setUpFillPaint();
     canvas.drawPath(path, paint);
-    flushPath();
   }
 
   public void stroke() {
-    setStrokePaintBeforeDrawing();
+    setUpStrokePaint();
     canvas.drawPath(path, paint);
-    flushPath();
   }
 
   public void drawFocusIfNeeded() {
@@ -398,6 +463,8 @@ public class CanvasRenderingContext2D {
   }
 
   public void translate(float x, float y) {
+    x *= scale;
+    y *= scale;
     canvas.translate(x, y);
   }
 
@@ -405,7 +472,7 @@ public class CanvasRenderingContext2D {
     // [ MSCALE_X, MSKEW_X, MTRANS_X, MSKEW_Y, MSCALE_Y, MTRANS_Y, MPERSP_0, MPERSP_1, MPERSP_2]
     // MDN canvas transform: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setTransform
     Matrix transformed = new Matrix();
-    transformed.setValues(new float[]{a, c, e, b, d, f, 0, 0, 1});
+    transformed.setValues(new float[]{a, c, e * scale, b, d, f * scale, 0, 0, 1});
     canvas.concat(transformed);
   }
 
