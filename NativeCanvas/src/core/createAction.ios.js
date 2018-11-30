@@ -64,7 +64,7 @@ export default function createAction(
 
   if (method === "arc" && args.length === 6) {
     return {
-      method: `${convertedMethod}:anticlockwise:`,
+      method: `${convertedMethod}anticlockwise:`,
       arguments: args
     };
   }
