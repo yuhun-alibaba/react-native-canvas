@@ -277,19 +277,20 @@
                 y:(CGFloat)y
            radius:(CGFloat)radius
       startAangle:(CGFloat)startAngle
-         endAngle:(CGFloat)endAangle
+         endAngle:(CGFloat)endAngle
     anticlockwise:(bool)anticlockwise
 {
-    CGContextAddArc(_context, x, y, radius, startAngle, endAangle, !anticlockwise);
+    int clockwise = anticlockwise ? 0 : 1;
+    CGContextAddArc(_context, x, y, radius, startAngle, endAngle, clockwise);
 }
 
 - (void)arc:(CGFloat)x
           y:(CGFloat)y
      radius:(CGFloat)radius
 startAangle:(CGFloat)startAngle
-   endAngle:(CGFloat)endAangle
+   endAngle:(CGFloat)endAngle
 {
-    CGContextAddArc(_context, x, y, radius, startAngle, endAangle, false);
+    [self arc:x y:y radius:radius startAangle:startAngle endAngle:endAngle anticlockwise:false];
 }
 
 - (void)arcTo:(CGFloat)x1

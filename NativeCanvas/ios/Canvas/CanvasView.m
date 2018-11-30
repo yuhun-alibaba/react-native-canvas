@@ -77,7 +77,7 @@
         } else if ([arg isKindOfClass:[NSNumber class]]) {
             NSNumber *number = (NSNumber *)arg;
             const char *numberType = [number objCType];
-            if (strcmp(numberType, @encode(BOOL)) == 0) {
+            if ((strcmp(numberType, @encode(BOOL)) == 0) || [arg isKindOfClass:[@YES class]]) {
                 bool value = [(NSNumber *)arg boolValue];
                 [invocation setArgument:&value atIndex:2 + i];
             } else if (strcmp(numberType, @encode(int)) == 0) {
