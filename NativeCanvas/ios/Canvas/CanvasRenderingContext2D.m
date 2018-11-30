@@ -280,7 +280,7 @@
          endAngle:(CGFloat)endAngle
     anticlockwise:(bool)anticlockwise
 {
-    int clockwise = anticlockwise ? 0 : 1;
+    int clockwise = anticlockwise ? 1 : 0; //以用户方向而言 0 是顺时针
     CGContextAddArc(_context, x, y, radius, startAngle, endAngle, clockwise);
 }
 
