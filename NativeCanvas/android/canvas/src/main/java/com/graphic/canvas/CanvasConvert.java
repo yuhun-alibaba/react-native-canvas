@@ -1,5 +1,8 @@
 package com.graphic.canvas;
 
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
+
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 
@@ -35,15 +38,77 @@ public class CanvasConvert {
     return drawingActions;
   }
 
-  public static int[] convertColor(int[] style) {
+  public static int[] convertColor(float[] style) {
     if (style.length != 4) {
       return new int[]{255, 0, 0, 0};
     }
     // alpha
-    return new int[]{style[3] * 255, style[0] * 255, style[1] * 255, style[2] * 255};
+    return new int[]{(int) (style[3] * 255), (int) (style[0] * 255), (int) (style[1] * 255), (int) (style[2] * 255)};
   }
 
   public static float convertDegree(float degree) {
     return (float) (degree * 180 / Math.PI);
   }
+
+  public static Paint.Cap convertLineCap(String lineCap) {
+    Paint.Cap cap = Paint.Cap.BUTT;
+    if (lineCap.equals((String) "round")) {
+      cap = Paint.Cap.ROUND;
+    } else if (lineCap.equals((String) "square")) {
+      cap = Paint.Cap.SQUARE;
+    }
+    return cap;
+  }
+
+  public static Paint.Join convertLineJoin(String lineJoin) {
+    Paint.Join join = Paint.Join.MITER;
+    if (lineJoin.equals((String) "bevel")) {
+      join = Paint.Join.BEVEL;
+    } else if (lineJoin.equals((String) "round")) {
+      join = Paint.Join.ROUND;
+    }
+    return join;
+  }
+
+  public static DashPathEffect convertLineDash(float[] lineDash) {
+    float size = lineDash.length;
+    boolean isOdd = size % 2 != 0;
+    float[] dashEffect;
+
+    if (isOdd) {
+      // 奇数变偶数
+      dashEffect = new float[lineDash.length * 2];
+    } else {
+      dashEffect = new float[lineDash.length];
+    }
+
+    for (int i = 0; i < dashEffect.length; i++) {
+      int atIndex = (int) (i % size);
+      dashEffect[i] = lineDash[atIndex];
+    }
+
+    return new DashPathEffect(dashEffect, 0);
+  }
+
+  public static Paint.Align convertTextAlign(String textAlign) {
+    Paint.Align align = Paint.Align.LEFT;
+    if (textAlign.equals((String) "right")) {
+      align = Paint.Align.RIGHT;
+    } else if (textAlign.equals((String) "center")) {
+      align = Paint.Align.CENTER;
+    }
+    return align;
+  }
+
+  public static int convertTextBaseline(String baseline) {
+    int baselineType = 0;
+    if (baseline.equals((String) "bottom")) {
+      baselineType = 1;
+    } else if (baseline.equals((String) "middle")) {
+      baselineType = 2;
+    }
+    return baselineType;
+  }
+
+
 }

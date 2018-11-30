@@ -16,23 +16,29 @@ public class CanvasView extends View {
   private static final JavaModuleWrapper module = new JavaModuleWrapper(CanvasRenderingContext2D.class);
 
   ArrayList<HashMap> actions = new ArrayList<>();
-  private final CanvasRenderingContext2D context = new CanvasRenderingContext2D();
+  private final CanvasRenderingContext2D renderingContext2D = new CanvasRenderingContext2D();
 
   public CanvasView(Context context) {
     super(context);
+    setDevicePixelRatio(context);
   }
 
   /**
    * { "method": "", "arguments": [] };
    */
-  private void runAction(String method, Object[] arguments) {
-    module.invoke(context, method, arguments);
-  }
-
   private void runActions() {
     for (HashMap action : actions) {
-      runAction((String) action.get("method"), (Object[]) action.get("arguments"));
+      module.invoke(renderingContext2D, (String) action.get("method"), (Object[]) action.get("arguments"));
     }
+  }
+
+  private void paint(Canvas canvas) {
+    renderingContext2D.setCanvas(canvas);
+    runActions();
+  }
+
+  private void setDevicePixelRatio(Context context) {
+    renderingContext2D.setDevicePixelRatio(context.getResources().getDisplayMetrics().density);
   }
 
   public void setActions(ArrayList<HashMap> drawActions) {
@@ -42,7 +48,6 @@ public class CanvasView extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
-    context.setCanvas(canvas);
-    runActions();
+    paint(canvas);
   }
 }
