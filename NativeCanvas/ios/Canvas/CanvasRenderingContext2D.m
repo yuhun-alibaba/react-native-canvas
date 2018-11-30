@@ -283,6 +283,15 @@
     CGContextAddArc(_context, x, y, radius, startAngle, endAangle, !anticlockwise);
 }
 
+- (void)arc:(CGFloat)x
+          y:(CGFloat)y
+     radius:(CGFloat)radius
+startAangle:(CGFloat)startAngle
+   endAngle:(CGFloat)endAangle
+{
+    CGContextAddArc(_context, x, y, radius, startAngle, endAangle, false);
+}
+
 - (void)arcTo:(CGFloat)x1
            y1:(CGFloat)y1
            x2:(CGFloat)x2

@@ -30,7 +30,7 @@ const methodMap = {
   lineTo: "lineTo:y:",
   bezierCurveTo: "bezierCurveTo:cp1y:cp2x:cp2y:x:y:",
   quadraticCurveTo: "quadraticCurveTo:cpy:x:y:",
-  arc: "arc:y:radius:startAangle:endAngle:anticlockwise:",
+  arc: "arc:y:radius:startAangle:endAngle:",
   arcTo: "arcTo:y1:x2:y2:radius:",
   rect: "rect:y:width:height:",
   clip: "clip",
@@ -58,6 +58,13 @@ export default function createAction(
   if (method === "clip" && args.length) {
     return {
       method: `${convertedMethod}:`,
+      arguments: args
+    };
+  }
+
+  if (method === "arc" && args.length === 6) {
+    return {
+      method: `${convertedMethod}:anticlockwise:`,
       arguments: args
     };
   }
