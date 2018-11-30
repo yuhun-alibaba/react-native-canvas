@@ -22,6 +22,7 @@ public class CanvasRenderingContext2D {
   private Float[] lastPoint; // tracking point
   private Path path;
   private Paint paint;
+  private float dpr;
   private int[] fillStyle;
   private int[] strokeStyle;
   private int textBaseline;
@@ -33,6 +34,11 @@ public class CanvasRenderingContext2D {
   public void setCanvas(Canvas canvasInstance) {
     canvas = canvasInstance;
     initOrResetProperty();
+    scale(dpr, dpr); // 先 scale, 不能用物理像素来画
+  }
+
+  public void setDevicePixelRatio(float devicePixelRatio) {
+    dpr = devicePixelRatio;
   }
 
   /**
@@ -40,19 +46,16 @@ public class CanvasRenderingContext2D {
    */
   private void initOrResetProperty() {
     flushPath();
-    flushPaint();
-    lastPoint = new Float[]{(float) 0, (float) 0};
+    paint = new Paint();
+    lastPoint = new Float[]{0.f, 0.f};
     fillStyle = new int[]{255, 0, 0, 0};
     strokeStyle = new int[]{255, 0, 0, 0};
     textBaseline = 0;
+    setLineWidth(1.f);
   }
 
   private void flushPath() {
     path = new Path();
-  }
-
-  private void flushPaint() {
-    paint = new Paint();
   }
 
   private void setPaintStyle(Paint.Style style, int[] color) {
@@ -73,17 +76,17 @@ public class CanvasRenderingContext2D {
   }
 
   private float getTextVerticalOffset() {
-    if (textBaseline == 0) return (float) 0;
+    if (textBaseline == 0) return 0.f;
 
     Paint.FontMetrics fm = paint.getFontMetrics();
-    float lineHeight = fm.bottom - fm.top + fm.leading;
+    float lineHeight = fm.ascent + fm.descent;
 
     if (textBaseline == 1) { // bottom
       return -lineHeight;
     } else if (textBaseline == 2) { // middle
       return -(lineHeight / 2);
     } else {
-      return (float) 0;
+      return 0.f;
     }
   }
 
@@ -125,23 +128,11 @@ public class CanvasRenderingContext2D {
   }
 
   public void setTextAlign(String textAlign) {
-    Paint.Align align = Paint.Align.LEFT;
-    if (textAlign.equals((String) "right")) {
-      align = Paint.Align.RIGHT;
-    } else if (textAlign.equals((String) "center")) {
-      align = Paint.Align.CENTER;
-    }
-    paint.setTextAlign(align);
+    paint.setTextAlign(CanvasConvert.convertTextAlign(textAlign));
   }
 
   public void setTextBaseline(String baseline) {
-    int baselineType = 0;
-    if (baseline.equals((String) "bottom")) {
-      baselineType = 1;
-    } else if (baseline.equals((String) "middle")) {
-      baselineType = 2;
-    }
-    textBaseline = baselineType;
+    textBaseline = CanvasConvert.convertTextBaseline(baseline);
   }
 
   /**
@@ -172,11 +163,11 @@ public class CanvasRenderingContext2D {
   /**
    * 设置填充与描边
    */
-  public void setFillStyle(int[] style) {
+  public void setFillStyle(float[] style) {
     fillStyle = CanvasConvert.convertColor(style);
   }
 
-  public void setStrokeStyle(int[] style) {
+  public void setStrokeStyle(float[] style) {
     strokeStyle = CanvasConvert.convertColor(style);
   }
 
@@ -188,22 +179,8 @@ public class CanvasRenderingContext2D {
   }
 
   public void setLineDash(float[] lineDash) {
-    float size = lineDash.length;
-    if (size == 0) return;
-
-    boolean isOdd = size % 2 != 0;
-
-    if (isOdd) {
-      // 奇数变偶数
-      float[] dashEffect = new float[lineDash.length * 2];
-      for (int i = 0; i < dashEffect.length; i++) {
-        int atIndex = (int) (i % size);
-        dashEffect[i] = lineDash[atIndex];
-      }
-      paint.setPathEffect(new DashPathEffect(dashEffect, 0));
-    } else {
-      paint.setPathEffect(new DashPathEffect(lineDash, 0));
-    }
+    if (lineDash.length == 0) return;
+    paint.setPathEffect(CanvasConvert.convertLineDash(lineDash));
   }
 
   public PathEffect getLineDash() {
@@ -211,23 +188,11 @@ public class CanvasRenderingContext2D {
   }
 
   public void setLineJoin(String lineJoin) {
-    Paint.Join join = Paint.Join.BEVEL;
-    if (lineJoin.equals((String) "miter")) {
-      join = Paint.Join.MITER;
-    } else if (lineJoin.equals((String) "round")) {
-      join = Paint.Join.ROUND;
-    }
-    paint.setStrokeJoin(join);
+    paint.setStrokeJoin(CanvasConvert.convertLineJoin(lineJoin));
   }
 
   public void setLineCap(String lineCap) {
-    Paint.Cap cap = Paint.Cap.ROUND;
-    if (lineCap.equals((String) "butt")) {
-      cap = Paint.Cap.BUTT;
-    } else if (lineCap.equals((String) "square")) {
-      cap = Paint.Cap.SQUARE;
-    }
-    paint.setStrokeCap(cap);
+    paint.setStrokeCap(CanvasConvert.convertLineCap(lineCap));
   }
 
   /**
@@ -445,7 +410,7 @@ public class CanvasRenderingContext2D {
   }
 
   public void setTransform(float a, float b, float c, float d, float e, float f) {
-    transform((float) 1, (float) 0, (float) 0, (float) 1, (float) 0, (float) 0);
+    transform(1.f, 0.f, 0.f, 1.f, 0.f, 0.f);
     transform(a, b, c, d, e, f);
   }
 

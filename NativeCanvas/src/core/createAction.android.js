@@ -4,8 +4,8 @@ import type { ActionMethod, ActionArguments } from "./types";
 
 const methodMap = {
   // styles
-  fillStyle: "setFillStyle:int[]",
-  strokeStyle: "setStrokeStyle:int[]",
+  fillStyle: "setFillStyle:float[]",
+  strokeStyle: "setStrokeStyle:float[]",
   lineWidth: "setLineWidth:float",
   lineCap: "setLineCap:String",
   lineJoin: "setLineJoin:String",
