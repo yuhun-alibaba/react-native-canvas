@@ -13,7 +13,7 @@ export default class CanvasAutoDrawing extends PureComponent<Props> {
   canvas;
 
   setRef = ref => {
-    this.canvas = ref.canvas;
+    this.canvas = ref && ref.canvas;
   };
 
   componentDidMount() {
