@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Created by sam on 2018/11/21.
  */
 
-public class JavaMethodWrapper {
+public class CanvasMethodWrapper {
 
   private static class ArgumentExtractor<T> {
     public T extractArgument(
@@ -104,41 +104,41 @@ public class JavaMethodWrapper {
 
   private static String paramTypeToString(Class typeClass) {
     if (typeClass == boolean.class) {
-      return new String("boolean");
+      return "boolean";
     } else if (typeClass == Boolean.class) {
-      return new String("Boolean");
+      return "Boolean";
     } else if (typeClass == int.class) {
-      return new String("int");
+      return "int";
     } else if (typeClass == int[].class) {
-      return new String("int[]");
+      return "int[]";
     } else if (typeClass == Integer.class) {
-      return new String("Integer");
+      return "Integer";
     } else if (typeClass == double.class) {
-      return new String("double");
+      return "double";
     } else if (typeClass == Double.class) {
-      return new String("Double");
+      return "Double";
     } else if (typeClass == float.class) {
-      return new String("float");
+      return "float";
     } else if (typeClass == float[].class) {
-      return new String("float[]");
+      return "float[]";
     } else if (typeClass == Float.class) {
-      return new String("Float");
+      return "Float";
     } else if (typeClass == String.class) {
-      return new String("String");
+      return "String";
     } else if (typeClass == HashMap.class) {
-      return new String("HashMap");
+      return "HashMap";
     } else {
-      return new String("other");
+      return "other";
     }
   }
 
-  private final String TAG = "JavaMethodWrapper";
+  private final String TAG = "CanvasMethodWrapper";
   private final Method mMethod;
   private final Class[] mParameterTypes;
   private String mMethodName;
   private ArgumentExtractor[] mArgumentExtractors;
 
-  public JavaMethodWrapper(Method method) {
+  public CanvasMethodWrapper(Method method) {
     mMethod = method;
     mMethod.setAccessible(true);
     mParameterTypes = mMethod.getParameterTypes();
@@ -151,8 +151,8 @@ public class JavaMethodWrapper {
   }
 
   private String buildName(Class[] parameterTypes) {
-    String methodName = new String(mMethod.getName());
-    String sep = new String(":");
+    String methodName = mMethod.getName();
+    String sep = ":";
 
     for (int i = 0; i < parameterTypes.length; i++) {
       if (i == 0) {

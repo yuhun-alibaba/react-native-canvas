@@ -42,15 +42,20 @@ public class CanvasConvert {
     if (style.length != 4) {
       return new int[]{255, 0, 0, 0};
     }
-    // alpha
-    return new int[]{(int) (style[3] * 255), (int) (style[0] * 255), (int) (style[1] * 255), (int) (style[2] * 255)};
+
+    return new int[]{
+      (int) (style[3] * 255), // alpha
+      (int) (style[0] * 255),
+      (int) (style[1] * 255),
+      (int) (style[2] * 255)
+    };
   }
 
   public static Paint.Cap convertLineCap(String lineCap) {
     Paint.Cap cap = Paint.Cap.BUTT;
-    if (lineCap.equals((String) "round")) {
+    if (lineCap.equals("round")) {
       cap = Paint.Cap.ROUND;
-    } else if (lineCap.equals((String) "square")) {
+    } else if (lineCap.equals("square")) {
       cap = Paint.Cap.SQUARE;
     }
     return cap;
@@ -58,9 +63,9 @@ public class CanvasConvert {
 
   public static Paint.Join convertLineJoin(String lineJoin) {
     Paint.Join join = Paint.Join.MITER;
-    if (lineJoin.equals((String) "bevel")) {
+    if (lineJoin.equals("bevel")) {
       join = Paint.Join.BEVEL;
-    } else if (lineJoin.equals((String) "round")) {
+    } else if (lineJoin.equals("round")) {
       join = Paint.Join.ROUND;
     }
     return join;
@@ -88,9 +93,9 @@ public class CanvasConvert {
 
   public static Paint.Align convertTextAlign(String textAlign) {
     Paint.Align align = Paint.Align.LEFT;
-    if (textAlign.equals((String) "right")) {
+    if (textAlign.equals("right")) {
       align = Paint.Align.RIGHT;
-    } else if (textAlign.equals((String) "center")) {
+    } else if (textAlign.equals("center")) {
       align = Paint.Align.CENTER;
     }
     return align;
@@ -98,9 +103,9 @@ public class CanvasConvert {
 
   public static int convertTextBaseline(String baseline) {
     int baselineType = 0;
-    if (baseline.equals((String) "bottom")) {
+    if (baseline.equals("bottom")) {
       baselineType = 1;
-    } else if (baseline.equals((String) "middle")) {
+    } else if (baseline.equals("middle")) {
       baselineType = 2;
     }
     return baselineType;

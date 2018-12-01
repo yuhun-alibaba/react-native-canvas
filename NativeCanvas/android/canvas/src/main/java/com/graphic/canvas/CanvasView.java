@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 
 public class CanvasView extends View {
-  private static final JavaModuleWrapper module = new JavaModuleWrapper(CanvasRenderingContext2D.class);
+  private static final CanvasMethodDelegate module = new CanvasMethodDelegate(CanvasRenderingContext2D.class);
 
   ArrayList<HashMap> actions = new ArrayList<>();
   private final CanvasRenderingContext2D renderingContext2D = new CanvasRenderingContext2D();
@@ -33,6 +33,8 @@ public class CanvasView extends View {
   }
 
   private void paint(Canvas canvas) {
+    // 不超出边界
+    canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight());
     renderingContext2D.setCanvas(canvas);
     runActions();
   }
