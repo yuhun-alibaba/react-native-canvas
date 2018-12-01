@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -15,33 +14,31 @@ import java.util.HashMap;
 
 /**
  * Created by sam on 2018/11/21.
+ * <p>
+ * API ref:
+ * https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D
  */
 
 public class CanvasRenderingContext2D {
   private final Paint paint = new Paint();
   private final Path path = new Path();
+  private final CanvasDrawingStateManager stateManager = new CanvasDrawingStateManager();
 
   private Canvas canvas;
-  private Float[] lastPoint; // tracking point
+  private CanvasDrawingState currentState;
   private float scale;
-
-  private int[] fillStyle;
-  private int[] strokeStyle;
-  private float strokeLineWidth;
-  private DashPathEffect strokeLineDash;
-  private Paint.Cap strokeLineCap;
-  private Paint.Join strokeLineJoin;
-
-  private float textSize;
-  private int textBaseline;
-  private Paint.Align textAlign;
+  private float[] lastPoint; // tracking point
 
   public CanvasRenderingContext2D() {
   }
 
   public void setCanvas(Canvas canvasInstance) {
     canvas = canvasInstance;
-    setUp();
+    stateManager.reset();
+    setUpCurrentState();
+    resetLastPoint();
+    path.reset();
+    resetPaint();
   }
 
   public void setDevicePixelRatio(float devicePixelRatio) {
@@ -52,32 +49,19 @@ public class CanvasRenderingContext2D {
   /**
    * 私用方法
    */
-
-  private void setUp() {
-    lastPoint = new Float[]{0.f, 0.f};
-    fillStyle = new int[]{255, 0, 0, 0};
-    strokeStyle = new int[]{255, 0, 0, 0};
-    strokeLineCap = Paint.Cap.BUTT;
-    strokeLineWidth = 1.f;
-    strokeLineJoin = Paint.Join.MITER;
-    strokeLineDash = new DashPathEffect(new float[]{0.f, 0.f}, 0);
-    textSize = 10.f;
-    textBaseline = 0;
-    textAlign = Paint.Align.LEFT;
-
-    setUpPathAndPaint();
+  private void setUpCurrentState() {
+    currentState = stateManager.getCurrentState();
   }
 
-  private void setUpPathAndPaint() {
-    path.reset();
-    resetPaint();
+  private void resetLastPoint() {
+    lastPoint = new float[]{0.f, 0.f};
   }
 
   private void resetPaint() {
     paint.reset();
     paint.setFlags(Paint.ANTI_ALIAS_FLAG);
-    paint.setTextSize(textSize);
-    paint.setTextAlign(textAlign);
+    paint.setTextSize(currentState.textSize);
+    paint.setTextAlign(currentState.textAlign);
   }
 
   private void setPaintStyle(Paint.Style style, int[] color) {
@@ -87,27 +71,27 @@ public class CanvasRenderingContext2D {
 
   private void setUpStrokePaint() {
     resetPaint();
-    setPaintStyle(Paint.Style.STROKE, strokeStyle);
-    paint.setStrokeCap(strokeLineCap);
-    paint.setStrokeWidth(strokeLineWidth);
-    paint.setStrokeJoin(strokeLineJoin);
-    paint.setPathEffect(strokeLineDash);
+    setPaintStyle(Paint.Style.STROKE, currentState.strokeStyle);
+    paint.setStrokeCap(currentState.strokeLineCap);
+    paint.setStrokeWidth(currentState.strokeLineWidth);
+    paint.setStrokeJoin(currentState.strokeLineJoin);
+    paint.setPathEffect(currentState.strokeLineDash);
   }
 
   private void setUpFillPaint() {
     resetPaint();
-    setPaintStyle(Paint.Style.FILL, fillStyle);
+    setPaintStyle(Paint.Style.FILL, currentState.fillStyle);
   }
 
   private float getTextVerticalOffset() {
-    if (textBaseline == 0) return 0.f;
+    if (currentState.textBaseline == 0) return 0.f;
 
     Paint.FontMetrics fm = paint.getFontMetrics();
     float lineHeight = fm.ascent + fm.descent;
 
-    if (textBaseline == 1) { // bottom
+    if (currentState.textBaseline == 1) { // bottom
       return -lineHeight;
-    } else if (textBaseline == 2) { // middle
+    } else if (currentState.textBaseline == 2) { // middle
       return -(lineHeight / 2);
     } else {
       return 0.f;
@@ -160,15 +144,15 @@ public class CanvasRenderingContext2D {
     Typeface fontFace = Typeface.SANS_SERIF;
     // @todo convert font family ...
     paint.setTypeface(fontFace);
-    textSize = fontSize.floatValue();
+    currentState.setTextSize(fontSize.floatValue());
   }
 
   public void setTextAlign(String align) {
-    textAlign = CanvasConvert.convertTextAlign(align);
+    currentState.setTextAlign(align);
   }
 
   public void setTextBaseline(String baseline) {
-    textBaseline = CanvasConvert.convertTextBaseline(baseline);
+    currentState.setTextBaseline(baseline);
   }
 
   /**
@@ -202,39 +186,35 @@ public class CanvasRenderingContext2D {
    * 设置填充与描边
    */
   public void setFillStyle(float[] style) {
-    fillStyle = CanvasConvert.convertColor(style);
+    currentState.setFillStyle(style);
   }
 
   public void setStrokeStyle(float[] style) {
-    strokeStyle = CanvasConvert.convertColor(style);
+    currentState.setStrokeStyle(style);
   }
 
   /**
    * 线型样式
    */
-  private void setTextSize(float fontSize) {
-    textSize = fontSize;
-  }
-
   public void setLineWidth(float lineWidth) {
-    strokeLineWidth = lineWidth;
+    currentState.setStrokeLineWidth(lineWidth);
   }
 
   public void setLineDash(float[] lineDash) {
     if (lineDash.length == 0) return;
-    strokeLineDash = CanvasConvert.convertLineDash(lineDash);
+    currentState.setStrokeLineDash(lineDash);
   }
 
   public DashPathEffect getLineDash() {
-    return strokeLineDash;
-  }
-
-  public void setLineJoin(String lineJoin) {
-    strokeLineJoin = CanvasConvert.convertLineJoin(lineJoin);
+    return currentState.strokeLineDash;
   }
 
   public void setLineCap(String lineCap) {
-    strokeLineCap = CanvasConvert.convertLineCap(lineCap);
+    currentState.setStrokeLineCap(lineCap);
+  }
+
+  public void setLineJoin(String lineJoin) {
+    currentState.setStrokeLineJoin(lineJoin);
   }
 
   /**
@@ -437,9 +417,9 @@ public class CanvasRenderingContext2D {
   }
 
   public void clip(String fillRule) {
-    if (fillRule.equals((String) "nonzero")) {
+    if (fillRule.equals("nonzero")) {
       clip();
-    } else if (fillRule.equals((String) "evenodd")) {
+    } else if (fillRule.equals("evenodd")) {
       path.setFillType(Path.FillType.EVEN_ODD);
       canvas.clipPath(path);
     }
@@ -503,10 +483,14 @@ public class CanvasRenderingContext2D {
    * 状态处理
    */
   public void save() {
+    stateManager.save();
+    setUpCurrentState();
     canvas.save();
   }
 
   public void restore() {
+    stateManager.restore();
+    setUpCurrentState();
     canvas.restore();
   }
 
