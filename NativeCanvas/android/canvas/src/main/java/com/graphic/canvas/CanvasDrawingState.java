@@ -41,7 +41,7 @@ public class CanvasDrawingState {
     strokeLineJoin = Paint.Join.MITER;
     strokeLineDash = new DashPathEffect(new float[]{0.f, 0.f}, 0);
     textSize = 10.f;
-    textBaseline = 0; // top
+    textBaseline = 0; // bottom
     textAlign = Paint.Align.LEFT;
     // primitive
     primitiveTextAlign = "left";

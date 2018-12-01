@@ -103,7 +103,7 @@ public class CanvasConvert {
 
   public static int convertTextBaseline(String baseline) {
     int baselineType = 0;
-    if (baseline.equals("bottom")) {
+    if (baseline.equals("top")) {
       baselineType = 1;
     } else if (baseline.equals("middle")) {
       baselineType = 2;

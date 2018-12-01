@@ -89,7 +89,7 @@ public class CanvasRenderingContext2D {
     Paint.FontMetrics fm = paint.getFontMetrics();
     float lineHeight = fm.ascent + fm.descent;
 
-    if (currentState.textBaseline == 1) { // bottom
+    if (currentState.textBaseline == 1) { // top
       return -lineHeight;
     } else if (currentState.textBaseline == 2) { // middle
       return -(lineHeight / 2);
