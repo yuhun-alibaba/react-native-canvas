@@ -40,7 +40,9 @@ export default function createCanvas(Renderer: RendererType) {
     }
 
     componentWillUnmount() {
-      this.context.release();
+      if (this.context) {
+        this.context.release();
+      }
     }
 
     render() {
