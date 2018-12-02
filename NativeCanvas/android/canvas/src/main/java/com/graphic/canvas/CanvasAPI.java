@@ -2,10 +2,12 @@ package com.graphic.canvas;
 
 import android.graphics.Paint;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.WritableMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,13 +30,14 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
     return NAME;
   }
 
-  @ReactMethod
-  public HashMap measureText(String text, double fontSize) {
+  @ReactMethod(isBlockingSynchronousMethod = true)
+  public WritableMap measureText(String text, double fontSize) {
     HashMap textMetric = new HashMap();
     paint.setTextSize((float) fontSize);
     float width = paint.measureText(text);
     textMetric.put("width", width);
-    return textMetric;
+
+    return Arguments.makeNativeMap(textMetric);
   }
 
   @ReactMethod(isBlockingSynchronousMethod = true)
