@@ -26,6 +26,8 @@
 		221E3A75219AA6D60088FE23 /* CanvasViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2274D2E6219A58FC00A858E5 /* CanvasViewManager.m */; };
 		2266A260219BFDB000CCBA1C /* CanvasConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 2266A25D219BC2FF00CCBA1C /* CanvasConvert.m */; };
 		2275AADC21A392B000786656 /* CanvasAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2275AADB21A392B000786656 /* CanvasAPI.m */; };
+		22A3A8F121B3F3A900F42A5F /* CanvasMethodDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A3A8F021B3F3A900F42A5F /* CanvasMethodDelegate.m */; };
+		22A3A8F421B3FF5000F42A5F /* CanvasMethodWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 22A3A8F321B3FF5000F42A5F /* CanvasMethodWrapper.m */; };
 		22EB12AB219AAC5000B9BD0D /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EB1281219AAC5000B9BD0D /* CanvasView.m */; };
 		22EB12AC219AAC5000B9BD0D /* CanvasRenderingContext2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -349,6 +351,10 @@
 		2274D2E6219A58FC00A858E5 /* CanvasViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasViewManager.m; sourceTree = "<group>"; };
 		2275AADA21A392B000786656 /* CanvasAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasAPI.h; sourceTree = "<group>"; };
 		2275AADB21A392B000786656 /* CanvasAPI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasAPI.m; sourceTree = "<group>"; };
+		22A3A8EF21B3F3A900F42A5F /* CanvasMethodDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasMethodDelegate.h; sourceTree = "<group>"; };
+		22A3A8F021B3F3A900F42A5F /* CanvasMethodDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasMethodDelegate.m; sourceTree = "<group>"; };
+		22A3A8F221B3FF5000F42A5F /* CanvasMethodWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CanvasMethodWrapper.h; sourceTree = "<group>"; };
+		22A3A8F321B3FF5000F42A5F /* CanvasMethodWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CanvasMethodWrapper.m; sourceTree = "<group>"; };
 		22EB1281219AAC5000B9BD0D /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
 		22EB1282219AAC5000B9BD0D /* CanvasRenderingContext2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasRenderingContext2D.m; sourceTree = "<group>"; };
 		22EB1283219AAC5000B9BD0D /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
@@ -553,6 +559,10 @@
 				2201240421A0FD7D003D28D8 /* CanvasTextBaseline.h */,
 				2275AADA21A392B000786656 /* CanvasAPI.h */,
 				2275AADB21A392B000786656 /* CanvasAPI.m */,
+				22A3A8EF21B3F3A900F42A5F /* CanvasMethodDelegate.h */,
+				22A3A8F021B3F3A900F42A5F /* CanvasMethodDelegate.m */,
+				22A3A8F221B3FF5000F42A5F /* CanvasMethodWrapper.h */,
+				22A3A8F321B3FF5000F42A5F /* CanvasMethodWrapper.m */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -1191,6 +1201,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2266A260219BFDB000CCBA1C /* CanvasConvert.m in Sources */,
+				22A3A8F121B3F3A900F42A5F /* CanvasMethodDelegate.m in Sources */,
+				22A3A8F421B3FF5000F42A5F /* CanvasMethodWrapper.m in Sources */,
 				2275AADC21A392B000786656 /* CanvasAPI.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
