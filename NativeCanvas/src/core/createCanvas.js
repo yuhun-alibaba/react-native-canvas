@@ -22,7 +22,8 @@ export default function createCanvas(Renderer: RendererType) {
     static propTypes = CanvasPropTypes;
 
     nativeID = this.props.nativeID || getNativeID();
-    canvas = new Renderer(new CanvasRenderingContext2D(this));
+    renderingContext = new CanvasRenderingContext2D(this);
+    canvas = new Renderer(this.renderingContext);
     ref;
 
     setRef = ref => {
@@ -40,9 +41,8 @@ export default function createCanvas(Renderer: RendererType) {
     }
 
     componentWillUnmount() {
-      if (this.context) {
-        this.context.release();
-      }
+      // @todo should auto realse
+      this.renderingContext.release();
     }
 
     render() {
