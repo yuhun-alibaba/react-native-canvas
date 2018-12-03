@@ -8,6 +8,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.UiThreadUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,17 +42,21 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod(isBlockingSynchronousMethod = true)
-  public Integer drawSync(String tag, ReadableArray actions) {
+  public Integer drawSync(final String tag, ReadableArray actions) {
     int size = actions.size();
     if (size == 0) return 0;
 
-    ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
-    CanvasView canvas = CanvasViewManager.getCanvasView(tag);
-
-    if (canvas != null) {
-      canvas.setActions(drawingActions);
-      canvas.invalidate();
-    }
+    final ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
+    UiThreadUtil.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        CanvasView canvas = CanvasViewManager.getCanvasView(tag);
+        if (canvas != null) {
+          canvas.setActions(drawingActions);
+          canvas.invalidate();
+        }
+      }
+    });
 
     return 1;
   }
