@@ -3,12 +3,11 @@ package com.graphic.canvas;
 import android.graphics.Paint;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.UiThreadUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,16 +46,12 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
     if (size == 0) return 0;
 
     final ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
-    UiThreadUtil.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        CanvasView canvas = CanvasViewManager.getCanvasView(tag);
-        if (canvas != null) {
-          canvas.setActions(drawingActions);
-          canvas.invalidate();
-        }
-      }
-    });
+
+    CanvasTextureView canvas = CanvasViewManager.getCanvasView(tag);
+    if (canvas != null) {
+      canvas.setActions(drawingActions);
+      canvas.drawOutput();
+    }
 
     return 1;
   }

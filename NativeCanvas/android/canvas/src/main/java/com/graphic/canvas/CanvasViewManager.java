@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 public class CanvasViewManager extends SimpleViewManager {
 
   private static final String NAME = "CanvasView";
-  private static final HashMap<String, CanvasView> canvasViews = new HashMap<>();
+  private static final HashMap<String, CanvasTextureView> canvasViews = new HashMap<>();
 
   @Override
   public String getName() {
@@ -25,32 +25,32 @@ public class CanvasViewManager extends SimpleViewManager {
   }
 
   @Override
-  public CanvasView createViewInstance(ThemedReactContext context) {
-    return new CanvasView(context);
+  public CanvasTextureView createViewInstance(ThemedReactContext context) {
+    return new CanvasTextureView(context);
   }
 
   @ReactProp(name = "nativeID")
-  public void setNativeID(CanvasView canvas, @Nullable String nativeID) {
+  public void setNativeID(CanvasTextureView canvas, @Nullable String nativeID) {
     if (getCanvasView(nativeID) == null) {
       setCanvasView(nativeID, canvas);
     }
   }
 
   @ReactProp(name = "actions")
-  public void setActions(CanvasView canvas, @Nullable ReadableArray actions) {
+  public void setActions(CanvasTextureView canvas, @Nullable ReadableArray actions) {
     int size = actions.size();
     if (size == 0) return;
 
     ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
     canvas.setActions(drawingActions);
-    canvas.invalidate();
+    canvas.drawOutput();
   }
 
-  private static void setCanvasView(String tag, CanvasView canvas) {
+  private static void setCanvasView(String tag, CanvasTextureView canvas) {
     canvasViews.put(tag, canvas);
   }
 
-  public static CanvasView getCanvasView(String tag) {
+  public static CanvasTextureView getCanvasView(String tag) {
     return canvasViews.get(tag);
   }
 
