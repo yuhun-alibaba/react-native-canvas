@@ -8,5 +8,7 @@
 // import App from "./examples/f2/column";
 // import App from "./examples/f2";
 import App from "./examples/echarts/k";
+// import App from "./examples/echarts/pie";
+// import App from "./examples/echarts/gauge";
 
 export default App;
