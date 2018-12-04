@@ -3,6 +3,7 @@ package com.graphic.canvas;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.ViewProps;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import javax.annotation.Nullable;
 public class CanvasViewManager extends SimpleViewManager {
 
   private static final String NAME = "CanvasView";
-  private static final HashMap<String, CanvasTextureView> canvasViews = new HashMap<>();
+  private static final HashMap<String, CanvasTextureView> canvasViews = new HashMap();
 
   @Override
   public String getName() {
@@ -29,21 +30,26 @@ public class CanvasViewManager extends SimpleViewManager {
     return new CanvasTextureView(context);
   }
 
+  @ReactProp(name = ViewProps.BACKGROUND_COLOR, customType = "Color")
+  public void setBackgroundColor(CanvasTextureView view, @Nullable Integer color) {
+    view.setBackgroundColor(color);
+  }
+
   @ReactProp(name = "nativeID")
-  public void setNativeID(CanvasTextureView canvas, @Nullable String nativeID) {
+  public void setNativeID(CanvasTextureView view, @Nullable String nativeID) {
     if (getCanvasView(nativeID) == null) {
-      setCanvasView(nativeID, canvas);
+      setCanvasView(nativeID, view);
     }
   }
 
   @ReactProp(name = "actions")
-  public void setActions(CanvasTextureView canvas, @Nullable ReadableArray actions) {
+  public void setActions(CanvasTextureView view, @Nullable ReadableArray actions) {
     int size = actions.size();
     if (size == 0) return;
 
     ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
-    canvas.setActions(drawingActions);
-    canvas.drawOutput();
+    view.setActions(drawingActions);
+    view.drawOutput();
   }
 
   private static void setCanvasView(String tag, CanvasTextureView canvas) {

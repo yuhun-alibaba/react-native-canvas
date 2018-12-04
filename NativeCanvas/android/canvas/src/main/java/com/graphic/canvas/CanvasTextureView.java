@@ -24,6 +24,7 @@ public class CanvasTextureView extends TextureView {
   private final String TAG = "CanvasTextureView";
   private ArrayList<HashMap> actions = new ArrayList();
   private Surface mSurface;
+  private Integer mBackgroundColor;
 
   public CanvasTextureView(Context context) {
     super(context);
@@ -68,7 +69,11 @@ public class CanvasTextureView extends TextureView {
 
   private void drawCanvas(Canvas canvas) {
     canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-    canvas.drawColor(Color.rgb(255, 255, 255));
+    if (mBackgroundColor != null) {
+      canvas.drawColor(mBackgroundColor);
+    } else {
+      canvas.drawColor(Color.rgb(255, 255, 255));
+    }
     canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight());
     renderingContext2D.setCanvas(canvas);
     runActions();
@@ -76,6 +81,10 @@ public class CanvasTextureView extends TextureView {
 
   public void setActions(ArrayList<HashMap> drawActions) {
     actions = new ArrayList(drawActions);
+  }
+
+  public void setBackgroundColor(Integer color) {
+    mBackgroundColor = color;
   }
 
   public void drawOutput() {
