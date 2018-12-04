@@ -1,12 +1,11 @@
 // @flow
-// Auto drawing when component did mount
 
 import React, { PureComponent } from "react";
 
 import createPanResponder from "../createPanResponder";
 import createCanvas from "../../core/createCanvas";
-import F2 from "./adaption";
 import Renderer from "./renderer";
+import F2 from "./adaption";
 
 type Props = {
   style?: any,
@@ -21,8 +20,6 @@ export default class F2Canvas extends PureComponent<Props> {
   setRef = ref => {
     this.canvas = ref && ref.canvas;
   };
-
-  isInResponse = false;
 
   createTouchEvent(name: string) {
     return ({ nativeEvent }) => {

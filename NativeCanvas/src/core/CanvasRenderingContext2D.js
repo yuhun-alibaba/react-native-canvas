@@ -76,10 +76,16 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
    */
 
   set fillStyle(fillStyle) {
+    if (fillStyle === "none" || fillStyle === "transparent") {
+      return;
+    }
     this.enqueue(this.createAction("fillStyle", [extractColor(fillStyle)]));
   }
 
   set strokeStyle(strokeStyle) {
+    if (strokeStyle === "none" || strokeStyle === "transparent") {
+      return;
+    }
     this.enqueue(this.createAction("strokeStyle", [extractColor(strokeStyle)]));
   }
 
