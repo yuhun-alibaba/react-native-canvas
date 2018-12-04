@@ -73,7 +73,7 @@ public class CanvasRenderingContext2D {
     resetPaint();
     setPaintStyle(Paint.Style.STROKE, currentState.strokeStyle);
     paint.setStrokeCap(currentState.strokeLineCap);
-    paint.setStrokeWidth(currentState.strokeLineWidth);
+    paint.setStrokeWidth(currentState.strokeLineWidth * scale);
     paint.setStrokeJoin(currentState.strokeLineJoin);
     paint.setPathEffect(currentState.strokeLineDash);
   }
