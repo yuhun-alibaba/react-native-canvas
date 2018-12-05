@@ -3,8 +3,6 @@
 
 import F2 from "@antv/f2";
 
-F2.Util.isWx = true;
-
 F2.Util.addEventListener = function(source, type, listener) {
   source.addListener(type, listener);
 };

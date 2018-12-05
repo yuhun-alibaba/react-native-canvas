@@ -18,6 +18,14 @@ export default class Renderer {
     this._chart = chart;
   }
 
+  attachEvent() {
+    // noop
+  }
+
+  detachEvent() {
+    // noop
+  }
+
   dispatchEvent(name, x, y) {
     this._chart._zr.handler.dispatch(name, {
       preventDefault: () => {},
