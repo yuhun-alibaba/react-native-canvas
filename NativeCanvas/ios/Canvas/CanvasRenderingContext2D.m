@@ -29,6 +29,11 @@
     _textBaseline = @(CanvasTextBaselineTop);
 }
 
+- (void)dealloc
+{
+    CGPathRelease(_path);
+}
+
 #pragma 绘制矩形
 - (void)clearRect:(CGFloat)x
                 y:(CGFloat)y
@@ -45,8 +50,7 @@
           height:(CGFloat)height
 {
     CGRect rect = CGRectMake(x, y, width, height);
-    CGContextAddRect(_context, rect);
-    CGContextDrawPath(_context, kCGPathFill);
+    CGContextFillRect(_context, rect);
 }
 
 - (void)strokeRect:(CGFloat)x
@@ -55,8 +59,7 @@
             height:(CGFloat)height
 {
     CGRect rect = CGRectMake(x, y, width, height);
-    CGContextAddRect(_context, rect);
-    CGContextDrawPath(_context, kCGPathStroke);
+    CGContextStrokeRect(_context, rect);
 }
 
 #pragma 设置文本样式
@@ -237,22 +240,23 @@
 #pragma 生成路径
 - (void)beginPath
 {
-    CGContextBeginPath(_context);
+    CGPathRelease(_path);
+    _path = CGPathCreateMutable();
 }
 
 - (void)closePath
 {
-    CGContextClosePath(_context);
+    CGPathCloseSubpath(_path);
 }
 
 - (void)moveTo:(CGFloat)x y:(CGFloat)y
 {
-    CGContextMoveToPoint(_context, x, y);
+    CGPathMoveToPoint(_path, NULL, x, y);
 }
 
 - (void)lineTo:(CGFloat)x y:(CGFloat)y
 {
-    CGContextAddLineToPoint(_context, x, y);
+    CGPathAddLineToPoint(_path, NULL, x, y);
 }
 
 - (void)bezierCurveTo:(CGFloat)cp1x
@@ -262,7 +266,7 @@
                     x:(CGFloat)x
                     y:(CGFloat)y
 {
-    CGContextAddCurveToPoint(_context, cp1x, cp1y, cp2x, cp2y, x, y);
+    CGPathAddCurveToPoint(_path, NULL, cp1x, cp1y, cp2x, cp2y, x, y);
 }
 
 - (void)quadraticCurveTo:(CGFloat)cpx
@@ -270,7 +274,7 @@
                        x:(CGFloat)x
                        y:(CGFloat)y
 {
-    CGContextAddQuadCurveToPoint(_context, cpx, cpy, x, y);
+    CGPathAddQuadCurveToPoint(_path, NULL, cpx, cpy, x, y);
 }
 
 - (void)arc:(CGFloat)x
@@ -281,7 +285,7 @@
     anticlockwise:(bool)anticlockwise
 {
     int clockwise = anticlockwise ? 1 : 0; //以用户方向而言 0 是顺时针
-    CGContextAddArc(_context, x, y, radius, startAngle, endAngle, clockwise);
+    CGPathAddArc(_path, NULL, x, y, radius, startAngle, endAngle, clockwise);
 }
 
 - (void)arc:(CGFloat)x
@@ -299,7 +303,7 @@ startAangle:(CGFloat)startAngle
            y2:(CGFloat)y2
        radius:(CGFloat)radius
 {
-    CGContextAddArcToPoint(_context, x1, y1, x2, y2, radius);
+    CGPathAddArcToPoint(_path, NULL, x1, y1, x2, y2, radius);
 }
 
 - (void)rect:(CGFloat)x
@@ -308,18 +312,20 @@ startAangle:(CGFloat)startAngle
       height:(CGFloat)height
 {
     CGRect rect = CGRectMake(x, y, width, height);
-    CGContextAddRect(_context, rect);
+    CGPathAddRect(_path, NULL, rect);
 }
 
 #pragma 绘制路径
 - (void)fill
 {
-    CGContextDrawPath(_context, kCGPathFillStroke);
+    CGContextAddPath(_context, _path);
+    CGContextFillPath(_context);
 }
 
 - (void)stroke
 {
-    CGContextDrawPath(_context, kCGPathStroke);
+    CGContextAddPath(_context, _path);
+    CGContextStrokePath(_context);
 }
 
 - (void)drawFocusIfNeeded

@@ -15,6 +15,7 @@
 @interface CanvasRenderingContext2D : NSObject
 
 @property (nonatomic, assign) CGContextRef context;
+@property (nonatomic, assign) CGMutablePathRef path;
 
 #pragma 线型
 @property (nonatomic, assign) CanvasCGFloatArray lineDash;
