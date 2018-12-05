@@ -63,6 +63,7 @@ export default class Animation extends Component<Props, State> {
     const ctx = this.renderingContext;
 
     ctx.strokeStyle = "red";
+    ctx.beginPath();
     ctx.arc(x + 100, y + 100, 50.0, 0, Math.PI * 2);
     ctx.stroke();
     ctx.draw();

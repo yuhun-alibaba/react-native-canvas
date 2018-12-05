@@ -20,10 +20,13 @@ export default class Simple extends Component<any> {
 
     ctx.translate(10, 10);
     ctx.save();
-    ctx.arc(3, 0, 3, 0, 6.283185307179586, false);
+    ctx.beginPath();
+    ctx.arc(10, 10, 5, 0, 6.283185307179586, false);
     ctx.fill();
     ctx.restore();
     ctx.save();
+    ctx.fillRect(10, 10, 20, 20);
+    ctx.strokeRect(10, 10, 20, 20);
     ctx.fillText("其他  2%", 12, -8);
     ctx.restore();
 
