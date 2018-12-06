@@ -63,6 +63,7 @@ export default function createAction(
   }
 
   if (method === "arc" && args.length === 6) {
+    args[5] = !!args[5];
     return {
       method: `${convertedMethod}:boolean`,
       arguments: args

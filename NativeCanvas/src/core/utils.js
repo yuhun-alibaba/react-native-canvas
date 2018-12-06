@@ -42,7 +42,7 @@ function parseFontString(font) {
   const isBold = /bold/.exec(match[1]);
   const isItalic = /italic/.exec(match[1]);
   cachedFontObjectsFromString[font] = {
-    fontFamily: fontFamily,
+    // fontFamily: fontFamily,
     fontSize: fontSize,
     fontWeight: isBold ? "bold" : "normal",
     fontStyle: isItalic ? "italic" : "normal"
