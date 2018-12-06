@@ -25,7 +25,7 @@
     if (!_context) {
         _context = [CanvasRenderingContext2D new];
     }
-    _context.context = context;
+    [_context setContext:context];
 }
 
 - (void)invalidate

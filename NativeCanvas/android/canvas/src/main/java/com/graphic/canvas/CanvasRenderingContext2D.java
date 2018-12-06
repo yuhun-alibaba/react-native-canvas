@@ -474,8 +474,13 @@ public class CanvasRenderingContext2D {
   }
 
   public void setTransform(float a, float b, float c, float d, float e, float f) {
-    transform(1.f, 0.f, 0.f, 1.f, 0.f, 0.f);
+    resetTransform();
     transform(a, b, c, d, e, f);
+  }
+
+  public void resetTransform() {
+    matrix.reset();
+    canvas.setMatrix(matrix);
   }
 
   /**

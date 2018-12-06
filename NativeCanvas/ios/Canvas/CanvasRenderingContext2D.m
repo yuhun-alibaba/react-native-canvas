@@ -29,6 +29,13 @@
     _textBaseline = @(CanvasTextBaselineTop);
 }
 
+- (void)setContext:(CGContextRef)context
+{
+    _context = CGContextRetain(context);
+    _originMatrix = CGContextGetCTM(_context);
+    CGContextRelease(context);
+}
+
 - (void)dealloc
 {
     CGPathRelease(_path);
@@ -374,6 +381,9 @@ startAangle:(CGFloat)startAngle
     CGContextTranslateCTM(_context, x, y);
 }
 
+// CGAffineTransform 坐标系是与用户坐标系的转置矩阵
+// MDN canvas transform:
+// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setTransform
 - (void)transform:(CGFloat)a
                 b:(CGFloat)b
                 c:(CGFloat)c
@@ -391,8 +401,15 @@ startAangle:(CGFloat)startAngle
                    e:(CGFloat)e
                    f:(CGFloat)f
 {
-    [self transform:1 b:0 c:0 d:1 e:0 f:0];
+    [self resetTransform];
     [self transform:a b:b c:c d:d e:e f:f];
+}
+
+- (void)resetTransform
+{
+    CGAffineTransform matrix = CGContextGetCTM(_context);
+    CGContextConcatCTM(_context, CGAffineTransformInvert(matrix));
+    CGContextConcatCTM(_context, _originMatrix);
 }
 
 #pragma 绘制图像

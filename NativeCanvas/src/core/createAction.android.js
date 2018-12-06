@@ -41,6 +41,7 @@ const methodMap = {
   translate: "translate:float:float",
   transform: "transform:float:float:float:float:float:float",
   setTransform: "setTransform:float:float:float:float:float:float",
+  resetTransform: "resetTransform",
   drawImage: "drawImage", // not implement
   createImageData: "createImageData", // not implement
   getImageData: "getImageData", // not implement

@@ -16,6 +16,7 @@
 
 @property (nonatomic, assign) CGContextRef context;
 @property (nonatomic, assign) CGMutablePathRef path;
+@property (nonatomic, assign) CGAffineTransform originMatrix;
 
 #pragma 线型
 @property (nonatomic, assign) CanvasCGFloatArray lineDash;
@@ -102,6 +103,7 @@
 - (void)translate:(CGFloat)x y:(CGFloat)y;
 - (void)transform:(CGFloat)a b:(CGFloat)b c:(CGFloat)c d:(CGFloat)d e:(CGFloat)e f:(CGFloat)f;
 - (void)setTransform:(CGFloat)a b:(CGFloat)b c:(CGFloat)c d:(CGFloat)d e:(CGFloat)e f:(CGFloat)f;
+- (void)resetTransform;
 
 #pragma 绘制图像
 - (void)drawImage;

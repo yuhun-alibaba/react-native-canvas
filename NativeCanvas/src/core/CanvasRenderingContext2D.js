@@ -108,7 +108,7 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
   }
 
   set lineDashOffset(lineDashOffset) {
-    this.enqueue(this.createAction("lineDashOffset", [lineDashOffset]));
+    // this.enqueue(this.createAction("lineDashOffset", [lineDashOffset]));
   }
 
   set font(font) {
@@ -129,11 +129,11 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
   }
 
   set shadowColor(shadowColor) {
-    this.enqueue(this.createAction("shadowColor", [shadowColor]));
+    // this.enqueue(this.createAction("shadowColor", [shadowColor]));
   }
 
   set shadowBlur(shadowBlur) {
-    this.enqueue(this.createAction("shadowBlur", [shadowBlur]));
+    // this.enqueue(this.createAction("shadowBlur", [shadowBlur]));
   }
 
   /**
@@ -233,6 +233,10 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
 
   setTransform(...args) {
     this.enqueue(this.createAction("setTransform", args));
+  }
+
+  resetTransform() {
+    this.enqueue(this.createAction("resetTransform", []));
   }
 
   drawImage(...args) {

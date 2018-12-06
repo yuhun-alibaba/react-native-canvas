@@ -41,6 +41,7 @@ const methodMap = {
   translate: "translate:y:",
   transform: "transform:b:c:d:e:f:",
   setTransform: "setTransform:b:c:d:e:f:",
+  resetTransform: "resetTransform",
   drawImage: "drawImage:", // not implement
   createImageData: "createImageData:", // not implement
   getImageData: "getImageData:", // not implement
