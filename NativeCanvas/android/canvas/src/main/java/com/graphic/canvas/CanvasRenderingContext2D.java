@@ -22,6 +22,7 @@ import java.util.HashMap;
 public class CanvasRenderingContext2D {
   private final Paint paint = new Paint();
   private final Path path = new Path();
+  private final Matrix matrix = new Matrix();
   private final CanvasDrawingStateManager stateManager = new CanvasDrawingStateManager();
 
   private Canvas canvas;
@@ -101,6 +102,20 @@ public class CanvasRenderingContext2D {
   private void trackPoint(float x, float y) {
     lastPoint[0] = x;
     lastPoint[1] = y;
+  }
+
+  /**
+   * Returns the floor modulus of the float arguments. Java modulus will return a negative remainder
+   * when the divisor is negative. Modulus should always be positive. This mimics the behavior of
+   * Math.floorMod, introduced in Java 8.
+   */
+  private float modulus(float x, float y) {
+    float remainder = x % y;
+    float modulus = remainder;
+    if (remainder < 0) {
+      modulus += y;
+    }
+    return modulus;
   }
 
   /**
@@ -233,7 +248,8 @@ public class CanvasRenderingContext2D {
    * 生成路径
    */
   public void beginPath() {
-    path.rewind();
+    path.reset();
+    resetLastPoint();
   }
 
   public void closePath() {
@@ -280,25 +296,26 @@ public class CanvasRenderingContext2D {
   }
 
   public void arc(float x, float y, float radius, float startAngle, float endAngle, boolean anticlockwise) {
+    // 参考自 react-native art/ARTShapeShadowNode.java
     x *= scale;
     y *= scale;
     radius *= scale;
     startAngle = (float) Math.toDegrees((double) startAngle);
     endAngle = (float) Math.toDegrees((double) endAngle);
-
-    if ((endAngle - startAngle) == 360) {
-      path.addCircle(x, y, radius, anticlockwise ? Path.Direction.CW : Path.Direction.CCW);
-      return;
-    }
-    if (endAngle < startAngle) {
-      endAngle = 360 + endAngle;
-    }
     float sweepAngle = endAngle - startAngle;
-    if (anticlockwise) { //  逆时针
-      sweepAngle = -sweepAngle;
+
+    if (Math.abs(sweepAngle) >= 360) {
+      path.addCircle(x, y, radius, anticlockwise ? Path.Direction.CCW : Path.Direction.CW);
+    } else {
+      sweepAngle = modulus(sweepAngle, 360);
+      if (anticlockwise && sweepAngle < 360) {
+        // anticlockwise sweeps are negative
+        sweepAngle = -1 * (360 - sweepAngle);
+      }
+
+      RectF oval = new RectF(x - radius, y - radius, x + radius, y + radius);
+      path.arcTo(oval, startAngle, sweepAngle);
     }
-    RectF rectF = new RectF(x - radius, y - radius, x + radius, y + radius);
-    path.arcTo(rectF, startAngle, sweepAngle);
   }
 
   public void arcTo(float x1, float y1, float x2, float y2, float radius) {
@@ -451,9 +468,9 @@ public class CanvasRenderingContext2D {
   public void transform(float a, float b, float c, float d, float e, float f) {
     // [ MSCALE_X, MSKEW_X, MTRANS_X, MSKEW_Y, MSCALE_Y, MTRANS_Y, MPERSP_0, MPERSP_1, MPERSP_2]
     // MDN canvas transform: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setTransform
-    Matrix transformed = new Matrix();
-    transformed.setValues(new float[]{a, c, e * scale, b, d, f * scale, 0, 0, 1});
-    canvas.concat(transformed);
+    matrix.reset();
+    matrix.setValues(new float[]{a, c, e * scale, b, d, f * scale, 0, 0, 1});
+    canvas.concat(matrix);
   }
 
   public void setTransform(float a, float b, float c, float d, float e, float f) {

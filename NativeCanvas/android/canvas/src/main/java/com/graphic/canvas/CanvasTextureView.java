@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Region;
 import android.graphics.SurfaceTexture;
 import android.util.Log;
 import android.view.Surface;
@@ -74,7 +75,7 @@ public class CanvasTextureView extends TextureView {
     } else {
       canvas.drawColor(Color.rgb(255, 255, 255));
     }
-    canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    canvas.clipRect(0, 0, canvas.getWidth(), canvas.getHeight(), Region.Op.REPLACE);
     renderingContext2D.setCanvas(canvas);
     runActions();
   }
