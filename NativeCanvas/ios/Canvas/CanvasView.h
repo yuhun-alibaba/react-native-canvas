@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <React/RCTLog.h>
 #import "CanvasRenderingContext2D.h"
+#import "CanvasMethodDelegate.h"
 
 
 @interface CanvasView : UIView

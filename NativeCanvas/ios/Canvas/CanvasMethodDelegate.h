@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, CanvasMethodWrapper *> *methods;
 
-- (void)initWithClass:(Class)moduleClass;
+- (id)initWithClass:(Class)moduleClass;
 - (void)invoke:object method:(NSString *)method arguments:(NSArray *)arguments;
 
 @end

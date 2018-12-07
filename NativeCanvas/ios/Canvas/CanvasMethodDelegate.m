@@ -11,10 +11,11 @@
 
 @implementation CanvasMethodDelegate
 
-- (void)initWithClass:(Class)moduleClass
+- (instancetype)initWithClass:(Class)moduleClass
 {
     _methods = [NSMutableDictionary new];
     [self findMethods:moduleClass];
+    return self;
 }
 
 - (void)findMethods:(Class)moduleClass
@@ -34,6 +35,7 @@
 {
     if (_methods[method] != nil) {
         [_methods[method] invoke:object arguments:arguments];
+        return;
     }
     RCTLog(@"CanvasMethodDelegate: Could not find method %@", method);
 }

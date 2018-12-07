@@ -8,16 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
-
-typedef void (^ArgumentExcator)(NSArray *, int);
+#import <React/RCTLog.h>
 
 
 @interface CanvasMethodWrapper : NSObject
 
 @property (nonatomic, assign) NSString *method;
 @property (nonatomic, assign) Class moduleClass;
-@property (nonatomic, assign) NSInvocation *invocation;
-@property (nonatomic, assign) NSMutableArray<ArgumentExcator> *argumentExcators;
+@property (nonatomic, strong) NSInvocation *invocation;
+@property (nonatomic, assign) NSUInteger argumentsNumber;
 
 - (instancetype)initWithMethod:(NSString *)method moduleClass:(Class)moduleClass;
 - (void)invoke:(id)instance arguments:(NSArray *)arguments;
