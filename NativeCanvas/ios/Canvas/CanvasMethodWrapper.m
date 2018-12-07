@@ -28,6 +28,48 @@
     _invocation.selector = selector;
 };
 
+- (void)buildExtractors:(NSArray *)arguments
+{
+    // 第一次运行将传入的参数做正确的入参，生成参数处理方法
+    // Warning: 依赖入参的类型检查！！
+    NSMutableArray<ArgumentExcator> *argumentExtractors = [[NSMutableArray alloc] initWithCapacity:_argumentsNumber];
+    NSInvocation *invocation = _invocation;
+
+#define SET_ARGUMENT_BLOCK(_logic)                                           \
+    [argumentExtractors addObject:^(NSArray * arguments, NSUInteger index) { \
+        _logic                                                               \
+            [invocation setArgument:&value atIndex:(index) + 2];             \
+    }]
+
+#define SET_ARGUMENT_NSNUMBER_BLOCK(_type, _typeValue) SET_ARGUMENT_BLOCK( \
+    NSNumber *number = (NSNumber *)arguments[index];                       \
+    _type value = [number _typeValue];)
+
+    for (NSUInteger i = 0; i < _argumentsNumber; i++) {
+        NSObject *argument = [arguments objectAtIndex:i];
+
+        if ([argument isKindOfClass:[NSNull class]]) {
+            argument = nil;
+        } else if ([argument isKindOfClass:[NSNumber class]]) {
+            NSNumber *number = (NSNumber *)argument;
+            const char *numberType = [number objCType];
+            if ((strcmp(numberType, @encode(BOOL)) == 0) || [number isKindOfClass:[@YES class]]) {
+                SET_ARGUMENT_NSNUMBER_BLOCK(bool, boolValue);
+            } else if (strcmp(numberType, @encode(int)) == 0) {
+                SET_ARGUMENT_NSNUMBER_BLOCK(int, intValue);
+            } else {
+                SET_ARGUMENT_NSNUMBER_BLOCK(CGFloat, floatValue);
+            }
+            continue;
+        }
+        SET_ARGUMENT_BLOCK(
+            NSObject *value = arguments[index];);
+    };
+
+    _invocation = invocation;
+    _argumentExcators = argumentExtractors;
+}
+
 - (void)invoke:(id)instance arguments:(NSArray *)arguments
 {
     if (_invocation == nil) {
@@ -39,30 +81,13 @@
         return;
     }
 
+    if (_argumentExcators == nil) {
+        [self buildExtractors:arguments];
+    }
+
     for (NSUInteger i = 0; i < _argumentsNumber; i++) {
-        NSObject *argument = [arguments objectAtIndex:i];
-        NSUInteger index = i + 2;
-
-        if ([argument isKindOfClass:[NSNull class]]) {
-            argument = nil;
-        } else if ([argument isKindOfClass:[NSNumber class]]) {
-            NSNumber *number = (NSNumber *)argument;
-            const char *numberType = [number objCType];
-            if ((strcmp(numberType, @encode(BOOL)) == 0) || [number isKindOfClass:[@YES class]]) {
-                bool value = [number boolValue];
-                [_invocation setArgument:&value atIndex:index];
-            } else if (strcmp(numberType, @encode(int)) == 0) {
-                int value = [number intValue];
-                [_invocation setArgument:&value atIndex:index];
-            } else {
-                CGFloat value = [number floatValue];
-                [_invocation setArgument:&value atIndex:index];
-            }
-            continue;
-        }
-
-        [_invocation setArgument:&argument atIndex:index];
-    };
+        _argumentExcators[i](arguments, i);
+    }
 
     [_invocation invokeWithTarget:instance];
 }
