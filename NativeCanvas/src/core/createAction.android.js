@@ -4,16 +4,17 @@ import type { ActionMethod, ActionArguments } from "./types";
 
 const methodMap = {
   // styles
+  globalAlpha: "setGlobalAlpha:float",
   fillStyle: "setFillStyle:float[]",
   strokeStyle: "setStrokeStyle:float[]",
   lineWidth: "setLineWidth:float",
   lineCap: "setLineCap:String",
   lineJoin: "setLineJoin:String",
-  lineDashOffset: "setLineDashOffset", // not implement
+  miterLimit: "setMiterLimit:float",
+  lineDashOffset: "setLineDashOffset:float",
   font: "setFont:HashMap",
   textAlign: "setTextAlign:String",
   textBaseline: "setTextBaseline:String",
-  direction: "setDirection", // not implement
   shadowColor: "setShadowColor:float[]",
   shadowBlur: "setShadowBlur:float",
   shadowOffsetX: "setShadowOffsetX:float",

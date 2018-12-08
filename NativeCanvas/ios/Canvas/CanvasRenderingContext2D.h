@@ -34,6 +34,9 @@
 - (void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y;
 - (CGSize)measureText:(NSString *)text;
 
+#pragma 透明度
+- (void)setGlobalAlpha:(CGFloat)alpha;
+
 #pragma 填充与描边
 - (void)setFillStyle:(NSArray *)fillStyle;
 - (void)setStrokeStyle:(NSArray *)strokeStyle;
@@ -43,6 +46,8 @@
 - (void)setLineDash:(NSArray *)lineDash;
 - (void)setLineCap:(NSString *)lineCap;
 - (void)setLineJoin:(NSString *)lineJoin;
+- (void)setMiterLimit:(CGFloat)miterLimit;
+- (void)setLineDashOffset:(CGFloat)lineDashOffset;
 
 #pragma 创建渐变和图案
 - (void)createLinearGradient:(CGFloat)x0 y0:(CGFloat)y0 x1:(CGFloat)x1 y1:(CGFloat)y1;

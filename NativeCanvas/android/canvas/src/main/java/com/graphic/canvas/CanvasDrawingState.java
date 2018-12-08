@@ -8,13 +8,17 @@ import android.graphics.Paint;
  */
 
 public class CanvasDrawingState {
+  public float globalAlpha;
+
   public int[] fillStyle;
   public int[] strokeStyle;
 
   public float strokeLineWidth;
   public DashPathEffect strokeLineDash;
+  public float lineDashOffset;
   public Paint.Cap strokeLineCap;
   public Paint.Join strokeLineJoin;
+  public float miterLimit;
 
   public float textSize;
   public int textBaseline;
@@ -40,12 +44,15 @@ public class CanvasDrawingState {
   }
 
   private void setUp() {
+    globalAlpha = 1.f;
     fillStyle = new int[]{255, 0, 0, 0};
     strokeStyle = new int[]{255, 0, 0, 0};
     strokeLineWidth = 1.f;
     strokeLineCap = Paint.Cap.BUTT;
     strokeLineJoin = Paint.Join.MITER;
-    strokeLineDash = new DashPathEffect(new float[]{0.f, 0.f}, 0);
+    miterLimit = 0.f;
+    lineDashOffset = 0.f;
+    strokeLineDash = new DashPathEffect(new float[]{0.f, 0.f}, lineDashOffset);
     textSize = 10.f;
     textBaseline = 0; // bottom
     textAlign = Paint.Align.LEFT;
@@ -61,12 +68,15 @@ public class CanvasDrawingState {
   }
 
   private void setUp(CanvasDrawingState preState) {
+    globalAlpha = CanvasDeepCopy.deepCopyFloat(preState.globalAlpha);
     fillStyle = CanvasDeepCopy.deepCopyIntList(preState.fillStyle);
     strokeStyle = CanvasDeepCopy.deepCopyIntList(preState.strokeStyle);
     strokeLineWidth = CanvasDeepCopy.deepCopyFloat(preState.strokeLineWidth);
     strokeLineCap = CanvasConvert.convertLineCap(preState.primitiveLineCap);
     strokeLineJoin = CanvasConvert.convertLineJoin(preState.primitiveLineJoin);
-    strokeLineDash = CanvasConvert.convertLineDash(preState.primitiveLineDash);
+    miterLimit = CanvasDeepCopy.deepCopyFloat(preState.miterLimit);
+    lineDashOffset = CanvasDeepCopy.deepCopyFloat(preState.lineDashOffset);
+    strokeLineDash = CanvasConvert.convertLineDash(preState.primitiveLineDash, lineDashOffset);
     textSize = CanvasDeepCopy.deepCopyFloat(preState.textSize);
     textBaseline = CanvasDeepCopy.deepCopyInt(preState.textBaseline);
     textAlign = CanvasConvert.convertTextAlign(preState.primitiveTextAlign);
@@ -79,6 +89,10 @@ public class CanvasDrawingState {
     primitiveLineCap = CanvasDeepCopy.deepCopyString(preState.primitiveLineCap);
     primitiveLineJoin = CanvasDeepCopy.deepCopyString(preState.primitiveLineJoin);
     primitiveLineDash = CanvasDeepCopy.deepCopyFloatList(preState.primitiveLineDash);
+  }
+
+  public void setGlobalAlpha(float alpha) {
+    globalAlpha = alpha;
   }
 
   public void setFillStyle(float[] style) {
@@ -103,7 +117,7 @@ public class CanvasDrawingState {
 
   public void setStrokeLineDash(float[] lineDash) {
     primitiveLineDash = lineDash;
-    strokeLineDash = CanvasConvert.convertLineDash(lineDash);
+    strokeLineDash = CanvasConvert.convertLineDash(lineDash, lineDashOffset);
   }
 
   public void setStrokeLineCap(String lineCap) {
@@ -114,6 +128,15 @@ public class CanvasDrawingState {
   public void setStrokeLineJoin(String lineJoin) {
     primitiveLineJoin = lineJoin;
     strokeLineJoin = CanvasConvert.convertLineJoin(lineJoin);
+  }
+
+  public void setLineDashOffset(float dashOffset){
+    lineDashOffset = dashOffset;
+    strokeLineDash = CanvasConvert.convertLineDash(primitiveLineDash, lineDashOffset);
+  }
+
+  public void setMiterLimit(float limit) {
+    miterLimit = limit;
   }
 
   public void setTextAlign(String align) {

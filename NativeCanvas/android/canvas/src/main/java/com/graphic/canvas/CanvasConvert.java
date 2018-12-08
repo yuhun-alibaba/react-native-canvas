@@ -81,7 +81,7 @@ public class CanvasConvert {
     return join;
   }
 
-  public static DashPathEffect convertLineDash(float[] lineDash) {
+  public static DashPathEffect convertLineDash(float[] lineDash, float dashOffset) {
     float size = lineDash.length;
     boolean isOdd = size % 2 != 0;
     float[] dashEffect;
@@ -98,7 +98,7 @@ public class CanvasConvert {
       dashEffect[i] = lineDash[atIndex];
     }
 
-    return new DashPathEffect(dashEffect, 0);
+    return new DashPathEffect(dashEffect, dashOffset > 0 ? dashOffset : 0);
   }
 
   public static Paint.Align convertTextAlign(String textAlign) {

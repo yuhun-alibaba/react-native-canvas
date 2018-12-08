@@ -32,6 +32,7 @@
     CGColorRef _shadowColor;
 #pragma 线型
     CanvasCGFloatArray _lineDash;
+    CGFloat _lineDashOffset;
     NSTextAlignment _textAlign;
     NSNumber *_textBaseline;
 #pragma 合成
@@ -209,6 +210,12 @@
     return textSize;
 }
 
+#pragma 透明度
+- (void)setGlobalAlpha:(CGFloat)alpha
+{
+    CGContextSetAlpha(_context, alpha);
+}
+
 #pragma 填充与描边
 - (void)setFillStyle:(NSArray *)fillStyle
 {
@@ -250,7 +257,7 @@
     }
     _lineDash = dash;
     if (dash.count) {
-        CGContextSetLineDash(_context, 0, dash.array, dash.count);
+        CGContextSetLineDash(_context, _lineDashOffset > 0 ? _lineDashOffset : 0, dash.array, dash.count);
     }
 }
 
@@ -258,6 +265,16 @@
 {
     CGLineJoin join = [CanvasConvert CGLineJoin:lineJoin];
     CGContextSetLineJoin(_context, join);
+}
+
+- (void)setMiterLimit:(CGFloat)miterLimit
+{
+    CGContextSetMiterLimit(_context, miterLimit);
+}
+
+- (void)setLineDashOffset:(CGFloat)lineDashOffset
+{
+    _lineDashOffset = lineDashOffset;
 }
 
 #pragma 创建渐变和图案

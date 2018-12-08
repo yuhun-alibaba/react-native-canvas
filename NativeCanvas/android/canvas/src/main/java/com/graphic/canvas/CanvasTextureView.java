@@ -20,9 +20,9 @@ import java.util.HashMap;
  */
 
 public class CanvasTextureView extends TextureView {
+  private final String TAG = "CanvasTextureView";
   private static final CanvasMethodDelegate delegate = new CanvasMethodDelegate(CanvasRenderingContext2D.class);
   private final CanvasRenderingContext2D renderingContext2D = new CanvasRenderingContext2D();
-  private final String TAG = "CanvasTextureView";
   private ArrayList<HashMap> actions = new ArrayList();
   private Surface mSurface;
   private Integer mBackgroundColor;

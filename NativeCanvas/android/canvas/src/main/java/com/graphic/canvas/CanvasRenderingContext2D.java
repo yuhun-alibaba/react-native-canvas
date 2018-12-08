@@ -68,7 +68,12 @@ public class CanvasRenderingContext2D {
 
   private void setPaintStyle(Paint.Style style, int[] color) {
     paint.setStyle(style);
-    paint.setARGB(color[0], color[1], color[2], color[3]);
+    paint.setARGB(
+      (int)(color[0] * currentState.globalAlpha),
+      color[1],
+      color[2],
+      color[3]
+    );
     paint.setShadowLayer(
       currentState.shadowBlur,
       currentState.shadowOffsetX,
@@ -83,6 +88,7 @@ public class CanvasRenderingContext2D {
     paint.setStrokeCap(currentState.strokeLineCap);
     paint.setStrokeWidth(currentState.strokeLineWidth * scale);
     paint.setStrokeJoin(currentState.strokeLineJoin);
+    paint.setStrokeMiter(currentState.miterLimit);
     paint.setPathEffect(currentState.strokeLineDash);
   }
 
@@ -227,6 +233,10 @@ public class CanvasRenderingContext2D {
     currentState.setStrokeLineDash(lineDash);
   }
 
+  public void setLineDashOffset(float lineDashOffset) {
+    currentState.setLineDashOffset(lineDashOffset);
+  }
+
   public DashPathEffect getLineDash() {
     return currentState.strokeLineDash;
   }
@@ -237,6 +247,10 @@ public class CanvasRenderingContext2D {
 
   public void setLineJoin(String lineJoin) {
     currentState.setStrokeLineJoin(lineJoin);
+  }
+
+  public void setMiterLimit(float miterLimit) {
+    currentState.setMiterLimit(miterLimit);
   }
 
   /**
@@ -507,6 +521,13 @@ public class CanvasRenderingContext2D {
   public void resetTransform() {
     matrix.reset();
     canvas.setMatrix(matrix);
+  }
+
+  /**
+   * 合成
+   */
+  public void setGlobalAlpha(float alpha) {
+    currentState.setGlobalAlpha(alpha);
   }
 
   /**

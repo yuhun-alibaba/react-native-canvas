@@ -75,6 +75,10 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
    * set styles
    */
 
+  set globalAlpha(alpha) {
+    this.enqueue(this.createAction("globalAlpha", [alpha]));
+  }
+
   set fillStyle(fillStyle) {
     this.enqueue(this.createAction("fillStyle", [extractColor(fillStyle)]));
   }
@@ -95,8 +99,12 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
     this.enqueue(this.createAction("lineJoin", [lineJoin]));
   }
 
+  set miterLimit(miterLimit) {
+    this.enqueue(this.createAction("miterLimit", [miterLimit]));
+  }
+
   set lineDashOffset(lineDashOffset) {
-    // this.enqueue(this.createAction("lineDashOffset", [lineDashOffset]));
+    this.enqueue(this.createAction("lineDashOffset", [lineDashOffset]));
   }
 
   set font(font) {
@@ -110,10 +118,6 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
 
   set textBaseline(textBaseline) {
     this.enqueue(this.createAction("textBaseline", [textBaseline]));
-  }
-
-  set direction(direction) {
-    // this.enqueue(this.createAction("direction", [direction]));
   }
 
   set shadowColor(shadowColor) {
@@ -236,19 +240,19 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
   }
 
   drawImage(...args) {
-    this.enqueue(this.createAction("drawImage", args));
+    // this.enqueue(this.createAction("drawImage", args));
   }
 
   createImageData(...args) {
-    this.enqueue(this.createAction("createImageData", args));
+    // this.enqueue(this.createAction("createImageData", args));
   }
 
   getImageData(...args) {
-    this.enqueue(this.createAction("getImageData", args));
+    // this.enqueue(this.createAction("getImageData", args));
   }
 
   putImageData(...args) {
-    this.enqueue(this.createAction("putImageData", args));
+    // this.enqueue(this.createAction("putImageData", args));
   }
 
   save() {
