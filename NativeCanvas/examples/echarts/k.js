@@ -57,6 +57,7 @@ export default createECChart(function initChart(
   canvas.setChart(chart);
   const data0 = splitData(jsonData);
   const option = {
+    backgroundColor: "#ffffff",
     tooltip: {
       trigger: "axis",
       axisPointer: {

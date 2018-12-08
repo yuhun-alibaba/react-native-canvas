@@ -100,6 +100,6 @@ function strLen(str) {
 
 export function measureText(text, fontSize = 10) {
   return {
-    width: (strLen(text) * fontSize) / 2
+    width: ((strLen(text) * fontSize) / 2) * 1.1406
   };
 }
