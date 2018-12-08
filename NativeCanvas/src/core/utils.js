@@ -6,8 +6,11 @@
 import Color from "art/core/color";
 
 export function extractColor(color) {
-  if (color == null) {
-    return null;
+  if (color === "none" || color === null) {
+    color = "#000000";
+  }
+  if (color === "transparent") {
+    color = "rgba(0, 0, 0, 0)";
   }
   const c = new Color(color);
   return [c.red / 255, c.green / 255, c.blue / 255, c.alpha];

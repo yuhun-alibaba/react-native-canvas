@@ -10,6 +10,7 @@ import android.graphics.Paint;
 public class CanvasDrawingState {
   public int[] fillStyle;
   public int[] strokeStyle;
+
   public float strokeLineWidth;
   public DashPathEffect strokeLineDash;
   public Paint.Cap strokeLineCap;
@@ -18,6 +19,11 @@ public class CanvasDrawingState {
   public float textSize;
   public int textBaseline;
   public Paint.Align textAlign;
+
+  public int[] shadowColor;
+  public float shadowBlur;
+  public float shadowOffsetX;
+  public float shadowOffsetY;
 
   // primitive
   private float[] primitiveLineDash;
@@ -43,6 +49,10 @@ public class CanvasDrawingState {
     textSize = 10.f;
     textBaseline = 0; // bottom
     textAlign = Paint.Align.LEFT;
+    shadowColor = new int[]{0, 0, 0, 0};
+    shadowBlur = 0.f;
+    shadowOffsetX = 0.f;
+    shadowOffsetY = 0.f;
     // primitive
     primitiveTextAlign = "left";
     primitiveLineCap = "butt";
@@ -60,6 +70,10 @@ public class CanvasDrawingState {
     textSize = CanvasDeepCopy.deepCopyFloat(preState.textSize);
     textBaseline = CanvasDeepCopy.deepCopyInt(preState.textBaseline);
     textAlign = CanvasConvert.convertTextAlign(preState.primitiveTextAlign);
+    shadowColor = CanvasDeepCopy.deepCopyIntList(preState.shadowColor);
+    shadowBlur = CanvasDeepCopy.deepCopyFloat(preState.shadowBlur);
+    shadowOffsetX = CanvasDeepCopy.deepCopyFloat(preState.shadowOffsetX);
+    shadowOffsetY = CanvasDeepCopy.deepCopyFloat(preState.shadowOffsetY);
     // primitive
     primitiveTextAlign = CanvasDeepCopy.deepCopyString(preState.primitiveTextAlign);
     primitiveLineCap = CanvasDeepCopy.deepCopyString(preState.primitiveLineCap);
@@ -105,6 +119,22 @@ public class CanvasDrawingState {
   public void setTextAlign(String align) {
     primitiveTextAlign = align;
     textAlign = CanvasConvert.convertTextAlign(align);
+  }
+
+  public void setShadowColor(float[] color) {
+    shadowColor = CanvasConvert.convertColor(color);
+  }
+
+  public void setShadowBlur(float blur) {
+    shadowBlur = blur;
+  }
+
+  public void setShadowOffsetX(float offsetX) {
+    shadowOffsetX = offsetX;
+  }
+
+  public void setShadowOffsetY(float offsetY) {
+    shadowOffsetY = offsetY;
   }
 
 }

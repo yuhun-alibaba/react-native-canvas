@@ -14,36 +14,10 @@
 
 @interface CanvasRenderingContext2D : NSObject
 
-@property (nonatomic, assign) CGContextRef context;
-@property (nonatomic, assign) CGMutablePathRef path;
-@property (nonatomic, assign) CGAffineTransform originMatrix;
-
-#pragma 线型
-@property (nonatomic, assign) CanvasCGFloatArray lineDash;
-
-#pragma 文本
-@property (nonatomic, assign) NSString *fontName;
-@property (nonatomic, assign) CGFloat fontSize;
-@property (nonatomic, assign) NSTextAlignment textAlign;
-@property (nonatomic, assign) NSNumber *textBaseline;
-@property (nonatomic, assign) NSString *direction;
-
-#pragma 填充与描边
-@property (nonatomic, assign) CGColorRef fillStyle;
-
-#pragma 阴影
-@property (nonatomic, assign) CGFloat shadowBlur;
-@property (nonatomic, assign) CGColorRef shadowColor;
-@property (nonatomic, assign) CGFloat shadowOffsetX;
-@property (nonatomic, assign) CGFloat shadowOffsetY;
-
-#pragma 合成
-@property (nonatomic, assign) CGFloat globalAlpha;
-@property (nonatomic, assign) NSString *globalCompositeOperation;
-
 #pragma 初始化
 - (CanvasRenderingContext2D *)init;
 - (void)initOrResetProperty;
+- (void)setContext:(CGContextRef)context;
 
 #pragma 绘制矩形
 - (void)clearRect:(CGFloat)x y:(CGFloat)y width:(CGFloat)width height:(CGFloat)height;
@@ -74,6 +48,9 @@
 - (void)createLinearGradient:(CGFloat)x0 y0:(CGFloat)y0 x1:(CGFloat)x1 y1:(CGFloat)y1;
 - (void)createRadialGradient:(CGFloat)x0 y0:(CGFloat)y0 r0:(CGFloat)r0 x1:(CGFloat)x1 y1:(CGFloat)y1 r1:(CGFloat)r1;
 - (void)createPattern;
+
+#pragma 阴影
+- (void)setShadowColor:(NSArray *)shadowColor;
 
 #pragma 生成路径
 - (void)beginPath;

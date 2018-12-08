@@ -63,11 +63,18 @@ public class CanvasRenderingContext2D {
     paint.setFlags(Paint.ANTI_ALIAS_FLAG);
     paint.setTextSize(currentState.textSize);
     paint.setTextAlign(currentState.textAlign);
+    paint.clearShadowLayer();
   }
 
   private void setPaintStyle(Paint.Style style, int[] color) {
     paint.setStyle(style);
     paint.setARGB(color[0], color[1], color[2], color[3]);
+    paint.setShadowLayer(
+      currentState.shadowBlur,
+      currentState.shadowOffsetX,
+      currentState.shadowOffsetY,
+      CanvasConvert.convertColorListToColor(currentState.shadowColor)
+    );
   }
 
   private void setUpStrokePaint() {
@@ -242,6 +249,25 @@ public class CanvasRenderingContext2D {
   }
 
   public void createPattern() {
+  }
+
+  /**
+   * 阴影
+   */
+  public void setShadowColor(float[] color) {
+    currentState.setShadowColor(color);
+  }
+
+  public void setShadowBlur(float blur) {
+    currentState.setShadowBlur(blur);
+  }
+
+  public void setShadowOffsetX(float offsetX) {
+    currentState.setShadowOffsetX(offsetX);
+  }
+
+  public void setShadowOffsetY(float offsetY) {
+    currentState.setShadowOffsetY(offsetY);
   }
 
   /**

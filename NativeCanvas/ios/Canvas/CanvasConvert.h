@@ -17,5 +17,6 @@
 + (CanvasCGFloatArray)CanvasCGFloatArray:(NSArray *)arr;
 + (CGColorRef)CGColorConvert:(NSArray *)arr;
 + (NSNumber *)TextBaselineConvert:(NSString *)textBaseline;
++ (BOOL)CGColorEqualToUIColor:(CGColorRef)cgColor uiColor:(UIColor *)uiColor;
 
 @end

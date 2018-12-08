@@ -13,6 +13,31 @@
 
 
 @implementation CanvasRenderingContext2D
+{
+    CGContextRef _context;
+    CGMutablePathRef _path;
+    CGAffineTransform _originMatrix;
+    CGFloat _scale;
+#pragma 文本
+    NSString *_fontName;
+    CGFloat _fontSize;
+    NSString *_direction;
+#pragma 填充与描边
+    CGColorRef _fillStyle;
+    CGColorRef _strokeStyle;
+#pragma 阴影
+    CGFloat _shadowBlur;
+    CGFloat _shadowOffsetX;
+    CGFloat _shadowOffsetY;
+    CGColorRef _shadowColor;
+#pragma 线型
+    CanvasCGFloatArray _lineDash;
+    NSTextAlignment _textAlign;
+    NSNumber *_textBaseline;
+#pragma 合成
+    CGFloat _globalAlpha;
+    NSString *_globalCompositeOperation;
+}
 
 #pragma 初始化
 - (CanvasRenderingContext2D *)init
@@ -23,22 +48,33 @@
 
 - (void)initOrResetProperty
 {
-    _fillStyle = [UIColor blackColor].CGColor;
+    _fillStyle = CGColorRetain([UIColor blackColor].CGColor);
+    _strokeStyle = CGColorRetain([UIColor blackColor].CGColor);
     _fontName = @"Helvetica";
     _fontSize = 10.0;
     _textBaseline = @(CanvasTextBaselineTop);
+    _shadowBlur = 0.0;
+    _shadowOffsetX = 0;
+    _shadowOffsetY = 0;
+    _shadowColor = CGColorRetain([UIColor clearColor].CGColor);
 }
 
 - (void)setContext:(CGContextRef)context
 {
     _context = CGContextRetain(context);
     _originMatrix = CGContextGetCTM(_context);
+    _scale = _originMatrix.a;
+    CGContextSetAllowsAntialiasing(_context, YES);
+    CGContextSetShouldAntialias(_context, YES);
     CGContextRelease(context);
 }
 
 - (void)dealloc
 {
     CGPathRelease(_path);
+    CGColorRelease(_fillStyle);
+    CGColorRelease(_strokeStyle);
+    CGColorRelease(_shadowColor);
 }
 
 #pragma 绘制矩形
@@ -127,11 +163,11 @@
 }
 
 #pragma 绘制文本
-- (void)drawText:(NSString *)text x:(CGFloat)x y:(CGFloat)y
+- (void)drawText:(NSString *)text color:(CGColorRef)color x:(CGFloat)x y:(CGFloat)y
 {
     NSMutableParagraphStyle *textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = _textAlign;
-    UIColor *color = [UIColor colorWithCGColor:_fillStyle];
+    UIColor *drawColor = [UIColor colorWithCGColor:color];
     UIFont *font = [UIFont fontWithName:_fontName size:_fontSize];
     if (!font) {
         font = [UIFont systemFontOfSize:_fontSize];
@@ -142,7 +178,7 @@
 
     NSDictionary *textFontAttributes = @{
         NSFontAttributeName : font,
-        NSForegroundColorAttributeName : color,
+        NSForegroundColorAttributeName : drawColor,
         NSParagraphStyleAttributeName : textStyle
     };
     [text drawAtPoint:CGPointMake(x + horizontalOffset, y + verticalOffset)
@@ -154,7 +190,7 @@
     CGContextSetTextPosition(_context, x, y);
     CGContextSetTextDrawingMode(_context, kCGTextFill);
 
-    [self drawText:text x:x y:y];
+    [self drawText:text color:_fillStyle x:x y:y];
 }
 
 - (void)strokeText:(NSString *)text x:(CGFloat)x y:(CGFloat)y
@@ -162,7 +198,7 @@
     CGContextSetTextPosition(_context, x, y);
     CGContextSetTextDrawingMode(_context, kCGTextStroke);
 
-    [self drawText:text x:x y:y];
+    [self drawText:text color:_fillStyle x:x y:y];
 }
 
 - (CGSize)measureText:(NSString *)text
@@ -176,13 +212,13 @@
 #pragma 填充与描边
 - (void)setFillStyle:(NSArray *)fillStyle
 {
-    _fillStyle = [CanvasConvert CGColorConvert:fillStyle];
+    _fillStyle = CGColorRetain([CanvasConvert CGColorConvert:fillStyle]);
     CGContextSetFillColorWithColor(_context, _fillStyle);
 }
 
 - (void)setStrokeStyle:(NSArray *)strokeStyle
 {
-    CGColorRef style = [CanvasConvert CGColorConvert:strokeStyle];
+    CGColorRef style = CGColorRetain([CanvasConvert CGColorConvert:strokeStyle]);
     CGContextSetStrokeColorWithColor(_context, style);
 }
 
@@ -242,6 +278,41 @@
 
 - (void)createPattern
 {
+}
+
+#pragma 阴影
+- (void)setShadow
+{
+    CGSize offset = CGSizeMake(_shadowOffsetX, _shadowOffsetY);
+    if (_shadowOffsetY == 0 && _shadowOffsetY == 0 && _shadowBlur == 0) {
+        CGContextSetShadowWithColor(_context, offset, _shadowBlur, NULL);
+        return;
+    }
+    CGContextSetShadowWithColor(_context, offset, _shadowBlur, _shadowColor);
+}
+
+- (void)setShadowBlur:(CGFloat)shadowBlur
+{
+    _shadowBlur = shadowBlur / _scale;
+    [self setShadow];
+}
+
+- (void)setShadowOffsetX:(CGFloat)shadowOffsetX
+{
+    _shadowOffsetX = shadowOffsetX;
+    [self setShadow];
+}
+
+- (void)setShadowOffsetY:(CGFloat)shadowOffsetY
+{
+    _shadowOffsetY = shadowOffsetY;
+    [self setShadow];
+}
+
+- (void)setShadowColor:(NSArray *)shadowColor
+{
+    _shadowColor = CGColorRetain([CanvasConvert CGColorConvert:shadowColor]);
+    [self setShadow];
 }
 
 #pragma 生成路径

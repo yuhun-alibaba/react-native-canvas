@@ -14,8 +14,10 @@ const methodMap = {
   textAlign: "setTextAlign:",
   textBaseline: "setTextBaseline:",
   direction: "setDirection:", // not implement
-  shadowColor: "setShadowColor:", // not implement
-  shadowBlur: "setShadowBlur:", // not implement
+  shadowColor: "setShadowColor:",
+  shadowBlur: "setShadowBlur:",
+  shadowOffsetX: "setShadowOffsetX:",
+  shadowOffsetY: "setShadowOffsetY:",
   // methods
   setLineDash: "setLineDash:",
   clearRect: "clearRect:y:width:height:",

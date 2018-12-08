@@ -1,5 +1,6 @@
 package com.graphic.canvas;
 
+import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 
@@ -49,6 +50,15 @@ public class CanvasConvert {
       (int) (style[1] * 255),
       (int) (style[2] * 255)
     };
+  }
+
+  public static int convertColorListToColor(int[] colorList) {
+    return Color.argb(
+      colorList[0],
+      colorList[1],
+      colorList[2],
+      colorList[3]
+    );
   }
 
   public static Paint.Cap convertLineCap(String lineCap) {

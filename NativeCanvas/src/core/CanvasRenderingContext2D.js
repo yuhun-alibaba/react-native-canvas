@@ -76,22 +76,10 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
    */
 
   set fillStyle(fillStyle) {
-    if (fillStyle === "none" || !fillStyle) {
-      fillStyle = "#000000";
-    }
-    if (fillStyle === "transparent") {
-      fillStyle = "rgba(255, 255, 255, .4)";
-    }
     this.enqueue(this.createAction("fillStyle", [extractColor(fillStyle)]));
   }
 
   set strokeStyle(strokeStyle) {
-    if (strokeStyle === "none" || !strokeStyle) {
-      strokeStyle = "#000000";
-    }
-    if (strokeStyle === "transparent") {
-      strokeStyle = "rgba(255, 255, 255, .4)";
-    }
     this.enqueue(this.createAction("strokeStyle", [extractColor(strokeStyle)]));
   }
 
@@ -125,15 +113,23 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
   }
 
   set direction(direction) {
-    this.enqueue(this.createAction("direction", [direction]));
+    // this.enqueue(this.createAction("direction", [direction]));
   }
 
   set shadowColor(shadowColor) {
-    // this.enqueue(this.createAction("shadowColor", [shadowColor]));
+    this.enqueue(this.createAction("shadowColor", [extractColor(shadowColor)]));
   }
 
   set shadowBlur(shadowBlur) {
-    // this.enqueue(this.createAction("shadowBlur", [shadowBlur]));
+    this.enqueue(this.createAction("shadowBlur", [shadowBlur]));
+  }
+
+  set shadowOffsetX(shadowOffsetX) {
+    this.enqueue(this.createAction("shadowOffsetX", [shadowOffsetX]));
+  }
+
+  set shadowOffsetY(shadowOffsetY) {
+    this.enqueue(this.createAction("shadowOffsetY", [shadowOffsetY]));
   }
 
   /**
