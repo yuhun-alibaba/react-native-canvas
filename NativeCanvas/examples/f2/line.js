@@ -53,7 +53,7 @@ export default createF2Chart(function initChart(
     { year: 2017, type: "Florida", value: 4.3 }
   ];
 
-  chart = new F2.Chart({
+  const chart = new F2.Chart({
     el: canvas,
     width,
     height

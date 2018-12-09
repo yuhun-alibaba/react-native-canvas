@@ -8,18 +8,13 @@ import Renderer from "./renderer";
 import F2 from "./adaption";
 
 type Props = {
-  style?: any,
-  draw: Function
+  onReady?: Function
 };
 
 const Canvas = createCanvas(Renderer);
 
 export default class F2Canvas extends PureComponent<Props> {
   canvas;
-
-  setRef = ref => {
-    this.canvas = ref && ref.canvas;
-  };
 
   createTouchEvent(name: string) {
     return ({ nativeEvent }) => {
@@ -41,13 +36,14 @@ export default class F2Canvas extends PureComponent<Props> {
     cancel: this.onTouchCancel
   });
 
-  componentDidMount() {
-    if (this.canvas) {
-      this.props.draw && this.props.draw(this.canvas, F2);
-    }
-  }
+  onReady = canvas => {
+    this.canvas = canvas;
+    this.props.onReady && this.props.onReady(canvas, F2);
+  };
 
   render() {
-    return <Canvas {...this.props} {...this.panHandlers} ref={this.setRef} />;
+    return (
+      <Canvas {...this.props} {...this.panHandlers} onReady={this.onReady} />
+    );
   }
 }

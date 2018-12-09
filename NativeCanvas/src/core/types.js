@@ -15,6 +15,7 @@ export type Action = {
 export type Actions = Array<Action>;
 
 export const CanvasPropTypes = {
+  onReady: PropTypes.func,
   actions: PropTypes.arrayOf(PropTypes.object),
   ...View.propTypes
 };

@@ -6,7 +6,7 @@ package com.graphic.canvas;
 
 public class CanvasDeepCopy {
 
-  public static String deepCopyString(String a){
+  public static String deepCopyString(String a) {
     return new String(a);
   }
 

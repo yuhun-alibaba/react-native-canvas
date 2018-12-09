@@ -3,7 +3,6 @@
 import React, { Component } from "react";
 import { View, Dimensions } from "react-native";
 
-import { CanvasAutoDrawing } from "../../src/core";
 import { ECCanvas } from "../../src/adaption";
 
 const windowWidth = Dimensions.get("window").width;
@@ -25,7 +24,7 @@ export default function createECChart(initChart) {
             height: canvasHeight,
             backgroundColor: "#ffffff"
           }}
-          draw={this.draw}
+          onReady={this.draw}
         />
       );
     }

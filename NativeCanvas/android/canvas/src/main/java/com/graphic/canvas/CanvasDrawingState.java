@@ -63,7 +63,7 @@ public class CanvasDrawingState {
     // primitive
     primitiveTextAlign = "left";
     primitiveLineCap = "butt";
-    primitiveLineJoin ="miter";
+    primitiveLineJoin = "miter";
     primitiveLineDash = new float[]{0.f, 0.f};
   }
 
@@ -130,7 +130,7 @@ public class CanvasDrawingState {
     strokeLineJoin = CanvasConvert.convertLineJoin(lineJoin);
   }
 
-  public void setLineDashOffset(float dashOffset){
+  public void setLineDashOffset(float dashOffset) {
     lineDashOffset = dashOffset;
     strokeLineDash = CanvasConvert.convertLineDash(primitiveLineDash, lineDashOffset);
   }

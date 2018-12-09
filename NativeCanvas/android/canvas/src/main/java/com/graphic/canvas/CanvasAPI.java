@@ -46,8 +46,8 @@ public class CanvasAPI extends ReactContextBaseJavaModule {
     if (size == 0) return 0;
 
     final ArrayList<HashMap> drawingActions = CanvasConvert.convertActions(actions);
-
     CanvasTextureView canvas = CanvasViewManager.getCanvasView(tag);
+
     if (canvas != null) {
       canvas.setActions(drawingActions);
       canvas.drawOutput();

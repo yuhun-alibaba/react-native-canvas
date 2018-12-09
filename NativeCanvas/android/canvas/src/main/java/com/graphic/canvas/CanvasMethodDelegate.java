@@ -1,13 +1,14 @@
 package com.graphic.canvas;
 
-import android.util.Log;
+
+import com.facebook.common.logging.FLog;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
 /**
  * Created by sam on 2018/11/21.
- *
+ * <p>
  * 生成模块方法配置，参考自 react-native
  */
 
@@ -29,7 +30,6 @@ public class CanvasMethodDelegate {
 
     for (Method targetMethod : targetMethods) {
       CanvasMethodWrapper method = new CanvasMethodWrapper(targetMethod);
-//      Log.i(TAG, method.getName());
       mMethods.put(method.getName(), method);
     }
   }
@@ -39,7 +39,7 @@ public class CanvasMethodDelegate {
     if (drawMethod != null) {
       drawMethod.invoke(mModuleClassInstance, arguments);
     } else {
-      Log.w(TAG, "Could not find method " + method);
+      FLog.w(TAG, "Could not find method " + method);
     }
   }
 }

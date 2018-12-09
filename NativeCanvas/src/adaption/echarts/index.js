@@ -8,18 +8,13 @@ import Renderer from "./renderer";
 import echarts from "./adaption";
 
 type Props = {
-  style?: any,
-  draw: Function
+  onReady?: Function
 };
 
 const Canvas = createCanvas(Renderer);
 
 export default class ECCanvas extends PureComponent<Props> {
   canvas;
-
-  setRef = ref => {
-    this.canvas = ref && ref.canvas;
-  };
 
   createTouchEvents(events: Array<String>) {
     return ({ nativeEvent }) => {
@@ -46,16 +41,22 @@ export default class ECCanvas extends PureComponent<Props> {
     end: this.onTouchEnd
   });
 
-  componentDidMount() {
-    if (this.canvas) {
-      echarts.setCanvasCreator(() => {
-        return this.canvas;
-      });
-      this.props.draw && this.props.draw(this.canvas, echarts);
-    }
-  }
+  onReady = canvas => {
+    this.canvas = canvas;
+    echarts.setCanvasCreator(() => {
+      return this.canvas;
+    });
+    this.props.onReady && this.props.onReady(this.canvas, echarts);
+  };
 
   render() {
-    return <Canvas {...this.props} {...this.panHandlers} ref={this.setRef} />;
+    return (
+      <Canvas
+        {...this.props}
+        {...this.panHandlers}
+        onReady={this.onReady}
+        ref={this.setRef}
+      />
+    );
   }
 }

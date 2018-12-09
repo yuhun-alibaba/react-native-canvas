@@ -6,9 +6,12 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Region;
 import android.graphics.SurfaceTexture;
-import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
+
+import com.facebook.common.logging.FLog;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,8 +23,8 @@ import java.util.HashMap;
  */
 
 public class CanvasTextureView extends TextureView {
-  private final String TAG = "CanvasTextureView";
   private static final CanvasMethodDelegate delegate = new CanvasMethodDelegate(CanvasRenderingContext2D.class);
+  private final String TAG = "CanvasTextureView";
   private final CanvasRenderingContext2D renderingContext2D = new CanvasRenderingContext2D();
   private ArrayList<HashMap> actions = new ArrayList();
   private Surface mSurface;
@@ -36,6 +39,7 @@ public class CanvasTextureView extends TextureView {
       public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         mSurface = new Surface(surface);
         drawOutput();
+        onReady();
       }
 
       @Override
@@ -53,6 +57,15 @@ public class CanvasTextureView extends TextureView {
       public void onSurfaceTextureUpdated(SurfaceTexture surface) {
       }
     });
+  }
+
+  public void onReady() {
+    ReactContext reactContext = (ReactContext)getContext();
+    reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+      getId(),
+      "onReady",
+      null
+    );
   }
 
   /**
@@ -95,7 +108,6 @@ public class CanvasTextureView extends TextureView {
 
     try {
       Canvas canvas = mSurface.lockCanvas(null);
-      // 绘制逻辑
       drawCanvas(canvas);
 
       if (mSurface == null) {
@@ -104,7 +116,7 @@ public class CanvasTextureView extends TextureView {
 
       mSurface.unlockCanvasAndPost(canvas);
     } catch (IllegalArgumentException | IllegalStateException e) {
-      Log.w(TAG, "in Surface.unlockCanvasAndPost");
+      FLog.e(TAG, "in Surface.unlockCanvasAndPost");
     }
   }
 }

@@ -6,9 +6,10 @@
 // import App from "./examples/f2/bar";
 // import App from "./examples/f2/area";
 // import App from "./examples/f2/column";
-// import App from "./examples/f2";
-import App from "./examples/echarts/k";
+import App from "./examples/f2";
+// import App from "./examples/echarts/k";
 // import App from "./examples/echarts/pie";
 // import App from "./examples/echarts/gauge";
+// import App from "./examples/echarts";
 
 export default App;

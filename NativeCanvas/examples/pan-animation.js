@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { View, Dimensions } from "react-native";
 
-import { CanvasAutoDrawing } from "../src/core";
+import Canvas from "../src/core";
 import createPanResponder from "../src/adaption/createPanResponder";
 
 const windowWidth = Dimensions.get("window").width;
@@ -58,7 +58,7 @@ export default class PanAnimation extends Component<any> {
 
   render() {
     return (
-      <CanvasAutoDrawing
+      <Canvas
         {...this.panHandlers}
         style={{
           marginTop: 100,
@@ -66,7 +66,7 @@ export default class PanAnimation extends Component<any> {
           height: canvasHeight,
           backgroundColor: "#dddddd"
         }}
-        draw={this.draw}
+        onReady={this.draw}
       />
     );
   }

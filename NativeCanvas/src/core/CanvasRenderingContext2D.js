@@ -141,9 +141,7 @@ export default class CanvasRenderingContext2D extends CanvasRenderingAction {
    */
 
   setLineDash(lineDash) {
-    if (this._lineDash === lineDash) return;
     this._lineDash = lineDash;
-
     this.enqueue(this.createAction("setLineDash", [lineDash]));
   }
 

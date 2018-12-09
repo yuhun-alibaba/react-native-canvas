@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { View, Dimensions } from "react-native";
 
-import { CanvasAutoDrawing } from "../src/core";
+import Canvas from "../src/core";
 
 const windowWidth = Dimensions.get("window").width;
 const canvasWidth = windowWidth;
@@ -35,14 +35,14 @@ export default class Simple extends Component<any> {
 
   render() {
     return (
-      <CanvasAutoDrawing
+      <Canvas
         style={{
           marginTop: 100,
           width: canvasWidth,
           height: canvasHeight,
           backgroundColor: "#dddddd"
         }}
-        draw={this.draw}
+        onReady={this.draw}
       />
     );
   }

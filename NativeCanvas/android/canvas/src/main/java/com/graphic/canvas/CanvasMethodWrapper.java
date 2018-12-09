@@ -1,7 +1,5 @@
 package com.graphic.canvas;
 
-import android.util.Log;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,23 +11,17 @@ import java.util.HashMap;
 
 public class CanvasMethodWrapper {
 
-  private static class ArgumentExtractor<T> {
-    public T extractArgument(
-      Object[] arguments, int atIndex) {
-      return (T) arguments[atIndex];
-    }
-  }
-
   static final private ArgumentExtractor<Float> ARGUMENT_EXTRACTOR_FLOAT =
     new ArgumentExtractor<Float>() {
       @Override
       public Float extractArgument(
         Object[] arguments, int atIndex) {
+        // @todo should remove;
+        if (arguments[atIndex] == null) return 0.f;
         Double value = (Double) arguments[atIndex];
         return new Float(value);
       }
     };
-
   static final private ArgumentExtractor<float[]> ARGUMENT_EXTRACTOR_FLOAT_LIST =
     new ArgumentExtractor<float[]>() {
       @Override
@@ -45,7 +37,6 @@ public class CanvasMethodWrapper {
         return list;
       }
     };
-
   static final private ArgumentExtractor<Integer> ARGUMENT_EXTRACTOR_INTEGER =
     new ArgumentExtractor<Integer>() {
       @Override
@@ -55,7 +46,6 @@ public class CanvasMethodWrapper {
         return new Integer(value.intValue());
       }
     };
-
   static final private ArgumentExtractor<int[]> ARGUMENT_EXTRACTOR_INTEGER_LIST =
     new ArgumentExtractor<int[]>() {
       @Override
@@ -71,7 +61,6 @@ public class CanvasMethodWrapper {
         return list;
       }
     };
-
   static final private ArgumentExtractor<HashMap> ARGUMENT_EXTRACTOR_HASHMAP =
     new ArgumentExtractor<HashMap>() {
       @Override
@@ -80,26 +69,16 @@ public class CanvasMethodWrapper {
         return (HashMap) arguments[atIndex];
       }
     };
+  private final Method mMethod;
+  private final Class[] mParameterTypes;
+  private String mMethodName;
+  private ArgumentExtractor[] mArgumentExtractors;
 
-  private ArgumentExtractor[] buildArgumentExtractors(Class[] paramTypes) {
-    ArgumentExtractor[] argumentExtractors = new ArgumentExtractor[paramTypes.length];
-    for (int i = 0; i < paramTypes.length; i++) {
-      Class argumentClass = paramTypes[i];
-      if (argumentClass == Float.class || argumentClass == float.class) {
-        argumentExtractors[i] = ARGUMENT_EXTRACTOR_FLOAT;
-      } else if (argumentClass == float[].class) {
-        argumentExtractors[i] = ARGUMENT_EXTRACTOR_FLOAT_LIST;
-      } else if (argumentClass == int.class || argumentClass == Integer.class) {
-        argumentExtractors[i] = ARGUMENT_EXTRACTOR_INTEGER;
-      } else if (argumentClass == int[].class) {
-        argumentExtractors[i] = ARGUMENT_EXTRACTOR_INTEGER_LIST;
-      } else if (argumentClass == HashMap.class) {
-        argumentExtractors[i] = ARGUMENT_EXTRACTOR_HASHMAP;
-      } else {
-        argumentExtractors[i] = new ArgumentExtractor();
-      }
-    }
-    return argumentExtractors;
+  public CanvasMethodWrapper(Method method) {
+    mMethod = method;
+    mMethod.setAccessible(true);
+    mParameterTypes = mMethod.getParameterTypes();
+    processArguments();
   }
 
   private static String paramTypeToString(Class typeClass) {
@@ -132,17 +111,25 @@ public class CanvasMethodWrapper {
     }
   }
 
-  private final String TAG = "CanvasMethodWrapper";
-  private final Method mMethod;
-  private final Class[] mParameterTypes;
-  private String mMethodName;
-  private ArgumentExtractor[] mArgumentExtractors;
-
-  public CanvasMethodWrapper(Method method) {
-    mMethod = method;
-    mMethod.setAccessible(true);
-    mParameterTypes = mMethod.getParameterTypes();
-    processArguments();
+  private ArgumentExtractor[] buildArgumentExtractors(Class[] paramTypes) {
+    ArgumentExtractor[] argumentExtractors = new ArgumentExtractor[paramTypes.length];
+    for (int i = 0; i < paramTypes.length; i++) {
+      Class argumentClass = paramTypes[i];
+      if (argumentClass == Float.class || argumentClass == float.class) {
+        argumentExtractors[i] = ARGUMENT_EXTRACTOR_FLOAT;
+      } else if (argumentClass == float[].class) {
+        argumentExtractors[i] = ARGUMENT_EXTRACTOR_FLOAT_LIST;
+      } else if (argumentClass == int.class || argumentClass == Integer.class) {
+        argumentExtractors[i] = ARGUMENT_EXTRACTOR_INTEGER;
+      } else if (argumentClass == int[].class) {
+        argumentExtractors[i] = ARGUMENT_EXTRACTOR_INTEGER_LIST;
+      } else if (argumentClass == HashMap.class) {
+        argumentExtractors[i] = ARGUMENT_EXTRACTOR_HASHMAP;
+      } else {
+        argumentExtractors[i] = new ArgumentExtractor();
+      }
+    }
+    return argumentExtractors;
   }
 
   private void processArguments() {
@@ -183,18 +170,21 @@ public class CanvasMethodWrapper {
 
     try {
       mMethod.invoke(moduleClassInstance, arguments);
-//      Log.i(TAG, "invoke " + mMethodName);
     } catch (IllegalArgumentException ie) {
-      Log.w(TAG, "IllegalArgumentException: Could not invoke " + mMethodName);
       throw new RuntimeException("Could not invoke " + mMethodName, ie);
     } catch (IllegalAccessException iae) {
-      Log.w(TAG, "IllegalAccessException: Could not invoke " + mMethodName);
       throw new RuntimeException("Could not invoke " + mMethodName, iae);
     } catch (InvocationTargetException ite) {
-      Log.w(TAG, "InvocationTargetException: Could not invoke " + mMethodName);
       throw new RuntimeException("Could not invoke " + mMethodName, ite);
     }
 
+  }
+
+  private static class ArgumentExtractor<T> {
+    public T extractArgument(
+      Object[] arguments, int atIndex) {
+      return (T) arguments[atIndex];
+    }
   }
 
 }

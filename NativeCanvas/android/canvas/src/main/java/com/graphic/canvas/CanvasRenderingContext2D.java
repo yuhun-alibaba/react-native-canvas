@@ -69,7 +69,7 @@ public class CanvasRenderingContext2D {
   private void setPaintStyle(Paint.Style style, int[] color) {
     paint.setStyle(style);
     paint.setARGB(
-      (int)(color[0] * currentState.globalAlpha),
+      (int) (color[0] * currentState.globalAlpha),
       color[1],
       color[2],
       color[3]
@@ -228,17 +228,17 @@ public class CanvasRenderingContext2D {
     currentState.setStrokeLineWidth(lineWidth);
   }
 
-  public void setLineDash(float[] lineDash) {
-    if (lineDash.length == 0) return;
-    currentState.setStrokeLineDash(lineDash);
-  }
-
   public void setLineDashOffset(float lineDashOffset) {
     currentState.setLineDashOffset(lineDashOffset);
   }
 
   public DashPathEffect getLineDash() {
     return currentState.strokeLineDash;
+  }
+
+  public void setLineDash(float[] lineDash) {
+    if (lineDash.length == 0) return;
+    currentState.setStrokeLineDash(lineDash);
   }
 
   public void setLineCap(String lineCap) {

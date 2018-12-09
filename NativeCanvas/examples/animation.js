@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import { TouchableWithoutFeedback, View, Text, Dimensions } from "react-native";
-import { CanvasAutoDrawing } from "../src/core";
+import Canvas from "../src/core";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -80,13 +80,13 @@ export default class Animation extends Component<Props, State> {
           alignItems: "center"
         }}
       >
-        <CanvasAutoDrawing
+        <Canvas
           style={{
             width: windowWidth,
             height: 300,
             backgroundColor: "#dddddd"
           }}
-          draw={this.draw}
+          onReady={this.draw}
         />
         <TouchableWithoutFeedback onPress={this.toggleRunning}>
           <View
