@@ -1,0 +1,30 @@
+{
+  "name": "rn-canvas",
+  "version": "0.0.1",
+  "description": "Canvas API in React Native, use Native Components",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henryluki/react-native-canvas.git"
+  },
+  "keywords": [
+    "react-native",
+    "canvas",
+    "canvasRenderingContext2D",
+    "canvas-api",
+    "native"
+  ],
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "author": "henryluki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/henryluki/react-native-canvas/issues"
+  },
+  "homepage": "https://github.com/henryluki/react-native-canvas#readme"
+}

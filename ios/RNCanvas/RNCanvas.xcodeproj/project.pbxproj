@@ -1,0 +1,313 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2228622A21BD2F120015794D /* CanvasRenderingContext2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228621B21BD2F100015794D /* CanvasRenderingContext2D.m */; };
+		2228622B21BD2F120015794D /* CanvasMethodDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228621E21BD2F100015794D /* CanvasMethodDelegate.m */; };
+		2228622C21BD2F120015794D /* CanvasMethodWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228622021BD2F110015794D /* CanvasMethodWrapper.m */; };
+		2228622D21BD2F120015794D /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228622121BD2F110015794D /* CanvasView.m */; };
+		2228622E21BD2F120015794D /* CanvasViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228622521BD2F110015794D /* CanvasViewManager.m */; };
+		2228622F21BD2F120015794D /* CanvasConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228622821BD2F120015794D /* CanvasConvert.m */; };
+		2228623021BD2F120015794D /* CanvasAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2228622921BD2F120015794D /* CanvasAPI.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2228620C21BD2E4E0015794D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2228620E21BD2E4E0015794D /* libRNCanvas.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNCanvas.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2228621A21BD2F100015794D /* CanvasMethodWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasMethodWrapper.h; sourceTree = "<group>"; };
+		2228621B21BD2F100015794D /* CanvasRenderingContext2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasRenderingContext2D.m; sourceTree = "<group>"; };
+		2228621C21BD2F100015794D /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
+		2228621D21BD2F100015794D /* CanvasAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasAPI.h; sourceTree = "<group>"; };
+		2228621E21BD2F100015794D /* CanvasMethodDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasMethodDelegate.m; sourceTree = "<group>"; };
+		2228621F21BD2F100015794D /* CanvasViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasViewManager.h; sourceTree = "<group>"; };
+		2228622021BD2F110015794D /* CanvasMethodWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasMethodWrapper.m; sourceTree = "<group>"; };
+		2228622121BD2F110015794D /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
+		2228622221BD2F110015794D /* CanvasRenderingContext2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasRenderingContext2D.h; sourceTree = "<group>"; };
+		2228622321BD2F110015794D /* CanvasMethodDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasMethodDelegate.h; sourceTree = "<group>"; };
+		2228622421BD2F110015794D /* CanvasCGFloatArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasCGFloatArray.h; sourceTree = "<group>"; };
+		2228622521BD2F110015794D /* CanvasViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasViewManager.m; sourceTree = "<group>"; };
+		2228622621BD2F110015794D /* CanvasTextBaseline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasTextBaseline.h; sourceTree = "<group>"; };
+		2228622721BD2F110015794D /* CanvasConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasConvert.h; sourceTree = "<group>"; };
+		2228622821BD2F120015794D /* CanvasConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasConvert.m; sourceTree = "<group>"; };
+		2228622921BD2F120015794D /* CanvasAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasAPI.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2228620B21BD2E4E0015794D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2228620521BD2E4E0015794D = {
+			isa = PBXGroup;
+			children = (
+				2228621D21BD2F100015794D /* CanvasAPI.h */,
+				2228622921BD2F120015794D /* CanvasAPI.m */,
+				2228622421BD2F110015794D /* CanvasCGFloatArray.h */,
+				2228622721BD2F110015794D /* CanvasConvert.h */,
+				2228622821BD2F120015794D /* CanvasConvert.m */,
+				2228622321BD2F110015794D /* CanvasMethodDelegate.h */,
+				2228621E21BD2F100015794D /* CanvasMethodDelegate.m */,
+				2228621A21BD2F100015794D /* CanvasMethodWrapper.h */,
+				2228622021BD2F110015794D /* CanvasMethodWrapper.m */,
+				2228622221BD2F110015794D /* CanvasRenderingContext2D.h */,
+				2228621B21BD2F100015794D /* CanvasRenderingContext2D.m */,
+				2228622621BD2F110015794D /* CanvasTextBaseline.h */,
+				2228621C21BD2F100015794D /* CanvasView.h */,
+				2228622121BD2F110015794D /* CanvasView.m */,
+				2228621F21BD2F100015794D /* CanvasViewManager.h */,
+				2228622521BD2F110015794D /* CanvasViewManager.m */,
+				2228620F21BD2E4E0015794D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2228620F21BD2E4E0015794D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2228620E21BD2E4E0015794D /* libRNCanvas.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2228620D21BD2E4E0015794D /* RNCanvas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2228621721BD2E4E0015794D /* Build configuration list for PBXNativeTarget "RNCanvas" */;
+			buildPhases = (
+				2228620A21BD2E4E0015794D /* Sources */,
+				2228620B21BD2E4E0015794D /* Frameworks */,
+				2228620C21BD2E4E0015794D /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RNCanvas;
+			productName = RNCanvas;
+			productReference = 2228620E21BD2E4E0015794D /* libRNCanvas.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2228620621BD2E4E0015794D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = graphic;
+				TargetAttributes = {
+					2228620D21BD2E4E0015794D = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2228620921BD2E4E0015794D /* Build configuration list for PBXProject "RNCanvas" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2228620521BD2E4E0015794D;
+			productRefGroup = 2228620F21BD2E4E0015794D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2228620D21BD2E4E0015794D /* RNCanvas */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2228620A21BD2E4E0015794D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2228622A21BD2F120015794D /* CanvasRenderingContext2D.m in Sources */,
+				2228622E21BD2F120015794D /* CanvasViewManager.m in Sources */,
+				2228622B21BD2F120015794D /* CanvasMethodDelegate.m in Sources */,
+				2228623021BD2F120015794D /* CanvasAPI.m in Sources */,
+				2228622D21BD2F120015794D /* CanvasView.m in Sources */,
+				2228622C21BD2F120015794D /* CanvasMethodWrapper.m in Sources */,
+				2228622F21BD2F120015794D /* CanvasConvert.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2228621521BD2E4E0015794D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2228621621BD2E4E0015794D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2228621821BD2E4E0015794D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2228621921BD2E4E0015794D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2228620921BD2E4E0015794D /* Build configuration list for PBXProject "RNCanvas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2228621521BD2E4E0015794D /* Debug */,
+				2228621621BD2E4E0015794D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2228621721BD2E4E0015794D /* Build configuration list for PBXNativeTarget "RNCanvas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2228621821BD2E4E0015794D /* Debug */,
+				2228621921BD2E4E0015794D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2228620621BD2E4E0015794D /* Project object */;
+}

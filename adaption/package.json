@@ -1,0 +1,16 @@
+{
+  "name": "rn-canvas-adaption",
+  "version": "0.0.1",
+  "description": "React Native Canvas adaption version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@antv/f2": "^3.2.4",
+    "echarts": "^4.2.0-rc.2",
+    "rn-canvas": "^0.0.1"
+  },
+  "author": "henryluki",
+  "license": "MIT"
+}
