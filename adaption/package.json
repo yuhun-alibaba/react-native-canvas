@@ -1,12 +1,13 @@
 {
   "name": "rn-canvas-adaption",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React Native Canvas adaption version",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "wolfy87-eventemitter": "^5.2.5",
     "@antv/f2": "^3.2.4",
     "echarts": "^4.2.0-rc.2",
     "rn-canvas": "^0.0.1"
