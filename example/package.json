@@ -11,7 +11,7 @@
     "react-native": "0.57.7",
     "react-native-gesture-handler": "^1.0.10",
     "react-navigation": "^3.0.7",
-    "rn-canvas": "0.0.1",
+    "rn-canvas": "0.0.3",
     "rn-canvas-adaption": "0.0.2"
   },
   "devDependencies": {

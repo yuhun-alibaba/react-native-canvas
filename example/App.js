@@ -14,7 +14,7 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    return <Echarts />;
+    return <F2 />;
   }
 }
 
