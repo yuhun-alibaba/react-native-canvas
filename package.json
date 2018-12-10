@@ -1,6 +1,6 @@
 {
   "name": "rn-canvas",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Canvas API in React Native, use Native Components",
   "main": "src/index.js",
   "scripts": {
