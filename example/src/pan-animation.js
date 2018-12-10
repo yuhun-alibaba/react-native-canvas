@@ -61,10 +61,10 @@ export default class PanAnimation extends Component<any> {
       <Canvas
         {...this.panHandlers}
         style={{
-          marginTop: 100,
+          marginTop: 20,
           width: canvasWidth,
           height: canvasHeight,
-          backgroundColor: "#dddddd"
+          backgroundColor: "#f4f4f4"
         }}
         onReady={this.draw}
       />

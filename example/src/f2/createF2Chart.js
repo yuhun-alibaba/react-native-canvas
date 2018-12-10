@@ -11,19 +11,21 @@ const canvasHeight = 300;
 
 export default function createF2Chart(initChart) {
   return class F2Chart extends Component<any> {
+    height = this.props.height || canvasHeight;
+
     draw = (canvas: any, F2) => {
-      initChart(canvas, canvasWidth, canvasHeight, F2);
+      initChart(canvas, canvasWidth, this.height, F2);
     };
 
     render() {
       return (
         <F2Canvas
-          style={{
+          style={[{
             marginTop: 20,
             width: canvasWidth,
-            height: canvasHeight,
+            height: this.height,
             backgroundColor: "#ffffff"
-          }}
+          }, this.props.style]}
           onReady={this.draw}
         />
       );

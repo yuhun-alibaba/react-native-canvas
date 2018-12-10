@@ -69,6 +69,10 @@ export default class Animation extends Component<Props, State> {
     ctx.draw();
   }
 
+  componentWillUnmount() {
+    this.gameLoopEnd();
+  }
+
   render() {
     const { running } = this.state;
 
@@ -84,7 +88,7 @@ export default class Animation extends Component<Props, State> {
           style={{
             width: windowWidth,
             height: 300,
-            backgroundColor: "#dddddd"
+            backgroundColor: "#f4f4f4"
           }}
           onReady={this.draw}
         />
@@ -97,7 +101,7 @@ export default class Animation extends Component<Props, State> {
               justifyContent: "center",
               alignItems: "center",
               borderWidth: 1,
-              borderColor: "#dddddd",
+              borderColor: "#f4f4f4",
               borderRadius: 4
             }}
           >

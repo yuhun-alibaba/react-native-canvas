@@ -18,16 +18,15 @@ export default class Simple extends Component<any> {
     ctx.textBaseline = "middle";
     ctx.textAlign = "right";
 
-    ctx.translate(10, 10);
+    ctx.translate(50, 50);
     ctx.save();
     ctx.beginPath();
-    ctx.arc(10, 10, 5, 0, 6.283185307179586, false);
+    ctx.arc(50, 50, 20, 0, 6.283185307179586, false);
     ctx.fill();
     ctx.restore();
     ctx.save();
-    ctx.fillRect(10, 10, 20, 20);
-    ctx.strokeRect(10, 10, 20, 20);
-    ctx.fillText("其他  2%", 12, -8);
+    ctx.fillRect(100, 100, 50, 50);
+    ctx.fillText("fillText", 12, -8);
     ctx.restore();
 
     ctx.draw();
@@ -37,10 +36,10 @@ export default class Simple extends Component<any> {
     return (
       <Canvas
         style={{
-          marginTop: 100,
+          marginTop: 20,
           width: canvasWidth,
           height: canvasHeight,
-          backgroundColor: "#dddddd"
+          backgroundColor: "#f4f4f4"
         }}
         onReady={this.draw}
       />

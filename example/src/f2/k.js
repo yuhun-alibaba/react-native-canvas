@@ -9,7 +9,7 @@ export default createF2Chart(function initChart(
   height,
   F2
 ) {
-  const data = jsonData.slice(0, 20);
+  const data = jsonData.slice(0, 50);
   data.sort(function(obj1, obj2) {
     return obj1.time > obj2.time ? 1 : -1;
   });

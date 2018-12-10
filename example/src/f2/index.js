@@ -23,6 +23,7 @@ export default class F2Example extends Component<Props, State> {
       <ScrollView
         style={{
           width: windowWidth,
+          backgroundColor: "#f4f4f4",
           flex: 1
         }}
       >

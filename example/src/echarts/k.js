@@ -1,5 +1,7 @@
 // @flow
 
+import { Dimensions } from "react-native";
+
 import createECChart from "./createECChart";
 import jsonData from "../data/echarts-kline.json";
 
@@ -318,4 +320,6 @@ export default createECChart(function initChart(
     ]
   };
   chart.setOption(option);
+}, {
+  height: Dimensions.get("window").height - 60
 });
