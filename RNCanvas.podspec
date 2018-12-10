@@ -9,6 +9,5 @@ Pod::Spec.new do |s|
   s.source_files = "ios/*.{h,m}"
   s.license      = "MIT"
   s.platforms    = { :ios => "8.0", :tvos => "9.2" }
-  s.dependency  'React'
 
 end
