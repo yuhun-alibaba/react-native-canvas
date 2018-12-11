@@ -1,6 +1,6 @@
 {
   "name": "rn-canvas-adaption",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React Native Canvas adaption version",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "wolfy87-eventemitter": "^5.2.5",
     "@antv/f2": "^3.2.4",
     "echarts": "^4.2.0-rc.2",
-    "rn-canvas": "^0.0.1"
+    "rn-canvas": "*"
   },
   "author": "henryluki",
   "license": "MIT"
